@@ -3,6 +3,10 @@
 Lag en egen branch:
 ```
 git branch vilkårlignavn
+```
+
+Bytt til den nye branchen:
+```
 git checkout vilkårlignavn
 ```
 
