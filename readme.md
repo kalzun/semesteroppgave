@@ -1,7 +1,8 @@
 # Semesteroppgaven INFO134 - Vår 2019
 
 Lag en egen branch:
-```git branch vilkårlignavn
+```
+git branch vilkårlignavn
 git checkout vilkårlignavn
 ```
 
