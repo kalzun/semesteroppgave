@@ -1,36 +1,64 @@
+var befolkning = 'http://wildboy.uib.no/~tpe056/folk/104857.json'
+var sysselsatte = 'http://wildboy.uib.no/~tpe056/folk/100145.json'
 var utdanning = 'http://wildboy.uib.no/~tpe056/folk/85432.json'
 
-function queryWildboy(url, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", url);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            callback(JSON.parse(xhr.responseText));
-        };
-    };
-    xhr.send();
-};
 
-function Dataset(url) {
-    var data = queryWildboy(url, function(responseText) {
-        console.log(responseText)
-        this.data = responseText
-    });
+function Datasett(url) {
+    this.url = url;
     this.getNames =  function() {
-        return this.data['elementer'];
+        var names = [];
+        for (var elem in this.response.data['elementer']){
+            names.push(elem);
+        };
+        return names;
     };
     this.getIDs = function() {
-        return null;
+        var id = [];
+        for (var elem in this.response.data['elementer']){
+            id.push(this.response.data[elem]['elementer']['kommunenummer']);
+        }
+        return id;
     };
     this.getInfo = function() {
-        return null;
+        alleKommuneNavn = this.getNames()
+        alleKommuner = {}
+        for (var kommune in alleKommuneNavn){
+            console.log(kommune)
+            alleKommuner[kommune] = KommuneInfo(kommune)
+        };
+        return alleKommuner
     };
     this.load = function() {
-        return null;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", this.url);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                this.data = JSON.parse(xhr.responseText);
+            };
+        };
+        xhr.send();
+        this.response = xhr;
     };
     this.onload = null;
 };
 
+function KommuneInfo(kommune) {
+    this.name = kommune;
+    this.befolkning = {
+        menn: obj.response.data['elementer'][kommune]['Menn'],
+        kvinner: obj.response.data['elementer'][kommune]['Kvinner'],
+        total: function() {
+            var all = {}
+            for (var år in this.menn) {
+                all[år] = this.menn[år] + this.kvinner[år]
+            }
+            return all
+        }
+    };
+};
 
-var obj = new Dataset(utdanning);
-console.log(obj.data)
+
+var obj = new Datasett(befolkning);
+obj.load();
+
+
