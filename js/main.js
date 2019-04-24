@@ -256,29 +256,35 @@ People.prototype = {
 
 	getEducationRates: function(edu){
 		switch (edu) {
-			case "grunnskole" || GRUNNSKOLE:	
+			case "grunnskole":
+			case GRUNNSKOLE:	
 				return this.education[GRUNNSKOLE];
 				break;
-			case "VGS" || VGS:
+			case "VGS":
+			case VGS:
 				return this.education[VGS];
 				break;
-			case "fagskole" || FAGSKOLE:
+			case "fagskole":
+			case FAGSKOLE:
 				return this.education[FAGSKOLE];
 				break;	
-			case "unikort" || UNIKORT:
+			case "unikort": 
+			case UNIKORT:
 				return this.education[UNIKORT];
 				break;
-			case "unilang" || UNILANG:
+			case "unilang":
+			case UNILANG:
 				return this.education[UNILANG];
 				break;
-			case "utenutdanning" || UTENUTD:
+			case "utenutdanning":
+			case UTENUTD:
 				return this.education[UTENUTD];
 				break;
 			default:
-				// statements_def
+				return this.education;
 				break;
 		}
-			return this.education;
+		
 	}
 }
 
