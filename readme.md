@@ -24,3 +24,10 @@ Om du er i din nye branch, og skriver `git push`, må du først:
 ```
 git push --set-upstream origin dittbranchnavn
 ```
+
+Om du vil sjekke ut en remote branch:
+(du må vite navnet på den eksterne branchen)
+```
+git fetch
+git checkout ENREMOTEBRANCH
+```
