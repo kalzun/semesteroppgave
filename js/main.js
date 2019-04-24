@@ -1,4 +1,9 @@
 
+const allUrls = ["http://wildboy.uib.no/~tpe056/folk/104857.json", // Befolkning
+				"http://wildboy.uib.no/~tpe056/folk/100145.json", // Sysselsatte
+				"http://wildboy.uib.no/~tpe056/folk/85432.json", // Utdanning
+			  ]
+
 const KOMNR = "kommunenummer";
 const MENN = "Menn";
 const KVINNER = "Kvinner";
@@ -10,13 +15,16 @@ const GRUNNSKOLE = "01",
 	UNILANG = "04a", 
 	UTENUTD =  "09a";
 
+// Benytter Singleton-pattern, for å ha ett samlet objekt å forholde seg til ved spørringer.
+// Denne funksjonen kjøres umiddelbart, og er ti
+
 AlleKommunerSingleton = (function() {
 	var instance;
 	var _IDs = [];
 	var _names = [];
 	var _all = [];
 	var _inhabitants = [];
-	var _employementRates = [];
+	var _employmentRates = [];
 	var _education = [];
 
 
@@ -24,98 +32,54 @@ AlleKommunerSingleton = (function() {
 
 		function setup(dataset) {
 
+			/* 
+				Går gjennom alle tre datasettene og lager:
+				alle ID-ene (kommunenummer)
+				inhabitants (innbyggere)
+				employmentrates (sysselsatte)
+				education (utdanning)
+			*/
+
 			function buildIds() {
+				
+				// Første datasett (innbyggere)
+				// Her legger vi til alle ID vi finner.
+				
 				for (i in dataset[0].elementer){
+					_inhabitants.push(dataset[0].elementer[i]);
 					_IDs.push(dataset[0].elementer[i][KOMNR]);
-					buildName(i);
+					_names.push(i);
 				}
+
+				// Andre datasett (sysselsatte).
+				// Her legger vi til alle info om sysselsatte.
+				// Men vi sjekker om ID allerede er lagt til, og legger IKKE til ID og navn til i så fall.
+				
 				for (i in dataset[1].elementer){
+					_employmentRates.push(dataset[1].elementer[i]);
 					if (!_IDs.includes(dataset[1].elementer[i][KOMNR])){
 						_IDs.push(dataset[1].elementer[i][KOMNR]);
-						buildName(i);
+						_names.push(i);
 					}
 				}
+				
+				// Tredje datasett (utdanning).
+				// Her legger vi til alle info om utdanning.
+				// Men vi sjekker om ID allerede er lagt til, og legger IKKE til ID og navn til i så fall.
+				
 				for (i in dataset[2].elementer){
+					_education.push(dataset[2].elementer[i]);
 					if (!_IDs.includes(dataset[2].elementer[i][KOMNR])){
 						_IDs.push(dataset[2].elementer[i][KOMNR]);
-						buildName(i);
+						_names.push(i);
 					}
 				}
-
-				// 	// check difference
-				// var diff1v2 = _IDs.filter(num => (!_IDs2.includes(num)));
-				// var diff1v3 = _IDs.filter(num => (!_IDs3.includes(num)));
-				// var diff2v3 = _IDs2.filter(num => (!_IDs3.includes(num)));
-				// var diff3v1 = _IDs3.filter(num => (!_IDs.includes(num)));
-				// var diff3v2 = _IDs3.filter(num => (!_IDs2.includes(num)));
-				
-				// for (i in diff3v1){
-				// 	_IDs.push(diff3v1[i]);
-				// 	buildName(dataset[2].elementer[i]);
-				// }
-
-				// var diff3v1After = _IDs3.filter(num => (!_IDs.includes(num)));
-				// console.log(`Diff3v1 ${diff3v1After} length: ${diff3v1After.length} and ${typeof diff3v1After}`);
-				// //return diff3v1;
 			}
 
 			buildIds();
-			buildInhabitants();
-			buildEmploymentRates();
-			buildEducationRates();
 			
-
-			function buildName(name) {
-				_names.push(name);
-			}
-
-			function buildInhabitants(){
-				for (i in dataset[0].elementer)
-					_inhabitants.push(dataset[0].elementer[i]);
-			}
-
-			function buildEmploymentRates() {
-				for (name in dataset[1].elementer)
-				 	_employementRates.push(dataset[1].elementer[name]);
-			}
-
-			function buildEducationRates() {
-				for (name in dataset[2].elementer)
-					_education.push(dataset[2].elementer[name]);
-			}
-
-			function depcr_buildInhabitants(){
-				for (i in dataset[0].elementer){
-					_names.push(i);
-					_inhabitants.push(dataset[0].elementer[i]);
-
-					for (name in dataset[1].elementer)
-						if (i == name)
-							_employementRates.push(dataset[1].elementer[name]);
-
-					for (name in dataset[2].elementer)
-						if (i == name)
-							_education.push(dataset[2].elementer[name]);
-				}
-				for (i in dataset[2].elementer){
-					console.log("Name already? " + _names.includes(i))
-					if (_names.includes(i)) 
-						continue;
-					_names.push(i);
-
-					_education.push(dataset[2].elementer[i]);
-
-					for (name in dataset[1].elementer)
-						if (i == name)
-							_employementRates.push(dataset[1].elementer[name]);
-
-					for (name in dataset[0].elementer)
-						if (i == name)
-							_inhabitants.push(dataset[0].elementer[name]);				
-				}
-			}
-
-			// Lager alle kommuneobjektene:
+			// Oppretter alle kommuneobjektene, som vi samler i _all. 
+			// _all blir gjort offentlig tilgjengelig via funksjonen getAlleKommuner()
 			for (id in _IDs){
 				var _ = new Kommuneobj(_names[id], _IDs[id]);
 				_all.push(_);
@@ -162,8 +126,8 @@ AlleKommunerSingleton = (function() {
 		}
 
 		function getEmploymentRates(id){
-			for (i in _employementRates)
-				if (_employementRates[i][KOMNR] == id) return _employementRates[i];			
+			for (i in _employmentRates)
+				if (_employmentRates[i][KOMNR] == id) return _employmentRates[i];			
 		}
 
 		function getEducation(id){
@@ -172,6 +136,7 @@ AlleKommunerSingleton = (function() {
 		}
 
 		return {
+			// Følgende metoder blir tilgjengelige utenfor singleton:
 			setup: setup,
 			getAlleKommuner: getAlleKommuner,
 			getAllIDs: getAllIDs,
@@ -187,6 +152,7 @@ AlleKommunerSingleton = (function() {
 	}
 
 	return {
+		// For å unngå å potensielt skape flere singletons
 		getInstance: function() {
 			if (!instance){
 				instance = init();
@@ -202,7 +168,9 @@ function httpRequest(url, callback) {
 
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
-			setTimeout(() => {callback(xhr.responseText);}, 500);
+			callback(xhr.responseText);
+			// Uncomment to test for latency:
+			// setTimeout(() => {callback(xhr.responseText);}, 500); 
 		}
 	};
 	xhr.send();
@@ -213,27 +181,34 @@ var DataSet = function(urls) {
 	this.onload = null;
 
 	this.getNames = function() {
-		var _ = AlleKommunerSingleton.getInstance()
-		return _.getAllNames();
+		return this.singleton.getAllNames();
 	}
 
 	this.getIDs = function() {
-		var _ = AlleKommunerSingleton.getInstance()
-		return _.getAllIDs();
+		return this.singleton.getAllIDs();
 	}
 
 	this.load = function() {
 		if (this.data) return "Data is already loaded.";
 		this.data = new Array();
+		
+		var timer0 = performance.now();
 		httpRequest(this.urls[0], (response0) => { 			// Befolkning
 			httpRequest(this.urls[1], (response1) => { 		// Sysselsatte
 				httpRequest(this.urls[2], (response2) => {	// Utdanning
 					this.data.push(JSON.parse(response0, rmvUnused));
 					this.data.push(JSON.parse(response1, rmvUnused));
 					this.data.push(JSON.parse(response2, rmvUnused));
+					
+					var timer1 = performance.now();
+					console.log(`All datasets are loaded. It took approximately: ${timer1-timer0} milliseconds.`);
+					
 					if (this.onload) this.onload();
+					var t2 = performance.now();
 					this.singleton = AlleKommunerSingleton.getInstance();
 					this.singleton.setup(this.data);
+					var t3 = performance.now();
+					console.log(`Datasets are setup in Singleton. It took approximately: ${t3-t2} milliseconds.`);
 				});
 			});
 		});
@@ -246,8 +221,7 @@ var DataSet = function(urls) {
 	}
 
 	this.getInfo = function(id) {
-		var _ = AlleKommunerSingleton.getInstance()
-		return _.getInfo(id);
+		return this.singleton.getInfo(id);
 	}
 }
 
@@ -259,7 +233,6 @@ var People = function(id) {
 };
 
 People.prototype = {
-
 	setup: function(){
 		this._kommuner = AlleKommunerSingleton.getInstance();
 		return this._kommuner;
@@ -315,10 +288,6 @@ var Kommuneobj = function(navn, id) {
 	this.people = new People(id);
 }
 
-var allUrls = ["http://wildboy.uib.no/~tpe056/folk/104857.json", // Befolkning
-				"http://wildboy.uib.no/~tpe056/folk/100145.json", // Sysselsatte
-				"http://wildboy.uib.no/~tpe056/folk/85432.json", // Utdanning
-			  ]
 var ds = new DataSet(allUrls);
 ds.load()
 var l = AlleKommunerSingleton.getInstance()
