@@ -1,0 +1,11 @@
+:root {
+	--box-color: yellow;
+}
+
+input {
+	padding: 10px 10px;
+}
+
+input:hover {
+	border-color: var(--box-color);
+}

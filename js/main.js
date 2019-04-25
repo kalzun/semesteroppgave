@@ -241,9 +241,39 @@ People.prototype = {
 		return this._kommuner;
 	},
 
-	getGenderByYear: function(gender, year) {
+	// INHABITANTS methods:
+
+	getInhabitantsGenderByYear: function(gender, year) {
 		return this.inhabitants[gender][year];
 	},
+
+	getInhabitants: function() {
+		return this.inhabitants;
+	},
+
+	getInhabitantsLastYearTotal: function(){
+		this.menn = this.inhabitants[MENN];
+		this.kvinner = this.inhabitants[KVINNER];
+
+		// Gå gjennom alle egenskapene i objektet, lagre alle keys i et array 
+		this.alleTallM = Object.keys(this.menn).sort();
+		this.alleTallK = Object.keys(this.kvinner).sort();
+
+		// Finner siste år i menn, ved å referere til lengden av alle tall - 1,
+		// som tilsvarer siste element. 
+		this.sisteTallM = this.menn[this.alleTallM[this.alleTallM.length-1]];
+		this.sisteTallK = this.kvinner[this.alleTallK[this.alleTallK.length-1]];
+
+		return this.sisteTallM + this.sisteTallK;
+	},
+
+	getInhabitantsByGender: function(gender) {
+		return this.inhabitants[gender];
+	},
+
+	// EMPLOYMENT methods:
+
+	
 
 	getEmploymentRatesByYear: function(year) {
 		return this.employment[BEGGE][year];
@@ -256,6 +286,9 @@ People.prototype = {
 	getEmploymentRatesByGenderAndYear: function(gender, year) {
 		return this.employment[gender][year];
 	},
+
+
+	// EDUCATION methods:
 
 	getEducationRates: function(edu){
 		switch (edu) {
@@ -300,4 +333,3 @@ var Kommuneobj = function(navn, id) {
 var ds = new DataSet(allUrls);
 ds.load()
 var l = AlleKommunerSingleton.getInstance()
-
