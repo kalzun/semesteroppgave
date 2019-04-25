@@ -27,6 +27,7 @@ function tabell(div, category, kommunenr, flerekommuner){
 		const sisteUtdProsentGjennomsnitt = (sisteUtdanningProsentUniKort + sisteUtdanningProsentUniLang) / 2;
 		const sisteUtdAntall = sisteBefolkning * sisteUtdProsentGjennomsnitt / 100;
 
+		//
 
 		console.log("Siste bef: " + sisteBefolkning);
 		console.log("Siste Sysselsatte prosent: " + sisteSysselsatteProsent);
@@ -37,6 +38,15 @@ function tabell(div, category, kommunenr, flerekommuner){
 		console.log("Siste sisteUtdannings antall: " + sisteUtdAntall);
 		//const sisteSysselsatte = kommune.people.get 
 
+		// Historisk utvikling
+		const sysselsatteHistorisk = kommune.people.getEmploymentRates();
+		const befolkningHistorisk = kommune.people.getInhabitants();
+		
+		for (year in sysselsatteHistorisk)
+			console.log(`Siste sysselsatteHistorisk: ${year}: ${sysselsatteHistorisk[year]}`);
+		for (year in befolkningHistorisk)
+			console.log(`Siste befolkningHistorisk: ${year}: ${befolkningHistorisk[year]}`);
+		
 	}
 
 	function sammenligning(){

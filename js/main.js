@@ -248,7 +248,22 @@ People.prototype = {
 	},
 
 	getInhabitants: function() {
-		return this.inhabitants;
+		this.befolkningTotal = {};
+
+		// Kontroller hvilke kjønn har flest målinger.
+		this._biggest = Object.keys(this.inhabitants[MENN])
+		if (Object.keys(this.inhabitants[KVINNER]).length > this._biggest.length) {
+			for (year in this.inhabitants[KVINNER]){
+				this.befolkningTotal[year] = this.inhabitants[MENN][year] + this.inhabitants[KVINNER][year];
+			}
+		} else {
+			for (year in this.inhabitants[MENN]){
+				this.befolkningTotal[year] = this.inhabitants[MENN][year] + this.inhabitants[KVINNER][year];
+			}
+		}
+		
+
+		return this.befolkningTotal;
 	},
 
 	getInhabitantsLastYearTotal: function() {
@@ -272,6 +287,10 @@ People.prototype = {
 	},
 
 	// EMPLOYMENT methods:
+
+	getEmploymentRates: function() {
+		return this.employment[BEGGE];
+	},
 
 	getEmploymentRatesLastYear: function() {
 		this.emp = this.employment[BEGGE];
