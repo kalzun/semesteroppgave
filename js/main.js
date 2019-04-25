@@ -251,7 +251,7 @@ People.prototype = {
 		return this.inhabitants;
 	},
 
-	getInhabitantsLastYearTotal: function(){
+	getInhabitantsLastYearTotal: function() {
 		this.menn = this.inhabitants[MENN];
 		this.kvinner = this.inhabitants[KVINNER];
 
@@ -273,7 +273,12 @@ People.prototype = {
 
 	// EMPLOYMENT methods:
 
-	
+	getEmploymentRatesLastYear: function() {
+		this.emp = this.employment[BEGGE];
+		this.empAllNumbers = Object.keys(this.employment[BEGGE]).sort();
+		this.empLastNumber = this.emp[this.empAllNumbers[this.empAllNumbers.length-1]];
+		return this.empLastNumber;
+	},
 
 	getEmploymentRatesByYear: function(year) {
 		return this.employment[BEGGE][year];
@@ -289,6 +294,16 @@ People.prototype = {
 
 
 	// EDUCATION methods:
+
+	getEducationRatesLastYearSpecified: function(educode) {
+		this.edu = this.education[educode];
+		this.eduMAllYears = Object.keys(this.edu[MENN]).sort();
+		this.eduKAllYears = Object.keys(this.edu[KVINNER]).sort();
+		this.eduLastYearM = this.edu[MENN][this.eduMAllYears[this.eduMAllYears.length-1]];
+		this.eduLastYearK = this.edu[KVINNER][this.eduKAllYears[this.eduKAllYears.length-1]];
+
+		return (this.eduLastYearM + this.eduLastYearK) / 2;
+	},
 
 	getEducationRates: function(edu){
 		switch (edu) {

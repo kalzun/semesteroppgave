@@ -17,8 +17,24 @@ function tabell(div, category, kommunenr, flerekommuner){
 		const kommune = singleton.getInfo(kommunenr);
 
 		const sisteBefolkning = kommune.people.getInhabitantsLastYearTotal();
+		
+		const sisteSysselsatteProsent = kommune.people.getEmploymentRatesLastYear();
+		const sisteSysselsatteAntall = sisteBefolkning * sisteSysselsatteProsent / 100;
 
-		//console.log("Siste bef: " + sisteBefolkning);
+		// Høyere utdanningsprosent og antall:
+		const sisteUtdanningProsentUniKort = kommune.people.getEducationRatesLastYearSpecified(UNIKORT);
+		const sisteUtdanningProsentUniLang = kommune.people.getEducationRatesLastYearSpecified(UNILANG);
+		const sisteUtdProsentGjennomsnitt = (sisteUtdanningProsentUniKort + sisteUtdanningProsentUniLang) / 2;
+		const sisteUtdAntall = sisteBefolkning * sisteUtdProsentGjennomsnitt / 100;
+
+
+		console.log("Siste bef: " + sisteBefolkning);
+		console.log("Siste Sysselsatte prosent: " + sisteSysselsatteProsent);
+		console.log("Siste Sysselsatte antall: " + sisteSysselsatteAntall);
+		console.log("Siste sisteUtdanningProsentUniKort " + sisteUtdanningProsentUniKort);
+		console.log("Siste sisteUtdanningProsentUniLang " + sisteUtdanningProsentUniLang);
+		console.log("Siste sisteUtdannings prosent gjennomsnitt: " + sisteUtdProsentGjennomsnitt);
+		console.log("Siste sisteUtdannings antall: " + sisteUtdAntall);
 		//const sisteSysselsatte = kommune.people.get 
 
 	}
