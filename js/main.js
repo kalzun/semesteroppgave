@@ -240,8 +240,62 @@ People.prototype = {
 		return this._kommuner;
 	},
 
-	getGenderByYear: function(gender, year) {
+	// INHABITANTS methods:
+
+	getInhabitantsGenderByYear: function(gender, year) {
 		return this.inhabitants[gender][year];
+	},
+
+	getInhabitants: function() {
+		this.befolkningTotal = {};
+
+		// Kontroller hvilke kjønn har flest målinger.
+		this._biggest = Object.keys(this.inhabitants[MENN])
+		if (Object.keys(this.inhabitants[KVINNER]).length > this._biggest.length) {
+			for (year in this.inhabitants[KVINNER]){
+				this.befolkningTotal[year] = this.inhabitants[MENN][year] + this.inhabitants[KVINNER][year];
+			}
+		} else {
+			for (year in this.inhabitants[MENN]){
+				this.befolkningTotal[year] = this.inhabitants[MENN][year] + this.inhabitants[KVINNER][year];
+			}
+		}
+
+
+		return this.befolkningTotal;
+	},
+
+	getInhabitantsLastYearTotal: function() {
+		this.menn = this.inhabitants[MENN];
+		this.kvinner = this.inhabitants[KVINNER];
+
+		// Gå gjennom alle egenskapene i objektet, lagre alle keys i et array
+		this.alleTallM = Object.keys(this.menn).sort();
+		this.alleTallK = Object.keys(this.kvinner).sort();
+
+		// Finner siste år i menn, ved å referere til lengden av alle tall - 1,
+		// som tilsvarer siste element.
+		this.sisteTallM = this.menn[this.alleTallM[this.alleTallM.length-1]];
+		this.sisteTallK = this.kvinner[this.alleTallK[this.alleTallK.length-1]];
+
+		return this.sisteTallM + this.sisteTallK;
+	},
+
+	getInhabitantsByGender: function(gender) {
+		return this.inhabitants[gender];
+	},
+
+	// EMPLOYMENT methods:
+
+	getEmploymentRates: function() {
+		return this.employment[BEGGE];
+	},
+
+	getEmploymentRatesLastYear: function() {
+		this.emp = this.employment[BEGGE];
+		this.empAllNumbers = Object.keys(this.employment[BEGGE]).sort();
+		this.empLastNumber = this.emp[this.empAllNumbers[this.empAllNumbers.length-1]];
+		return this.empLastNumber;
 	},
 
 	getEmploymentRatesByYear: function(year) {
@@ -254,6 +308,19 @@ People.prototype = {
 
 	getEmploymentRatesByGenderAndYear: function(gender, year) {
 		return this.employment[gender][year];
+	},
+
+
+	// EDUCATION methods:
+
+	getEducationRatesLastYearSpecified: function(educode) {
+		this.edu = this.education[educode];
+		this.eduMAllYears = Object.keys(this.edu[MENN]).sort();
+		this.eduKAllYears = Object.keys(this.edu[KVINNER]).sort();
+		this.eduLastYearM = this.edu[MENN][this.eduMAllYears[this.eduMAllYears.length-1]];
+		this.eduLastYearK = this.edu[KVINNER][this.eduKAllYears[this.eduKAllYears.length-1]];
+
+		return (this.eduLastYearM + this.eduLastYearK) / 2;
 	},
 
 	getEducationRates: function(edu){
@@ -299,4 +366,3 @@ var Kommuneobj = function(navn, id) {
 var ds = new DataSet(allUrls);
 ds.load()
 var l = AlleKommunerSingleton.getInstance()
-
