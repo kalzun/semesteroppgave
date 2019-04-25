@@ -22,9 +22,8 @@ function Datasett(url) {
     this.getInfo = function() {
         alleKommuneNavn = this.getNames()
         alleKommuner = {}
-        for (var kommune in alleKommuneNavn){
-            console.log(kommune)
-            alleKommuner[kommune] = KommuneInfo(kommune)
+        for (var i = 0; i < alleKommuneNavn.length; i++){
+            alleKommuner[alleKommuneNavn[i]] = KommuneInfo(alleKommuneNavn[i])
         };
         return alleKommuner
     };
@@ -43,18 +42,14 @@ function Datasett(url) {
 };
 
 function KommuneInfo(kommune) {
-    this.name = kommune;
-    this.befolkning = {
+    var befolkning = {
         menn: obj.response.data['elementer'][kommune]['Menn'],
         kvinner: obj.response.data['elementer'][kommune]['Kvinner'],
-        total: function() {
-            var all = {}
-            for (var år in this.menn) {
-                all[år] = this.menn[år] + this.kvinner[år]
+        total: function(år) {
+            return this.menn[år] + this.kvinner[år]
             }
-            return all
-        }
     };
+    return befolkning
 };
 
 
