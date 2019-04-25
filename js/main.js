@@ -123,16 +123,19 @@ AlleKommunerSingleton = (function() {
 		function getInhabitants(id){
 			for (i in _inhabitants)
 				if (_inhabitants[i][KOMNR] == id) return _inhabitants[i];			
+			return "Ingen tilgjengelige data.";
 		}
 
 		function getEmploymentRates(id){
 			for (i in _employmentRates)
-				if (_employmentRates[i][KOMNR] == id) return _employmentRates[i];			
+				if (_employmentRates[i][KOMNR] == id) return _employmentRates[i];
+			return "Ingen tilgjengelige data.";	
 		}
 
 		function getEducation(id){
 			for (i in _education)
 				if (_education[i][KOMNR] == id) return _education[i];			
+			return "Ingen tilgjengelige data.";
 		}
 
 		return {
@@ -170,7 +173,7 @@ function httpRequest(url, callback) {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			callback(xhr.responseText);
 			// Uncomment to test for latency:
-			// setTimeout(() => {callback(xhr.responseText);}, 500); 
+			//setTimeout(() => {callback(xhr.responseText);}, 2000); 
 		}
 	};
 	xhr.send();
