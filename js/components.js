@@ -41,20 +41,35 @@ function tabell(div, category, kommunenr, flerekommuner){
 		// Historisk utvikling
 		const sysselsatteHistorisk = kommune.people.getEmploymentRates();
 		const befolkningHistorisk = kommune.people.getInhabitants();
+		const utdanningHistorisk = kommune.people.getAllEducationRates();
 
-		for (year in sysselsatteHistorisk)
-			console.log(`Siste sysselsatteHistorisk: ${year}: ${sysselsatteHistorisk[year]}`);
-		for (year in befolkningHistorisk)
-			console.log(`Siste befolkningHistorisk: ${year}: ${befolkningHistorisk[year]}`);
-
+		for (let year in sysselsatteHistorisk)
+			console.log(`Gjennomsnittelig sysselsettingsprosent ${year}: ${sysselsatteHistorisk[year]}`);
+		for (let year in befolkningHistorisk)
+			console.log(`Total befolkning ${year}: ${befolkningHistorisk[year]}`);
+		for (let edu in utdanningHistorisk) {
+			for (gender in utdanningHistorisk[edu]) {
+				for (let year in utdanningHistorisk[edu][gender]) {
+					console.log(`Prosentvis ${edu}-utdanning blandt ${gender} i ${year}: ${utdanningHistorisk[edu][gender][year]}`)
+				}
+			}
+		}
 	}
 
 	function sammenligning(){
 		// Allekommuner.people.getEducation(kommunenr)
+		const singleton = AlleKommunerSingleton.getInstance();
+		const kommune = singleton.getInfo(kommunenr);
+
+		const menn = kommune.people.getEmploymentRatesByGender(MENN);
+		const kvinner = kommune.people.getEmploymentRatesByGender(KVINNER);
+
+		console.log(menn)
+		console.log(kvinner)
 	}
 
-	function constructOutput(){
-	//	div.addChild()
+	function constructOutput(data){
+	//	div.appendChild()
 	}
 
 }

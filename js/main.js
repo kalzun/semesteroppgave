@@ -313,6 +313,22 @@ People.prototype = {
 
 	// EDUCATION methods:
 
+	getAllEducationRates() {
+		const educodes = [
+			GRUNNSKOLE,
+			VGS,
+			FAGSKOLE,
+			UNIKORT,
+			UNILANG,
+			UTENUTD
+		];
+		let eduRates = {};
+		for (num in educodes) {
+			eduRates[educodes[num]] = this.education[educodes[num]];
+		}
+		return eduRates;
+	},
+
 	getEducationRatesLastYearSpecified: function(educode) {
 		this.edu = this.education[educode];
 		this.eduMAllYears = Object.keys(this.edu[MENN]).sort();
