@@ -2,32 +2,71 @@ header {
     background-color: var(--colorSecondary);
     color: var(--colorMain);
 }
-header > div#buttons {
+
+
+header > div#title {
     display: flex;
-    flex-direction: row;
-    align-content: center;
-    min-height: 7vh;
-}
-header > div#buttons > button {
-    flex-grow: 1;
-    font-size: 3vh;
+    flex-direction: column;
 }
 
-header > #search {
-    text-align: center;
-    padding: 5vh;
-}
-header > #search > input {
-    min-height: 5vh;
-    min-width: 20vw;
-    font-size: 5vh;
-}
-header > #title {
-    display: flex;
-}
-
-header > #title > h1 {
-    font-size: 2vw;
+header > div#title > div {
     vertical-align: middle;
     margin: auto;
+    padding-left: 70px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-left: 1px solid white;
+}
+header > div#title > div > h1, h2 {
+    text-align: center;
+}
+
+
+header > div#search {
+    min-height: 5vh;
+    font-size: 5vh;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    max-width: 400px;
+}
+header > div#search > div {
+    display: flex;
+
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 4px;
+    border-right: 1px solid white;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+}
+
+header > div#search > div > input {
+    font-size: inherit;
+    padding-left: 7px;
+    padding-right: 7px;
+    border: 1px white solid;
+}
+
+header > div#search > div > button {
+    font-size: inherit;
+    flex-grow: 1;
+}
+
+header > div#search > div > button:hover {
+    background-color: var(--colorSecondaryHover);
+}
+
+main > div#tabs > div.active {
+    display: flex;
+    flex-direction: column;
+}
+
+main > div#tabs > div.active > div {
+    margin: auto;
+    padding-top: 5vh;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-style: italic;
 }

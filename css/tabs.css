@@ -1,18 +1,36 @@
-div#tabs {}
-div#tabs > .active {
-    display: block;
+header > div#tabs {
+    
 }
-#tabs>div:not(.active) { display: none; }
+main > div#tabs > .active {
+    display: flex;
+    flex-direction: column;
+}
+main > #tabs > div:not(.active) { display: none; }
 
-div#buttons > button { display: block; }
-div#buttons > .active {
+header > div#buttons {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    min-height: 7vh;
+}
+header > div#buttons > button {
+    display: block;
+
+    flex-grow: 1;
+    font-size: 3vh;
+    width: 15vw;
+}
+header > div#buttons > .active {
     background-color: var(--colorMain);
     color: var(--colorThird);
 }
-div#buttons > div:not(.active) {}
+header > div#buttons > button:not(.active) {}
+header > div#buttons > button:not(.active):hover {
+    background-color: var(--colorSecondaryHover);
+}
 
-
-
-div#tabs > h1 {
-    text-align: center;
+main > div#tabs > div > h3 {
+    margin: auto;
+    padding-top: 8vh;
+    padding-bottom: 2vh;
 }

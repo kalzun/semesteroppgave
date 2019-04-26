@@ -2,10 +2,11 @@
     --colorMain: white;
     --colorSecondary: #ca2f2f;
     --colorThird: #000000;
+    --colorSecondaryHover: #e04646;
 }
 * {
     font-family: 'Roboto', sans-serif;
-    font-weight: 200;
+    font-weight: 300;
 }
 
 h1, h2, h3, h4, h5, h6, p, body, div {
@@ -17,5 +18,29 @@ button {
     background-color: inherit;
     border: none;
     color: inherit;
+    font-weight: 400;
 }
 button:focus {outline:0;}
+
+h1 {
+    font-size: 6vh;
+    font-weight: 600;
+}
+h2 {
+    font-size: 3.5vh;
+}
+h3 {
+    font-size: 3.5vh;
+    font-weight: 400;
+}
+p {
+    font-size: 3vh;
+    padding-left: 20vw;
+    padding-right: 20vw;
+}
+
+a {
+    font-size: 3vh;
+    text-align: center;
+    display: inline;
+}
