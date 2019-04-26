@@ -2,7 +2,7 @@
 //tabell(this.target, "Detaljer", inputvalue)
 
 // Tabell
-function tabell(div, category, kommunenr, flerekommuner){
+function tabell(div, category, kommunenr1, kommunenr2){
 	switch (category){
 		case "Detaljer":
 			detaljer();
@@ -14,7 +14,7 @@ function tabell(div, category, kommunenr, flerekommuner){
 
 	function detaljer(){
 		const singleton = AlleKommunerSingleton.getInstance();
-		const kommune = singleton.getInfo(kommunenr);
+		const kommune = singleton.getInfo(kommunenr1);
 
 		const sisteBefolkning = kommune.people.getInhabitantsLastYearTotal();
 
@@ -57,15 +57,36 @@ function tabell(div, category, kommunenr, flerekommuner){
 	}
 
 	function sammenligning(){
-		// Allekommuner.people.getEducation(kommunenr)
+		// Allekommuner.people.getEducation(kommunenr1)
+
 		const singleton = AlleKommunerSingleton.getInstance();
-		const kommune = singleton.getInfo(kommunenr);
+		const kommune1 = singleton.getInfo(kommunenr1);
+		const kommune2 = singleton.getInfo(kommunenr2);
 
-		const menn = kommune.people.getEmploymentRatesByGender(MENN);
-		const kvinner = kommune.people.getEmploymentRatesByGender(KVINNER);
+		const menn1 = kommune1.people.getEmploymentRatesByGender(MENN);
+		const kvinner1 = kommune1.people.getEmploymentRatesByGender(KVINNER);
+		const menn2 = kommune2.people.getEmploymentRatesByGender(MENN);
+		const kvinner2 = kommune2.people.getEmploymentRatesByGender(KVINNER);
 
-		console.log(menn)
-		console.log(kvinner)
+		console.log(menn1);
+		console.log(kvinner1);
+
+		//Tabell
+		let table = document.createElement('TABLE');
+		div.appendChild(table)
+		let longest = menn1;
+		if (Object.keys(kvinner1).length > Object.keys(menn1).length) {
+			longest = kvinner1;
+		};
+
+		const thead = addChild(table, undefined, 'thead');
+		const headerRow = addChild(thead, undefined, 'tr');
+		addChild(headerRow, 'Sysselsetting', 'th');
+		addChild(headerRow, 'Kjønn', 'th');
+
+		for (year in longest) {
+			addChild(headerRow, year, 'th');
+		}
 	}
 
 	function constructOutput(data){
@@ -73,3 +94,9 @@ function tabell(div, category, kommunenr, flerekommuner){
 	}
 
 }
+	function addChild(parent, input, type){
+		const node = document.createElement(type);
+		node.innerHTML = input;
+		parent.appendChild(node);
+		return node;
+	}
