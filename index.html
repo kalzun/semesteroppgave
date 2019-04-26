@@ -5,9 +5,10 @@
 	<title>Info134 - semesteroppgave</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">	<link rel=stylesheet type=text/css href="css/base.css">
-	<link rel=stylesheet type=text/css href="css/style.css">
+	<link rel=stylesheet type=text/css href="css/header.css">
 	<link rel=stylesheet type=text/css href="css/grids.css">
 	<link rel=stylesheet type=text/css href="css/tabs.css">
+	<link rel=stylesheet type=text/css href="css/nav.css">
 	<script src="js/main.js"></script>
 </head>
 <body>
@@ -33,33 +34,42 @@
 	</header>
 	<main>
 		<div id="tabs">
-			<div class="active">
-				<h3>Befolkningsstatistikk</h3>
-				<p>Denne applikasjonen viser statistikk om befolkningen i Norge. Dataene er hentet fra Statistisk Sentralbyrå sine nettsider, og kan inneholde feil.</p>
-				<div id="sources">
-					<p>Befolkning: </p>
+			<div class="active intro">
+				<div>
+					<h3>Befolkningsstatistikk</h3>
+					<p>Denne applikasjonen viser statistikk om befolkningen i Norge. Dataene er hentet fra Statistisk Sentralbyrå sine nettsider, og kan inneholde feil.</p>
+				</div>
+				<div>
+					<h3>Hvordan bruker jeg produktet?</h3>
+					<p>Det er ganske enkelt! Bruk søkefeltet øverst på siden for å tilegne deg informasjon omkring det du er ute etter å vite, så gjør vi noe datamagi bak kulissene i nettleseren din. Det er ikke vanskeligere enn som så!</p>
+				</div>
+				<h3>Kilder</h3>
+				<div class="kilder">
+					<h4>Befolkning:</h4>
 					<a href="http://data.ssb.no/api/v0/dataset/104857?lang=no
 					">http://data.ssb.no/api/v0/dataset/104857?lang=no</a>
-					<p>Sysselsatte: </p>
+				</div>
+				<div class="kilder">
+					<h4>Sysselsatte:</h4>
 					<a href="http://data.ssb.no/api/v0/dataset/100145?lang=no
 					">http://data.ssb.no/api/v0/dataset/100145?lang=no</a>
-					<p>Utdanning: </p>
+				</div>
+				<div class="kilder">
+					<h4>Utdanning:</h4>
 					<a href="http://data.ssb.no/api/v0/dataset/85432?lang=no
 					">http://data.ssb.no/api/v0/dataset/85432?lang=no</a>
 				</div>
-				<h3>Hvordan bruker jeg produktet?</h3>
-				<p>Det er ganske enkelt! Bruk søkefeltet øverst på siden for å tilegne deg informasjon omkring det du er ute etter å vite, så gjør vi noe datamagi bak kulissene i nettleseren din. Det er ikke vanskeligere enn som så!</p>
 			</div>
-			<div>
-				<h1>Oversikt</h1>
+			<div class="oversikt">
+				<h3>Oversikt</h3>
 				<p>Her kan du se oversikten.</p>
 			</div>
-			<div>
-				<h1>Detaljer</h1>
+			<div class="detaljer">
+				<h3>Detaljer</h3>
 				<p>Her finner du masse detaljer.</p>
 			</div>
-			<div>
-				<h1>Sammenligning</h1>
+			<div class="sammenligning">
+				<h3>Sammenligning</h3>
 				<p>Denne siden inneholder sammenligningen.</p>
 			</div>
 		</div>

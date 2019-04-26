@@ -1,36 +1,18 @@
-header > div#tabs {
-    
-}
 main > div#tabs > .active {
     display: flex;
     flex-direction: column;
 }
 main > #tabs > div:not(.active) { display: none; }
 
-header > div#buttons {
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    min-height: 7vh;
-}
-header > div#buttons > button {
-    display: block;
-
-    flex-grow: 1;
-    font-size: 3vh;
-    width: 15vw;
-}
-header > div#buttons > .active {
-    background-color: var(--colorMain);
-    color: var(--colorThird);
-}
-header > div#buttons > button:not(.active) {}
-header > div#buttons > button:not(.active):hover {
-    background-color: var(--colorSecondaryHover);
+main > #tabs > div.active {
+    margin-left: 20vw;
+    margin-right: 20vw;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
 }
 
-main > div#tabs > div > h3 {
+main > #tabs > div.active > div.kilder {
     margin: auto;
-    padding-top: 8vh;
-    padding-bottom: 2vh;
 }
+main > #tabs > div.active > div.kilder > h4 {display: inline;}
+main > #tabs > div.active > div:not(.kilder) {padding: 2vh;}

@@ -1,3 +1,5 @@
+/* Grid-layout for headeren. */
+
 header {
     display: grid;
 
@@ -9,3 +11,4 @@ header {
 header > div#search {grid-area: search;}
 header > div#tabs {grid-area: nav;}
 header > div#title {grid-area: title;}
+/* --------------------------------- */

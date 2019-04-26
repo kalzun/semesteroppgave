@@ -26,21 +26,20 @@ h1 {
     font-size: 6vh;
     font-weight: 600;
 }
-h2 {
-    font-size: 3.5vh;
-}
+h2 {font-size: 3.5vh;}
 h3 {
     font-size: 3.5vh;
     font-weight: 400;
+    text-align: center;
+    padding: 3vh;
 }
-p {
+h4 {
     font-size: 3vh;
-    padding-left: 20vw;
-    padding-right: 20vw;
+    font-style: italic;
 }
+p{font-size: 3vh;}
 
 a {
     font-size: 3vh;
-    text-align: center;
-    display: inline;
+    font-style: italic;
 }

@@ -1,0 +1,21 @@
+header > div#buttons {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    min-height: 7vh;
+}
+header > div#buttons > button {
+    display: block;
+
+    flex-grow: 1;
+    font-size: 3vh;
+    width: 15vw;
+}
+header > div#buttons > .active {
+    background-color: var(--colorMain);
+    color: var(--colorThird);
+}
+header > div#buttons > button:not(.active) {}
+header > div#buttons > button:not(.active):hover {
+    background-color: var(--colorSecondaryHover);
+}
