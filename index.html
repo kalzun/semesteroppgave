@@ -1,30 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<title>Info134 - semesteroppgave</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<!-- Denne linktaggen er bare en fontface. (Roboto) -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">	<link rel=stylesheet type=text/css href="css/base.css">
+	
+	<!-- Midlertidige css-filer. Endelige produkt bruker bare en css-fil. -->
 	<link rel=stylesheet type=text/css href="css/header.css">
 	<link rel=stylesheet type=text/css href="css/grids.css">
 	<link rel=stylesheet type=text/css href="css/tabs.css">
 	<link rel=stylesheet type=text/css href="css/nav.css">
+
 	<script src="js/main.js"></script>
 </head>
 <body>
 	<header>
+		<!-- Søkefelt er containet inni dette div-elementet. -->
 		<div id="search">
 			<div>
 				<input type="text" autofocus="true" placeholder="search...">
 				<button type="submit">&#9906</button>
 			</div>
 		</div>
+
+		<!-- Navigasjonsfeltet er containet inni dette div-elementet. -->
 		<div id="buttons">
 			<button class="active">Introduksjon</button>
 			<button>Oversikt</button>
 			<button>Detaljer</button>
 			<button>Sammenligning</button>
 		</div>
+
+		<!-- Nettside-headeren. -->
 		<div id="title">
 			<div>
 				<h1>Semesteroppgave</h1>
@@ -33,7 +42,10 @@
 		</div>
 	</header>
 	<main>
+		<!-- Container for tabsene. -->
 		<div id="tabs">
+
+			<!-- Container for introduksjons-tabben.-->
 			<div class="active intro">
 				<div>
 					<h3>Befolkningsstatistikk</h3>
@@ -60,14 +72,20 @@
 					">http://data.ssb.no/api/v0/dataset/85432?lang=no</a>
 				</div>
 			</div>
+
+			<!-- Container for oversikts-tabben. -->
 			<div class="oversikt">
 				<h3>Oversikt</h3>
 				<p>Her kan du se oversikten.</p>
 			</div>
+
+			<!-- Container for detalje-tabben. -->
 			<div class="detaljer">
 				<h3>Detaljer</h3>
 				<p>Her finner du masse detaljer.</p>
 			</div>
+
+			<!-- Container for sammenlignings-tabben. -->
 			<div class="sammenligning">
 				<h3>Sammenligning</h3>
 				<p>Denne siden inneholder sammenligningen.</p>
