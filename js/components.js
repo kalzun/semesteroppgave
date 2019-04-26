@@ -63,30 +63,48 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const kommune1 = singleton.getInfo(kommunenr1);
 		const kommune2 = singleton.getInfo(kommunenr2);
 
-		const menn1 = kommune1.people.getEmploymentRatesByGender(MENN);
-		const kvinner1 = kommune1.people.getEmploymentRatesByGender(KVINNER);
-		const menn2 = kommune2.people.getEmploymentRatesByGender(MENN);
-		const kvinner2 = kommune2.people.getEmploymentRatesByGender(KVINNER);
+		const kommune1Menn = kommune1.people.getEmploymentRatesByGender(MENN);
+		const kommune1Kvinner = kommune1.people.getEmploymentRatesByGender(KVINNER);
+		const kommune2Menn = kommune2.people.getEmploymentRatesByGender(MENN);
+		const kommune2Kvinner = kommune2.people.getEmploymentRatesByGender(KVINNER);
 
-		console.log(menn1);
-		console.log(kvinner1);
 
 		//Tabell
 		let table = document.createElement('TABLE');
 		div.appendChild(table)
-		let longest = menn1;
-		if (Object.keys(kvinner1).length > Object.keys(menn1).length) {
-			longest = kvinner1;
-		};
+		//Years-objektet henter årstall fra det lengste av menn(1/2)/kvinner(1/2) objektene.
+		let years = Object.keys(kommune1Menn);
+		if (Object.keys(kommune1Kvinner).length > years.length) {
+			years = Object.keys(kommune1Kvinner)
+		} // må utviddes for kommune 2
+		console.log(years)
 
-		const thead = addChild(table, undefined, 'thead');
-		const headerRow = addChild(thead, undefined, 'tr');
-		addChild(headerRow, 'Sysselsetting', 'th');
-		addChild(headerRow, 'Kjønn', 'th');
+		const thead = addChild(table, null, 'thead');
+		const tBody = addChild(table, null, 'tbody');
+		const headerRow = addChild(thead, null, 'tr');
+		const kommune1MennRow = addChild(tBody, null, 'tr');
+		const kommune1KvinnerRow = addChild(tBody, null, 'tr');
+		const kommune2MennRow = addChild(tBody, null, 'tr');
+		const kommune2KvinnerRow = addChild(tBody, null, 'tr');
 
-		for (year in longest) {
-			addChild(headerRow, year, 'th');
+		for (let i = 0; i < years.length; i++) {
+			if (i == 0) {
+				console.log('Adding data to table');
+				addChild(headerRow, 'Sysselsetting (kjønn)/ År', 'th');
+				addChild(kommune1MennRow, `${kommune1['navn']} (Menn)`, 'td');
+				addChild(kommune1KvinnerRow, `${kommune1['navn']} (Kvinner)`, 'td');
+				addChild(kommune2MennRow, `${kommune2['navn']} (Menn)`, 'td');
+				addChild(kommune2KvinnerRow, `${kommune2['navn']} (Kvinner)`, 'td');
+			} else {
+				addChild(headerRow, years[i], 'td');
+				addChild(kommune1MennRow, kommune1Menn[years[i]], 'td');
+				addChild(kommune1KvinnerRow, kommune1Kvinner[years[i]], 'td');
+				addChild(kommune2MennRow, kommune2Menn[years[i]], 'td');
+				addChild(kommune2KvinnerRow, kommune2Kvinner[years[i]], 'td');
+			};
 		}
+
+
 	}
 
 	function constructOutput(data){
