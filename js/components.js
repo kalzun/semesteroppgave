@@ -64,32 +64,20 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const kommune1 = singleton.getInfo(kommunenr1);
 		const kommune2 = singleton.getInfo(kommunenr2);
 
-		const menn1 = kommune1.people.getEmploymentRatesByGender(MENN);
-		const kvinner1 = kommune1.people.getEmploymentRatesByGender(KVINNER);
-		const menn2 = kommune2.people.getEmploymentRatesByGender(MENN);
-		const kvinner2 = kommune2.people.getEmploymentRatesByGender(KVINNER);
-
-		console.log(menn1);
-		console.log(kvinner1);
+		const kommune1Menn = kommune1.people.getEmploymentRatesByGender(MENN);
+		const kommune1Kvinner = kommune1.people.getEmploymentRatesByGender(KVINNER);
+		const kommune2Menn = kommune2.people.getEmploymentRatesByGender(MENN);
+		const kommune2Kvinner = kommune2.people.getEmploymentRatesByGender(KVINNER);
 
 		//Presentasjon
-		let table = document.createElement('TABLE');
-		div.appendChild(table)
-<<<<<<< Updated upstream
-		let longest = menn1;
-		if (Object.keys(kvinner1).length > Object.keys(menn1).length) {
-			longest = kvinner1;
-		};
-
-		const thead = addChild(table, undefined, 'thead');
-		const headerRow = addChild(thead, undefined, 'tr');
-		addChild(headerRow, 'Sysselsetting', 'th');
-		addChild(headerRow, 'Kjønn', 'th');
-
-		for (year in longest) {
-			addChild(headerRow, year, 'th');
-		}
-=======
+		let table = addChild(div, null, 'table')
+		const thead = addChild(table, null, 'thead');
+		const tBody = addChild(table, null, 'tbody');
+		const headerRow = addChild(thead, null, 'tr');
+		const kommune1MennRow = addChild(tBody, null, 'tr');
+		const kommune2MennRow = addChild(tBody, null, 'tr');
+		const kommune1KvinnerRow = addChild(tBody, null, 'tr');
+		const kommune2KvinnerRow = addChild(tBody, null, 'tr');
 
 		//Years-objektet henter årstall fra det lengste av menn(1/2)/kvinner(1/2) objektene.
 		let years = Object.keys(kommune1Menn);
@@ -104,13 +92,6 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		}
 
 		console.log("Creating table...")
-		const thead = addChild(table, null, 'thead');
-		const tBody = addChild(table, null, 'tbody');
-		const headerRow = addChild(thead, null, 'tr');
-		const kommune1MennRow = addChild(tBody, null, 'tr');
-		const kommune2MennRow = addChild(tBody, null, 'tr');
-		const kommune1KvinnerRow = addChild(tBody, null, 'tr');
-		const kommune2KvinnerRow = addChild(tBody, null, 'tr');
 
 		for (let i = 0; i < years.length +1; i++) {
 			if (i == 0) {
@@ -148,7 +129,6 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			}
 		}
 
->>>>>>> Stashed changes
 	}
 
 	function constructOutput(data){
