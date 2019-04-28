@@ -110,29 +110,40 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			};
 		}
 
-		//Itererer gjennom hvert år i tabellen og sammenligner dataene i hver rad med dataene fra forrige år, markerer cellen med høyest økning. Ikke interresert i første år, da vi ikke har noen tidligere år for å regne ut vekst.
+		//Itererer gjennom hvert år i tabellen og sammenligner dataene i hver rad med dataene fra forrige år, markerer cellene (menn og kvinner) med høyest økning. Ikke interresert i første år, da vi ikke har noen tidligere år å vekst ut i fra.
 
 		const tableData = tBody.childNodes;
-		for (let i = 2; i < tableData[0].childElementCount - 1; i++) {
-			let largestDiff = [undefined, 0];
-			for (let index = 0; index < tableData.length; index++) {
-				const currentYear = tableData[index].childNodes[i].innerHTML;
-				const lastYear = tableData[index].childNodes[i - 1].innerHTML;
-				let diff = currentYear - lastYear;
-				if (diff > largestDiff[1]) {
-					largestDiff[1] = diff;
-					largestDiff[0] = tableData[index].childNodes[i];
+		for (let rowIndex = 2; rowIndex < tableData[0].childElementCount - 1; rowIndex++) {
+			let largestDiffM = [undefined, 0];
+			let largestDiffK = [undefined, 0];
+			for (let columnIndex = 0; columnIndex < 2; columnIndex++) {
+
+				const currentYearM = tableData[columnIndex].childNodes[rowIndex].innerHTML;
+				const lastYearM = tableData[columnIndex].childNodes[rowIndex - 1].innerHTML;
+				let diffM = currentYearM - lastYearM;
+
+				const currentYearK = tableData[columnIndex + 2].childNodes[rowIndex].innerHTML;
+				const lastYearK = tableData[columnIndex + 2].childNodes[rowIndex - 1].innerHTML;
+				let diffK = currentYearK - lastYearK;
+
+				if (diffM > largestDiffM[1]) {
+					largestDiffM[1] = diffM;
+					largestDiffM[0] = tableData[columnIndex].childNodes[rowIndex];
+				}
+				if (diffK > largestDiffK[1]) {
+					largestDiffK[1] = diffK;
+					largestDiffK[0] = tableData[columnIndex + 2].childNodes[rowIndex];
 				}
 			}
-			if (largestDiff[0] != undefined) {
-				largestDiff[0].setAttribute("style", "background-color: green")
+
+			if (largestDiffM[0] != undefined) {
+				largestDiffM[0].setAttribute("style", "background-color: green")
+			}
+			if (largestDiffK[0] != undefined) {
+				largestDiffK[0].setAttribute("style", "background-color: green")
 			}
 		}
 
-	}
-
-	function constructOutput(data){
-	//	div.appendChild()
 	}
 
 }
