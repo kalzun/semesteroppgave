@@ -382,3 +382,4 @@ var Kommuneobj = function(navn, id) {
 var ds = new DataSet(allUrls);
 ds.load()
 var l = AlleKommunerSingleton.getInstance()
+

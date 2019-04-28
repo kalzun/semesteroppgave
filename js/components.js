@@ -75,8 +75,8 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const tBody = addChild(table, null, 'tbody');
 		const headerRow = addChild(tHead, null, 'tr');
 		const kommune1MennRow = addChild(tBody, null, 'tr');
-		const kommune1KvinnerRow = addChild(tBody, null, 'tr');
 		const kommune2MennRow = addChild(tBody, null, 'tr');
+		const kommune1KvinnerRow = addChild(tBody, null, 'tr');
 		const kommune2KvinnerRow = addChild(tBody, null, 'tr');
 
 		//Years-objektet henter årstall fra det lengste av menn(1/2)/kvinner(1/2) objektene.
