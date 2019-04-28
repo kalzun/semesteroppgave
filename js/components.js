@@ -70,6 +70,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const kommune2Kvinner = kommune2.people.getEmploymentRatesByGender(KVINNER);
 
 		//Presentasjon
+		console.log("Creating table...")
 		let table = addChild(div, null, 'table')
 		const thead = addChild(table, null, 'thead');
 		const tBody = addChild(table, null, 'tbody');
@@ -90,8 +91,6 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		if (Object.keys(kommune2Kvinner).length > years.length) {
 			years = Object.keys(kommune2Kvinner)
 		}
-
-		console.log("Creating table...")
 
 		for (let i = 0; i < years.length +1; i++) {
 			if (i == 0) {
@@ -114,33 +113,40 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 		const tableData = tBody.childNodes;
 		for (let rowIndex = 2; rowIndex < tableData[0].childElementCount - 1; rowIndex++) {
-			let largestDiffM = [undefined, 0];
-			let largestDiffK = [undefined, 0];
+			let largestDiff = {
+				"menn": [undefined, null],
+				"kvinner": [undefined, null]
+			};
 			for (let columnIndex = 0; columnIndex < 2; columnIndex++) {
 
-				const currentYearM = tableData[columnIndex].childNodes[rowIndex].innerHTML;
-				const lastYearM = tableData[columnIndex].childNodes[rowIndex - 1].innerHTML;
-				let diffM = currentYearM - lastYearM;
+				const currentYear = {
+					"menn": tableData[columnIndex].childNodes[rowIndex].innerHTML,
+					"kvinner": tableData[columnIndex + 2].childNodes[rowIndex].innerHTML
+				};
+				const lastYear = {
+					"menn": tableData[columnIndex].childNodes[rowIndex - 1].innerHTML,
+					"kvinner": tableData[columnIndex + 2].childNodes[rowIndex - 1].innerHTML
+				};
+				let diff = {
+					"menn": currentYear["menn"] - lastYear["menn"],
+					"kvinner": currentYear["kvinner"] - lastYear["kvinner"]
+				};
 
-				const currentYearK = tableData[columnIndex + 2].childNodes[rowIndex].innerHTML;
-				const lastYearK = tableData[columnIndex + 2].childNodes[rowIndex - 1].innerHTML;
-				let diffK = currentYearK - lastYearK;
-
-				if (diffM > largestDiffM[1]) {
-					largestDiffM[1] = diffM;
-					largestDiffM[0] = tableData[columnIndex].childNodes[rowIndex];
+				if (diff["menn"] > largestDiff["menn"][1]) {
+					largestDiff["menn"][1] = diff["menn"];
+					largestDiff["menn"][0] = tableData[columnIndex].childNodes[rowIndex];
 				}
-				if (diffK > largestDiffK[1]) {
-					largestDiffK[1] = diffK;
-					largestDiffK[0] = tableData[columnIndex + 2].childNodes[rowIndex];
+				if (diff["kvinner"] > largestDiff["kvinner"][1]) {
+					largestDiff["kvinner"][1] = diff["kvinner"];
+					largestDiff["kvinner"][0] = tableData[columnIndex + 2].childNodes[rowIndex];
 				}
 			}
 
-			if (largestDiffM[0] != undefined) {
-				largestDiffM[0].setAttribute("style", "background-color: green")
+			if (largestDiff["menn"][0] != undefined) {
+				largestDiff["menn"][0].setAttribute("style", "background-color: green")
 			}
-			if (largestDiffK[0] != undefined) {
-				largestDiffK[0].setAttribute("style", "background-color: green")
+			if (largestDiff["kvinner"][0] != undefined) {
+				largestDiff["kvinner"][0].setAttribute("style", "background-color: green")
 			}
 		}
 
