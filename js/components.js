@@ -71,12 +71,12 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 		//Presentasjon
 		let table = addChild(div, null, 'table')
-		const thead = addChild(table, null, 'thead');
+		const tHead = addChild(table, null, 'tHead');
 		const tBody = addChild(table, null, 'tbody');
-		const headerRow = addChild(thead, null, 'tr');
+		const headerRow = addChild(tHead, null, 'tr');
 		const kommune1MennRow = addChild(tBody, null, 'tr');
-		const kommune2MennRow = addChild(tBody, null, 'tr');
 		const kommune1KvinnerRow = addChild(tBody, null, 'tr');
+		const kommune2MennRow = addChild(tBody, null, 'tr');
 		const kommune2KvinnerRow = addChild(tBody, null, 'tr');
 
 		//Years-objektet henter årstall fra det lengste av menn(1/2)/kvinner(1/2) objektene.
@@ -110,37 +110,41 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			};
 		}
 
-		//Itererer gjennom hvert år i tabellen og sammenligner dataene i hver rad med dataene fra forrige år, markerer cellene (menn og kvinner) med høyest økning. Ikke interresert i første år, da vi ikke har noen tidligere år å vekst ut i fra.
+		//Itererer gjennom hvert år i tabellen og sammenligner dataene i hver rad med dataene fra forrige år, markerer cellene (menn og kvinner) med høyest økning.
+		//Ikke interresert i første år, da vi ikke har noen tidligere år å regne vekst ut i fra.
 
 		const tableData = tBody.childNodes;
-		for (let rowIndex = 2; rowIndex < tableData[0].childElementCount - 1; rowIndex++) {
-			let largestDiffM = [undefined, 0];
-			let largestDiffK = [undefined, 0];
-			for (let columnIndex = 0; columnIndex < 2; columnIndex++) {
-
-				const currentYearM = tableData[columnIndex].childNodes[rowIndex].innerHTML;
-				const lastYearM = tableData[columnIndex].childNodes[rowIndex - 1].innerHTML;
-				let diffM = currentYearM - lastYearM;
-
-				const currentYearK = tableData[columnIndex + 2].childNodes[rowIndex].innerHTML;
-				const lastYearK = tableData[columnIndex + 2].childNodes[rowIndex - 1].innerHTML;
-				let diffK = currentYearK - lastYearK;
-
-				if (diffM > largestDiffM[1]) {
-					largestDiffM[1] = diffM;
-					largestDiffM[0] = tableData[columnIndex].childNodes[rowIndex];
+		//Itererer gjennom hvert år (kolonne) i tabellen
+		for (let columnIndex = 2; columnIndex < tableData[0].childElementCount; columnIndex++) {
+			let largestDiff = {
+				"menn": [undefined, 0],
+				"kvinner": [undefined, 0]
+			};
+			// Itererer gjennom hver av radene
+			for (let rowIndex = 0; rowIndex <= 1; rowIndex++) {
+				console.log(tableData[rowIndex].childNodes[columnIndex])
+				const currentYear = {
+					"menn": tableData[rowIndex].childNodes[columnIndex].innerHTML,
+					"kvinner": tableData[rowIndex + 2].childNodes[columnIndex].innerHTML
+				};
+				const lastYear = {
+					"menn": tableData[rowIndex].childNodes[columnIndex - 1].innerHTML,
+					"kvinner": tableData[rowIndex + 2].childNodes[columnIndex - 1].innerHTML
+				};
+				let diff = {
+					"menn": currentYear["menn"] - lastYear["menn"],
+					"kvinner": currentYear["kvinner"] - lastYear["kvinner"]
+				};
+				const kjønn = Object.keys(largestDiff) // [menn, kvinner]
+				for (let index in kjønn) {
+					if (diff[kjønn[index]] > largestDiff[kjønn[index]][1]) {
+						largestDiff[kjønn[index]][1] = diff[kjønn[index]];
+						largestDiff[kjønn[index]][0] = tableData[rowIndex].childNodes[columnIndex];
+					}
+					if (largestDiff[kjønn[index]][0] != undefined) {
+						largestDiff[kjønn[index]][0].setAttribute("style", "background-color: green")
+					}
 				}
-				if (diffK > largestDiffK[1]) {
-					largestDiffK[1] = diffK;
-					largestDiffK[0] = tableData[columnIndex + 2].childNodes[rowIndex];
-				}
-			}
-
-			if (largestDiffM[0] != undefined) {
-				largestDiffM[0].setAttribute("style", "background-color: green")
-			}
-			if (largestDiffK[0] != undefined) {
-				largestDiffK[0].setAttribute("style", "background-color: green")
 			}
 		}
 
