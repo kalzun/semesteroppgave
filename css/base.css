@@ -7,6 +7,9 @@
     --colorSecondary: #be2b38;
     --colorThird: #000000;
     --colorSecondaryHover: #e04d59;
+
+    --tableCell_1: #ffffff;
+    --tableCell_2: #f1eeee;
 }
 
 /* Forandring av fryktelige deafult-settings */
@@ -41,3 +44,7 @@ p{font-size: 3vh;}
 
 /* hyperlink-styling */
 a {font-size: 3vh; font-style: italic;}
+
+table {
+    border-spacing: 0;
+}

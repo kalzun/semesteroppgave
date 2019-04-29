@@ -1,0 +1,23 @@
+.sammenligning > h3 {
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+
+}
+
+.sammenligning > table > tbody > tr:nth-child(odd) {
+  background: var(--tableCell_1);
+}
+.sammenligning > table > tbody > tr:nth-child(even) {
+  background: var(--tableCell_2);
+}
+
+.sammenligning > table > thead {
+  background-color: var(--colorSecondary);
+  color: var(--colorMain);
+}
+
+
+.sammenligning td {
+  padding: 2vh;
+  text-align: center;
+}
