@@ -97,10 +97,10 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			if (i == 0) {
 				console.log('Adding data to table...');
 				addChild(headerRow, 'Kommune (Kjønn)/År', 'th');
-				addChild(kommune1MennRow, `${kommune1['navn']} (Menn)`, 'td');
-				addChild(kommune1KvinnerRow, `${kommune1['navn']} (Kvinner)`, 'td');
-				addChild(kommune2MennRow, `${kommune2['navn']} (Menn)`, 'td');
-				addChild(kommune2KvinnerRow, `${kommune2['navn']} (Kvinner)`, 'td');
+				addChild(kommune1MennRow, `${kommune1['navn']} (Menn)`, 'th');
+				addChild(kommune1KvinnerRow, `${kommune1['navn']} (Kvinner)`, 'th');
+				addChild(kommune2MennRow, `${kommune2['navn']} (Menn)`, 'th');
+				addChild(kommune2KvinnerRow, `${kommune2['navn']} (Kvinner)`, 'th');
 			} else {
 				addChild(headerRow, years[i-1], 'td');
 				addChild(kommune1MennRow, kommune1Menn[years[i-1]], 'td');
