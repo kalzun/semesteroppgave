@@ -4,7 +4,7 @@ main > div#tabs > .active {
 }
 main > div#tabs > div:not(.active) { display: none; }
 
-main > div#tabs > div.active {
+main > div#tabs > .intro, .oversikt, .detaljer {
     margin-left: 20vw;
     margin-right: 20vw;
     margin-top: 10vh;
