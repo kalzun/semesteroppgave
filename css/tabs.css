@@ -2,17 +2,17 @@ main > div#tabs > .active {
     display: flex;
     flex-direction: column;
 }
-main > #tabs > div:not(.active) { display: none; }
+main > div#tabs > div:not(.active) { display: none; }
 
-main > #tabs > div.active {
+main > div#tabs > div.active {
     margin-left: 20vw;
     margin-right: 20vw;
     margin-top: 10vh;
     margin-bottom: 10vh;
 }
 
-main > #tabs > div.active > div.kilder {
+main > div#tabs > div.active > div.kilder {
     margin: auto;
 }
-main > #tabs > div.active > div.kilder > h4 {display: inline;}
+main > div#tabs > div.active > div.kilder > h4 {display: inline;}
 main > #tabs > div.active > div:not(.kilder) {padding: 2vh;}
