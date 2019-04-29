@@ -1,11 +1,33 @@
-:root {
-	--box-color: yellow;
+header {
+    background-color: var(--colorSecondary);
+    color: var(--colorMain);
+}
+header > div#buttons {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    min-height: 7vh;
+}
+header > div#buttons > button {
+    flex-grow: 1;
+    font-size: 3vh;
 }
 
-input {
-	padding: 10px 10px;
+header > #search {
+    text-align: center;
+    padding: 5vh;
+}
+header > #search > input {
+    min-height: 5vh;
+    min-width: 20vw;
+    font-size: 5vh;
+}
+header > #title {
+    display: flex;
 }
 
-input:hover {
-	border-color: var(--box-color);
+header > #title > h1 {
+    font-size: 2vw;
+    vertical-align: middle;
+    margin: auto;
 }

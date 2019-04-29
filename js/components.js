@@ -43,6 +43,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const befolkningHistorisk = kommune.people.getInhabitants();
 		const utdanningHistorisk = kommune.people.getAllEducationRates();
 
+
 		for (let year in sysselsatteHistorisk)
 			console.log(`Gjennomsnittelig sysselsettingsprosent ${year}: ${sysselsatteHistorisk[year]}`);
 		for (let year in befolkningHistorisk)
@@ -69,52 +70,93 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const kommune2Kvinner = kommune2.people.getEmploymentRatesByGender(KVINNER);
 
 
-		//Tabell
-		let table = document.createElement('TABLE');
-		div.appendChild(table)
+		//Presentasjon
+		// Konstruerer tabellen
+		console.log("Creating table...")
+		let table = addChild(div, null, 'table')
+		const tHead = addChild(table, null, 'tHead');
+		const tBody = addChild(table, null, 'tbody');
+		const headerRow = addChild(tHead, null, 'tr');
+		const kommune1MennRow = addChild(tBody, null, 'tr');
+		const kommune2MennRow = addChild(tBody, null, 'tr');
+		const kommune1KvinnerRow = addChild(tBody, null, 'tr');
+		const kommune2KvinnerRow = addChild(tBody, null, 'tr');
+
 		//Years-objektet henter årstall fra det lengste av menn(1/2)/kvinner(1/2) objektene.
 		let years = Object.keys(kommune1Menn);
 		if (Object.keys(kommune1Kvinner).length > years.length) {
 			years = Object.keys(kommune1Kvinner)
-		} // må utviddes for kommune 2
-		console.log(years)
+		}
+		if (Object.keys(kommune2Menn).length > years.length) {
+			years = Object.keys(kommune2Menn)
+		}
+		if (Object.keys(kommune2Kvinner).length > years.length) {
+			years = Object.keys(kommune2Kvinner)
+		}
 
-		const thead = addChild(table, null, 'thead');
-		const tBody = addChild(table, null, 'tbody');
-		const headerRow = addChild(thead, null, 'tr');
-		const kommune1MennRow = addChild(tBody, null, 'tr');
-		const kommune1KvinnerRow = addChild(tBody, null, 'tr');
-		const kommune2MennRow = addChild(tBody, null, 'tr');
-		const kommune2KvinnerRow = addChild(tBody, null, 'tr');
-
-		for (let i = 0; i < years.length; i++) {
+		for (let i = 0; i < years.length + 1; i++) {
 			if (i == 0) {
-				console.log('Adding data to table');
-				addChild(headerRow, 'Sysselsetting (kjønn)/ År', 'th');
-				addChild(kommune1MennRow, `${kommune1['navn']} (Menn)`, 'td');
-				addChild(kommune1KvinnerRow, `${kommune1['navn']} (Kvinner)`, 'td');
-				addChild(kommune2MennRow, `${kommune2['navn']} (Menn)`, 'td');
-				addChild(kommune2KvinnerRow, `${kommune2['navn']} (Kvinner)`, 'td');
+				console.log('Adding data to table...');
+				addChild(headerRow, 'Kommune (Kjønn)/År', 'th');
+				addChild(kommune1MennRow, `${kommune1['navn']} (Menn)`, 'th');
+				addChild(kommune1KvinnerRow, `${kommune1['navn']} (Kvinner)`, 'th');
+				addChild(kommune2MennRow, `${kommune2['navn']} (Menn)`, 'th');
+				addChild(kommune2KvinnerRow, `${kommune2['navn']} (Kvinner)`, 'th');
 			} else {
-				addChild(headerRow, years[i], 'td');
-				addChild(kommune1MennRow, kommune1Menn[years[i]], 'td');
-				addChild(kommune1KvinnerRow, kommune1Kvinner[years[i]], 'td');
-				addChild(kommune2MennRow, kommune2Menn[years[i]], 'td');
-				addChild(kommune2KvinnerRow, kommune2Kvinner[years[i]], 'td');
+				addChild(headerRow, years[i-1], 'td');
+				addChild(kommune1MennRow, kommune1Menn[years[i-1]], 'td');
+				addChild(kommune1KvinnerRow, kommune1Kvinner[years[i-1]], 'td');
+				addChild(kommune2MennRow, kommune2Menn[years[i-1]], 'td');
+				addChild(kommune2KvinnerRow, kommune2Kvinner[years[i-1]], 'td');
 			};
 		}
 
+		//Itererer gjennom hvert år i tabellen og sammenligner dataene i hver rad med dataene fra forrige år, markerer cellene (menn og kvinner) med høyest økning.
+		//Ikke interresert i første år, da vi ikke har noen tidligere år å regne vekst ut i fra.
 
+		const tableData = tBody.childNodes;
+		// Itererer gjennom hvert år (kolonne) i tabellen
+		for (let colIndex = 2; colIndex < tableData[0].childElementCount; colIndex++) {
+			let largestDiff = {
+				"menn": [undefined, null],
+				"kvinner": [undefined, null]
+			};
+			//Itererer gjennom hver rad for hvert år
+			for (let rowIndex = 0; rowIndex < 2; rowIndex++) {
+				const currentYear = {
+					"menn": tableData[rowIndex].childNodes[colIndex].innerHTML,
+					"kvinner": tableData[rowIndex + 2].childNodes[colIndex].innerHTML
+				};
+				const lastYear = {
+					"menn": tableData[rowIndex].childNodes[colIndex - 1].innerHTML,
+					"kvinner": tableData[rowIndex + 2].childNodes[colIndex - 1].innerHTML
+				};
+				let diff = {
+					"menn": currentYear["menn"] - lastYear["menn"],
+					"kvinner": currentYear["kvinner"] - lastYear["kvinner"]
+				};
+				if (diff["menn"] > largestDiff["menn"][1]) {
+					largestDiff["menn"][1] = diff["menn"];
+					largestDiff["menn"][0] = tableData[rowIndex].childNodes[colIndex];
+				}
+				if (diff["kvinner"] > largestDiff["kvinner"][1]) {
+					largestDiff["kvinner"][1] = diff["kvinner"];
+					largestDiff["kvinner"][0] = tableData[rowIndex + 2].childNodes[colIndex];
+				}
+			}
+			if (largestDiff["menn"][0] != undefined) {
+				largestDiff["menn"][0].setAttribute("style", "background-color: green")
+			}
+			if (largestDiff["kvinner"][0] != undefined) {
+				largestDiff["kvinner"][0].setAttribute("style", "background-color: green")
+			}
+		}
 	}
+};
 
-	function constructOutput(data){
-	//	div.appendChild()
-	}
-
+function addChild(parent, input, type, attr){
+	const node = document.createElement(type);
+	node.innerHTML = input;
+	parent.appendChild(node);
+	return node;
 }
-	function addChild(parent, input, type){
-		const node = document.createElement(type);
-		node.innerHTML = input;
-		parent.appendChild(node);
-		return node;
-	}

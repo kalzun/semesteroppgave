@@ -1,0 +1,18 @@
+div#tabs {}
+div#tabs > .active {
+    display: block;
+}
+#tabs>div:not(.active) { display: none; }
+
+div#buttons > button { display: block; }
+div#buttons > .active {
+    background-color: var(--colorMain);
+    color: var(--colorThird);
+}
+div#buttons > div:not(.active) {}
+
+
+
+div#tabs > h1 {
+    text-align: center;
+}

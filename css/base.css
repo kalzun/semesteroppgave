@@ -1,0 +1,21 @@
+:root {
+    --colorMain: white;
+    --colorSecondary: #ca2f2f;
+    --colorThird: #000000;
+}
+* {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 200;
+}
+
+h1, h2, h3, h4, h5, h6, p, body, div {
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    background-color: inherit;
+    border: none;
+    color: inherit;
+}
+button:focus {outline:0;}
