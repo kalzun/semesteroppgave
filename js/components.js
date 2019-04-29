@@ -17,33 +17,118 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const kommune = singleton.getInfo(kommunenr1);
 
 		const sisteBefolkning = kommune.people.getInhabitantsLastYearTotal();
-
 		const sisteSysselsatteProsent = kommune.people.getEmploymentRatesLastYear();
-		const sisteSysselsatteAntall = sisteBefolkning * sisteSysselsatteProsent / 100;
+		const sisteSysselsatteAntall = Math.floor(sisteBefolkning * sisteSysselsatteProsent / 100);
 
 		// Høyere utdanningsprosent og antall:
 		const sisteUtdanningProsentUniKort = kommune.people.getEducationRatesLastYearSpecified(UNIKORT);
+		const sisteUtdanningAntallUniKort = Math.floor((sisteUtdanningProsentUniKort * sisteBefolkning) / 100); 
 		const sisteUtdanningProsentUniLang = kommune.people.getEducationRatesLastYearSpecified(UNILANG);
+		const sisteUtdanningAntallUniLang = Math.floor((sisteUtdanningProsentUniLang * sisteBefolkning) / 100);
 		const sisteUtdProsentGjennomsnitt = (sisteUtdanningProsentUniKort + sisteUtdanningProsentUniLang) / 2;
-		const sisteUtdAntall = sisteBefolkning * sisteUtdProsentGjennomsnitt / 100;
+		const sisteUtdAntall = Math.floor(sisteBefolkning * sisteUtdProsentGjennomsnitt / 100);
 
-		//
+		
 
-		console.log("Siste bef: " + sisteBefolkning);
-		console.log("Siste Sysselsatte prosent: " + sisteSysselsatteProsent);
-		console.log("Siste Sysselsatte antall: " + sisteSysselsatteAntall);
-		console.log("Siste sisteUtdanningProsentUniKort " + sisteUtdanningProsentUniKort);
-		console.log("Siste sisteUtdanningProsentUniLang " + sisteUtdanningProsentUniLang);
-		console.log("Siste sisteUtdannings prosent gjennomsnitt: " + sisteUtdProsentGjennomsnitt);
-		console.log("Siste sisteUtdannings antall: " + sisteUtdAntall);
-		//const sisteSysselsatte = kommune.people.get
+		/*
+		Vise tabell med 
+		kommunens navn, 
+		kommunenummer, 
+		siste målte befolkning
+		siste målte statistikk for sysselsetting (antall og prosent)
+		siste målte statistikk for høyere utdanning (antall og prosent)
+		*/
+
+		//Presentasjon
+		// Konstruerer tabellen
+		console.log("Creating table...")
+		let table = addChild(div, null, 'table')
+		const tHead = addChild(table, null, 'tHead');
+		const tBody = addChild(table, null, 'tbody');
+		const headerRow = addChild(tHead, `${kommune['navn']}`, 'tr');
+		//const infoRow = addChild(tBody, null, 'tr');
+
+		console.log('Adding data to table...');
+		const befRow = addChild(tBody, `Befolkning`, 'tr');
+		const sysselRow = addChild(tBody, `Sysselsatte`, 'tr');
+		const utdKortRow = addChild(tBody, `Utdanning (Universitets- og høgskolenivå kort)`, 'tr');
+		const utdLangRow = addChild(tBody, `Utdanning (Universitets- og høgskolenivå lang)`, 'tr');
+
+		addChild(headerRow, 'Antall', 'th');
+		addChild(headerRow, 'Prosent', 'th');
+
+		addChild(befRow, sisteBefolkning, 'td');
+		addChild(sysselRow, sisteSysselsatteAntall, 'td');
+		addChild(sysselRow, sisteSysselsatteProsent, 'td');
+		addChild(utdKortRow, sisteUtdanningAntallUniKort, 'td');
+		addChild(utdKortRow, sisteUtdanningProsentUniKort, 'td');
+		addChild(utdLangRow, sisteUtdanningAntallUniLang, 'td');
+		addChild(utdLangRow, sisteUtdanningProsentUniLang, 'td');
+
+
+/*
+		Vise historisk utvikling
+		Befolkning (ANTALL)
+		sysselsetting (PROSENT)
+		utdanning (ALLE UTDANNINGER I PROSENT)
+*/	
 
 		// Historisk utvikling
-		const sysselsatteHistorisk = kommune.people.getEmploymentRates();
-		const befolkningHistorisk = kommune.people.getInhabitants();
-		const utdanningHistorisk = kommune.people.getAllEducationRates();
+		
+		(function historisk() {
+			const befolkningHistorisk = kommune.people.getInhabitants();
+			const sysselsatteHistorisk = kommune.people.getEmploymentRates();
+			const utdanningHistorisk = kommune.people.getAllEducationRates();
 
+			//Presentasjon
+			let table = addChild(div, null, 'table')
+			const tHead = addChild(table, null, 'tHead');
+			const tBody = addChild(table, null, 'tbody');
+			const headerRow = addChild(tHead, ``, 'tr');
 
+			const befRow = addChild(tBody, 'Befolkning', 'tr');
+			const sysRow = addChild(tBody, 'Sysselsatte', 'tr');
+			const eduCodes = kommune.people.getEduCodes();
+
+			let eduRow = {};
+
+			for (let i = 0, len = eduCodes.length; i < len; i++) {
+					// TODO: Bytt ut utdanningskode med utdanningsinfo (f.eks Høyere utdanning)
+				eduRow[i] = addChild(tBody, `${eduCodes[i]}`, 'tr');
+				console.log("EduRow : " + eduRow[i]);
+				console.log("Educodes I : ", eduCodes[i]);
+			}
+
+			// Bruker education-datasett for å finne flest år.
+
+			const eduYears = Object.keys(utdanningHistorisk[GRUNNSKOLE][MENN]);
+
+			for (let i = 0, len = eduYears.length; i < len; i++) {
+				addChild(headerRow, ``, 'th');
+				addChild(headerRow, `${eduYears[i]}`, 'th');
+				addChild(befRow, `${befolkningHistorisk[eduYears[i]]}`, 'td');
+				addChild(sysRow, `${sysselsatteHistorisk[eduYears[i]]}`, 'td');
+				
+				for (let j = 0, eduLen = eduCodes.length; j < eduLen; j++){
+					const avgEduPerc = ((utdanningHistorisk[eduCodes[j]][MENN][eduYears[i]] + 
+										utdanningHistorisk[eduCodes[j]][KVINNER][eduYears[i]]) / 2).toFixed(2);
+					addChild(eduRow[j], `${avgEduPerc}`, 'td');
+				}
+			}
+		})()
+
+		// console.log("Siste bef: " + sisteBefolkning);
+		// console.log("Siste Sysselsatte prosent: " + sisteSysselsatteProsent);
+		// console.log("Siste Sysselsatte antall: " + sisteSysselsatteAntall);
+		// console.log("Siste sisteUtdanningProsentUniKort " + sisteUtdanningProsentUniKort);
+		// console.log("Siste sisteUtdanningProsentUniLang " + sisteUtdanningProsentUniLang);
+		// console.log("Siste sisteUtdannings prosent gjennomsnitt: " + sisteUtdProsentGjennomsnitt);
+		// console.log("Siste sisteUtdannings antall: " + sisteUtdAntall);
+		// //const sisteSysselsatte = kommune.people.get
+
+		
+
+/*
 		for (let year in sysselsatteHistorisk)
 			console.log(`Gjennomsnittelig sysselsettingsprosent ${year}: ${sysselsatteHistorisk[year]}`);
 		for (let year in befolkningHistorisk)
@@ -55,6 +140,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 				}
 			}
 		}
+*/
 	}
 
 	function sammenligning(){
@@ -156,7 +242,12 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 function addChild(parent, input, type, attr){
 	const node = document.createElement(type);
-	node.innerHTML = input;
+	if (input == 'undefined'){
+		node.innerHTML = null;
+		node.classList += "no-data";
+	}
+	else
+		node.innerHTML = input;
 	parent.appendChild(node);
 	return node;
 }

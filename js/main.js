@@ -313,6 +313,11 @@ People.prototype = {
 
 	// EDUCATION methods:
 
+	getEduCodes() {
+		const allCodes = ["01", "02a", "11", "03a", "04a", "09a"];
+		return allCodes;
+	},
+
 	getAllEducationRates() {
 		const educodes = [
 			GRUNNSKOLE,
