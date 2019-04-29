@@ -1,1 +1,1 @@
-
+Trenger styling til klasse "green-highlight", for å markere felter i sammenligning med høyest vekst.
