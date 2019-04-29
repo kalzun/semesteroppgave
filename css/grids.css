@@ -1,0 +1,11 @@
+header {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+    "search title"
+    "nav title";
+}
+header > div#search {grid-area: search;}
+header > div#tabs {grid-area: nav;}
+header > div#title {grid-area: title;}

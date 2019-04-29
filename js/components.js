@@ -70,15 +70,8 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const kommune2Kvinner = kommune2.people.getEmploymentRatesByGender(KVINNER);
 
 		//Presentasjon
-		console.log("Creating table...")
-		let table = addChild(div, null, 'table')
-		const thead = addChild(table, null, 'thead');
-		const tBody = addChild(table, null, 'tbody');
-		const headerRow = addChild(thead, null, 'tr');
-		const kommune1MennRow = addChild(tBody, null, 'tr');
-		const kommune2MennRow = addChild(tBody, null, 'tr');
-		const kommune1KvinnerRow = addChild(tBody, null, 'tr');
-		const kommune2KvinnerRow = addChild(tBody, null, 'tr');
+		// Konstruerer tabellen
+
 
 		//Years-objektet henter årstall fra det lengste av menn(1/2)/kvinner(1/2) objektene.
 		let years = Object.keys(kommune1Menn);
@@ -109,39 +102,39 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			};
 		}
 
-		//Itererer gjennom hvert år i tabellen og sammenligner dataene i hver rad med dataene fra forrige år, markerer cellene (menn og kvinner) med høyest økning. Ikke interresert i første år, da vi ikke har noen tidligere år å vekst ut i fra.
+		//Itererer gjennom hvert år i tabellen og sammenligner dataene i hver rad med dataene fra forrige år, markerer cellene (menn og kvinner) med høyest økning.
+		//Ikke interresert i første år, da vi ikke har noen tidligere år å regne vekst ut i fra.
 
 		const tableData = tBody.childNodes;
-		for (let rowIndex = 2; rowIndex < tableData[0].childElementCount - 1; rowIndex++) {
+		// Itererer gjennom hvert år (kolonne) i tabellen
+		for (let colIndex = 2; colIndex < tableData[0].childElementCount - 1; colIndex++) {
 			let largestDiff = {
 				"menn": [undefined, null],
 				"kvinner": [undefined, null]
 			};
-			for (let columnIndex = 0; columnIndex < 2; columnIndex++) {
-
+			//Itererer gjennom hver rad for hvert år
+			for (let rowIndex = 0; rowIndex < 2; rowIndex++) {
 				const currentYear = {
-					"menn": tableData[columnIndex].childNodes[rowIndex].innerHTML,
-					"kvinner": tableData[columnIndex + 2].childNodes[rowIndex].innerHTML
+					"menn": tableData[rowIndex].childNodes[colIndex].innerHTML,
+					"kvinner": tableData[rowIndex + 2].childNodes[colIndex].innerHTML
 				};
 				const lastYear = {
-					"menn": tableData[columnIndex].childNodes[rowIndex - 1].innerHTML,
-					"kvinner": tableData[columnIndex + 2].childNodes[rowIndex - 1].innerHTML
+					"menn": tableData[rowIndex].childNodes[colIndex - 1].innerHTML,
+					"kvinner": tableData[rowIndex + 2].childNodes[colIndex - 1].innerHTML
 				};
 				let diff = {
 					"menn": currentYear["menn"] - lastYear["menn"],
 					"kvinner": currentYear["kvinner"] - lastYear["kvinner"]
 				};
-
 				if (diff["menn"] > largestDiff["menn"][1]) {
 					largestDiff["menn"][1] = diff["menn"];
-					largestDiff["menn"][0] = tableData[columnIndex].childNodes[rowIndex];
+					largestDiff["menn"][0] = tableData[rowIndex].childNodes[colIndex];
 				}
 				if (diff["kvinner"] > largestDiff["kvinner"][1]) {
 					largestDiff["kvinner"][1] = diff["kvinner"];
-					largestDiff["kvinner"][0] = tableData[columnIndex + 2].childNodes[rowIndex];
+					largestDiff["kvinner"][0] = tableData[rowIndex + 2].childNodes[colIndex];
 				}
 			}
-
 			if (largestDiff["menn"][0] != undefined) {
 				largestDiff["menn"][0].setAttribute("style", "background-color: green")
 			}
@@ -149,13 +142,24 @@ function tabell(div, category, kommunenr1, kommunenr2){
 				largestDiff["kvinner"][0].setAttribute("style", "background-color: green")
 			}
 		}
-
 	}
+};
 
+function createSammenligningsTable(){
+	console.log("Creating table...")
+	let table = addChild(div, null, 'table')
+	const tHead = addChild(table, null, 'tHead');
+	const tBody = addChild(table, null, 'tbody');
+	const headerRow = addChild(tHead, null, 'tr');
+	const kommune1MennRow = addChild(tBody, null, 'tr');
+	const kommune2MennRow = addChild(tBody, null, 'tr');
+	const kommune1KvinnerRow = addChild(tBody, null, 'tr');
+	const kommune2KvinnerRow = addChild(tBody, null, 'tr');
+};
+
+function addChild(parent, input, type, attr){
+	const node = document.createElement(type);
+	node.innerHTML = input;
+	parent.appendChild(node);
+	return node;
 }
-	function addChild(parent, input, type, attr){
-		const node = document.createElement(type);
-		node.innerHTML = input;
-		parent.appendChild(node);
-		return node;
-	}
