@@ -28,6 +28,7 @@ button {
     border: none;
     color: inherit;
     font-weight: 400;
+    font-size: inherit;
 }
 
 /* For å fjerne irriterende blå outline til knapper og tekstbokser som er trykket på. */

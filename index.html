@@ -31,10 +31,10 @@
 
 		<!-- Navigasjonsfeltet er containet inni dette div-elementet. -->
 		<div id="buttons">
-			<button class="active">Introduksjon</button>
+			<button >Introduksjon</button>
 			<button>Oversikt</button>
 			<button>Detaljer</button>
-			<button>Sammenligning</button>
+			<button class="active">Sammenligning</button>
 		</div>
 
 		<!-- Nettside-headeren. -->
@@ -49,7 +49,7 @@
 		<!-- Container for tabsene. -->
 		<div id="tabs">
 			<!-- Container for introduksjons-tabben.-->
-			<div class="active intro">
+			<div class="intro">
 				<div>
 					<h3>Befolkningsstatistikk</h3>
 					<p>Denne applikasjonen viser statistikk om befolkningen i Norge. Dataene er hentet fra Statistisk Sentralbyrå sine nettsider, og kan inneholde feil.</p>
@@ -89,8 +89,20 @@
 			</div>
 
 			<!-- Container for sammenlignings-tabben. -->
-			<div class="sammenligning">
-				<h3>Sammenligning</h3>
+			<div class="active sammenligning">
+				<div class="header">
+					<h3 class="tabTitle">Sammenlign</h3>
+					<div class="search1 search">
+						<input type="text"placeholder="kommunenr.">
+					</div>
+					<h3 class="binder">med</h3>
+					<div class="search2 search">
+						<input type="text"placeholder="kommunenr.">
+					</div>
+					<div class="submit">
+						<button type="submit">Søk</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</main>
