@@ -1,0 +1,57 @@
+header {
+    background-color: var(--colorSecondary);
+    color: var(--colorMain);
+}
+
+
+header > div#title {
+    display: flex;
+    flex-direction: column;
+}
+
+header > div#title > div {
+    vertical-align: middle;
+    margin: auto;
+    padding-left: 70px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-left: 1px solid var(--colorMain);
+}
+header > div#title > div > h1, h2 {
+    text-align: center;
+}
+
+
+header > div#search {
+    min-height: 5vh;
+    font-size: 5vh;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    max-width: 400px;
+}
+header > div#search > div {
+    display: flex;
+
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 4px;
+    border-right: 1px solid var(--colorMain);
+    border-top: 1px solid var(--colorMain);
+    border-bottom: 1px solid var(--colorMain);
+}
+
+header > div#search > div > input {
+    font-size: inherit;
+    padding-left: 7px;
+    padding-right: 7px;
+    border: 1px var(--colorMain) solid;
+}
+
+header > div#search > div > button {
+    font-size: inherit;
+    flex-grow: 1;
+}
+
+header > div#search > div > button:hover {
+    background-color: var(--colorSecondaryHover);
+}
