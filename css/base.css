@@ -1,9 +1,15 @@
+/*  Dette er den første css-filen som rendres. Top-level modifikasjon.
+    Ikke put spesifikk styling i denne filen. Bare generell styling. */
+
+/* Variabler */
 :root {
     --colorMain: white;
-    --colorSecondary: #ca2f2f;
+    --colorSecondary: #be2b38;
     --colorThird: #000000;
-    --colorSecondaryHover: #e04646;
+    --colorSecondaryHover: #e04d59;
 }
+
+/* Forandring av fryktelige deafult-settings */
 * {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
@@ -20,26 +26,18 @@ button {
     color: inherit;
     font-weight: 400;
 }
-button:focus {outline:0;}
 
-h1 {
-    font-size: 6vh;
-    font-weight: 600;
-}
+/* For å fjerne irriterende blå outline til knapper og tekstbokser som er trykket på. */
+button:focus, input:focus {outline:0;}
+
+/* Header-styling */
+h1 {font-size: 6vh; font-weight: 600;}
 h2 {font-size: 3.5vh;}
-h3 {
-    font-size: 3.5vh;
-    font-weight: 400;
-    text-align: center;
-    padding: 3vh;
-}
-h4 {
-    font-size: 3vh;
-    font-style: italic;
-}
+h3 {font-size: 3.5vh; font-weight: 400; text-align: center; padding: 3vh;}
+h4 {font-size: 3vh; font-style: italic;}
+
+/* Generell paragraf-tekst styling */
 p{font-size: 3vh;}
 
-a {
-    font-size: 3vh;
-    font-style: italic;
-}
+/* hyperlink-styling */
+a {font-size: 3vh; font-style: italic;}
