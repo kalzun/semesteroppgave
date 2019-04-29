@@ -71,7 +71,15 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 		//Presentasjon
 		// Konstruerer tabellen
-		createSammenligningsTable()
+		console.log("Creating table...")
+		let table = addChild(div, null, 'table')
+		const tHead = addChild(table, null, 'tHead');
+		const tBody = addChild(table, null, 'tbody');
+		const headerRow = addChild(tHead, null, 'tr');
+		const kommune1MennRow = addChild(tBody, null, 'tr');
+		const kommune2MennRow = addChild(tBody, null, 'tr');
+		const kommune1KvinnerRow = addChild(tBody, null, 'tr');
+		const kommune2KvinnerRow = addChild(tBody, null, 'tr');
 
 		//Years-objektet henter årstall fra det lengste av menn(1/2)/kvinner(1/2) objektene.
 		let years = Object.keys(kommune1Menn);
@@ -85,7 +93,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			years = Object.keys(kommune2Kvinner)
 		}
 
-		for (let i = 0; i < years.length +1; i++) {
+		for (let i = 0; i < years.length + 1; i++) {
 			if (i == 0) {
 				console.log('Adding data to table...');
 				addChild(headerRow, 'Kommune (Kjønn)/År', 'th');
@@ -107,7 +115,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 		const tableData = tBody.childNodes;
 		// Itererer gjennom hvert år (kolonne) i tabellen
-		for (let colIndex = 2; colIndex < tableData[0].childElementCount - 1; colIndex++) {
+		for (let colIndex = 2; colIndex < tableData[0].childElementCount; colIndex++) {
 			let largestDiff = {
 				"menn": [undefined, null],
 				"kvinner": [undefined, null]
@@ -143,18 +151,6 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			}
 		}
 	}
-};
-
-function createSammenligningsTable(){
-	console.log("Creating table...")
-	let table = addChild(div, null, 'table')
-	const tHead = addChild(table, null, 'tHead');
-	const tBody = addChild(table, null, 'tbody');
-	const headerRow = addChild(tHead, null, 'tr');
-	const kommune1MennRow = addChild(tBody, null, 'tr');
-	const kommune2MennRow = addChild(tBody, null, 'tr');
-	const kommune1KvinnerRow = addChild(tBody, null, 'tr');
-	const kommune2KvinnerRow = addChild(tBody, null, 'tr');
 };
 
 function addChild(parent, input, type, attr){
