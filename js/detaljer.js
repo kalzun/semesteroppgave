@@ -1,7 +1,7 @@
 function constructDetaljer() {
     const alleKommuner = l.getAlleKommuner();
 
-    for (let kommune in alleKommuner) {
-        console.log(kommune.navn)
+    for (let index in alleKommuner) {
+        console.log(alleKommuner[index].navn)
     }
 }

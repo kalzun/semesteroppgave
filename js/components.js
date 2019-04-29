@@ -84,6 +84,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 		//Years-objektet henter årstall fra det lengste av menn(1/2)/kvinner(1/2) objektene.
 		let years = Object.keys(kommune1Menn);
+		console.log(kommune1Menn)
 		if (Object.keys(kommune1Kvinner).length > years.length) {
 			years = Object.keys(kommune1Kvinner)
 		}
@@ -145,10 +146,10 @@ function tabell(div, category, kommunenr1, kommunenr2){
 				}
 			}
 			if (largestDiff["menn"][0] != undefined) {
-				largestDiff["menn"][0].setAttribute("style", "background-color: green")
+				largestDiff["menn"][0].setAttribute("style", "green-highlight")
 			}
 			if (largestDiff["kvinner"][0] != undefined) {
-				largestDiff["kvinner"][0].setAttribute("style", "background-color: green")
+				largestDiff["kvinner"][0].setAttribute("class", "green-highlight")
 			}
 		}
 	}
