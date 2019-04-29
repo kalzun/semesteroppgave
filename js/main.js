@@ -318,6 +318,18 @@ People.prototype = {
 		return allCodes;
 	},
 
+	getEduName(eduCode) {
+		const categories = {
+			"01": "Grunnskolenivå",
+	    	"02a": "Videregående skole-nivå",
+	    	"11": "Fagskolenivå",
+	    	"03a": "Universitets- og høgskolenivå kort",
+	    	"04a": "Universitets- og høgskolenivå lang",
+	     	"09a": "Uoppgitt eller ingen fullført utdanning"
+    	};
+    	return categories[eduCode];
+	},
+
 	getAllEducationRates() {
 		const educodes = [
 			GRUNNSKOLE,

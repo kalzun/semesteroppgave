@@ -4,6 +4,9 @@
 // Tabell
 function tabell(div, category, kommunenr1, kommunenr2){
 	switch (category){
+		case "Oversikt":
+			oversikt();
+			break;
 		case "Detaljer":
 			detaljer();
 			break;
@@ -11,6 +14,23 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			sammenligning();
 			break;
 	}
+
+	function oversikt() {
+	    const alleKommuner = l.getAlleKommuner();
+
+	    console.log("Creating table...");
+	    let table = addChild(div, null, 'table');
+	    const tHead = addChild(table, null, 'tHead');
+	    const tBody = addChild(table, null, 'tbody');
+	    const headerRow = addChild(tHead, 'Kommunenavn', 'th');
+	    addChild(tHead, 'Kommunenummer', 'th');
+
+	    for (let index in alleKommuner) {
+	        const currentRow = addChild(tBody, alleKommuner[index].navn, 'tr');
+	        addChild(currentRow, alleKommuner[index].id, 'td');
+	    }
+	}
+
 
 	function detaljer(){
 		const singleton = AlleKommunerSingleton.getInstance();
@@ -22,18 +42,18 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 		// Høyere utdanningsprosent og antall:
 		const sisteUtdanningProsentUniKort = kommune.people.getEducationRatesLastYearSpecified(UNIKORT);
-		const sisteUtdanningAntallUniKort = Math.floor((sisteUtdanningProsentUniKort * sisteBefolkning) / 100); 
+		const sisteUtdanningAntallUniKort = Math.floor((sisteUtdanningProsentUniKort * sisteBefolkning) / 100);
 		const sisteUtdanningProsentUniLang = kommune.people.getEducationRatesLastYearSpecified(UNILANG);
 		const sisteUtdanningAntallUniLang = Math.floor((sisteUtdanningProsentUniLang * sisteBefolkning) / 100);
 		const sisteUtdProsentGjennomsnitt = (sisteUtdanningProsentUniKort + sisteUtdanningProsentUniLang) / 2;
 		const sisteUtdAntall = Math.floor(sisteBefolkning * sisteUtdProsentGjennomsnitt / 100);
 
-		
+
 
 		/*
-		Vise tabell med 
-		kommunens navn, 
-		kommunenummer, 
+		Vise tabell med
+		kommunens navn,
+		kommunenummer,
 		siste målte befolkning
 		siste målte statistikk for sysselsetting (antall og prosent)
 		siste målte statistikk for høyere utdanning (antall og prosent)
@@ -71,10 +91,10 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		Befolkning (ANTALL)
 		sysselsetting (PROSENT)
 		utdanning (ALLE UTDANNINGER I PROSENT)
-*/	
+*/
 
 		// Historisk utvikling
-		
+
 		(function historisk() {
 			const befolkningHistorisk = kommune.people.getInhabitants();
 			const sysselsatteHistorisk = kommune.people.getEmploymentRates();
@@ -93,10 +113,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			let eduRow = {};
 
 			for (let i = 0, len = eduCodes.length; i < len; i++) {
-					// TODO: Bytt ut utdanningskode med utdanningsinfo (f.eks Høyere utdanning)
-				eduRow[i] = addChild(tBody, `${eduCodes[i]}`, 'tr');
-				console.log("EduRow : " + eduRow[i]);
-				console.log("Educodes I : ", eduCodes[i]);
+				eduRow[i] = addChild(tBody, `${kommune.people.getEduName(eduCodes[i])}`, 'tr');
 			}
 
 			// Bruker education-datasett for å finne flest år.
@@ -108,9 +125,9 @@ function tabell(div, category, kommunenr1, kommunenr2){
 				addChild(headerRow, `${eduYears[i]}`, 'th');
 				addChild(befRow, `${befolkningHistorisk[eduYears[i]]}`, 'td');
 				addChild(sysRow, `${sysselsatteHistorisk[eduYears[i]]}`, 'td');
-				
+
 				for (let j = 0, eduLen = eduCodes.length; j < eduLen; j++){
-					const avgEduPerc = ((utdanningHistorisk[eduCodes[j]][MENN][eduYears[i]] + 
+					const avgEduPerc = ((utdanningHistorisk[eduCodes[j]][MENN][eduYears[i]] +
 										utdanningHistorisk[eduCodes[j]][KVINNER][eduYears[i]]) / 2).toFixed(2);
 					addChild(eduRow[j], `${avgEduPerc}`, 'td');
 				}
@@ -126,7 +143,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		// console.log("Siste sisteUtdannings antall: " + sisteUtdAntall);
 		// //const sisteSysselsatte = kommune.people.get
 
-		
+
 
 /*
 		for (let year in sysselsatteHistorisk)
@@ -162,15 +179,14 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		let table = addChild(div, null, 'table')
 		const tHead = addChild(table, null, 'tHead');
 		const tBody = addChild(table, null, 'tbody');
-		const headerRow = addChild(tHead, null, 'tr');
-		const kommune1MennRow = addChild(tBody, null, 'tr');
-		const kommune2MennRow = addChild(tBody, null, 'tr');
-		const kommune1KvinnerRow = addChild(tBody, null, 'tr');
-		const kommune2KvinnerRow = addChild(tBody, null, 'tr');
+		const headerRow = addChild(tHead, 'Kommune (Kjønn)/År', 'tr');
+		const kommune1MennRow = addChild(tBody, `${kommune1['navn']} (Menn)`, 'tr');
+		const kommune2MennRow = addChild(tBody, `${kommune2['navn']} (Menn)`, 'tr');
+		const kommune1KvinnerRow = addChild(tBody, `${kommune1['navn']} (Kvinner)`, 'tr');
+		const kommune2KvinnerRow = addChild(tBody, `${kommune2['navn']} (Kvinner)`, 'tr');
 
 		//Years-objektet henter årstall fra det lengste av menn(1/2)/kvinner(1/2) objektene.
 		let years = Object.keys(kommune1Menn);
-		console.log(kommune1Menn)
 		if (Object.keys(kommune1Kvinner).length > years.length) {
 			years = Object.keys(kommune1Kvinner)
 		}
@@ -181,21 +197,13 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			years = Object.keys(kommune2Kvinner)
 		}
 
-		for (let i = 0; i < years.length + 1; i++) {
-			if (i == 0) {
-				console.log('Adding data to table...');
-				addChild(headerRow, 'Kommune (Kjønn)/År', 'th');
-				addChild(kommune1MennRow, `${kommune1['navn']} (Menn)`, 'th');
-				addChild(kommune1KvinnerRow, `${kommune1['navn']} (Kvinner)`, 'th');
-				addChild(kommune2MennRow, `${kommune2['navn']} (Menn)`, 'th');
-				addChild(kommune2KvinnerRow, `${kommune2['navn']} (Kvinner)`, 'th');
-			} else {
-				addChild(headerRow, years[i-1], 'td');
-				addChild(kommune1MennRow, kommune1Menn[years[i-1]], 'td');
-				addChild(kommune1KvinnerRow, kommune1Kvinner[years[i-1]], 'td');
-				addChild(kommune2MennRow, kommune2Menn[years[i-1]], 'td');
-				addChild(kommune2KvinnerRow, kommune2Kvinner[years[i-1]], 'td');
-			};
+		console.log('Adding data to table...');
+		for (let i = 0; i < years.length; i++) {
+			addChild(headerRow, years[i], 'td');
+			addChild(kommune1MennRow, kommune1Menn[years[i]], 'td');
+			addChild(kommune1KvinnerRow, kommune1Kvinner[years[i]], 'td');
+			addChild(kommune2MennRow, kommune2Menn[years[i]], 'td');
+			addChild(kommune2KvinnerRow, kommune2Kvinner[years[i]], 'td');
 		}
 
 		//Itererer gjennom hvert år i tabellen og sammenligner dataene i hver rad med dataene fra forrige år, markerer cellene (menn og kvinner) med høyest økning.
