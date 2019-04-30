@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width" initial-scale="1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Document</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet"/>
@@ -15,77 +15,61 @@
     <link rel="stylesheet" type="text/css" href="css/table.css"/>
     <script src="js/main.js"></script>
     <script src="js/components.js"></script>
+    <script src="js/tabs.js"></script>
   </head>
   <body>
-    <header>
-      <div id="search">
-        <div>
-          <input autofocus="true" type="text" placeholder="search..."/>
-          <button type="submit">&#9906</button>
-        </div>
-      </div>
-      <div id="buttons">
-        <button>Introduksjon</button>
-        <button>Oversikt</button>
-        <button>Detaljer</button>
-        <button>Sammenligning</button>
-      </div>
-      <div id="title">
-        <div>
-          <h1>Semesteroppgave</h1>
-          <h2>INFO134 - Klientprogrammering</h2>
-        </div>
-      </div>
+    <header id="buttons">
+      <button class="active">Introduksjon</button>
+      <button>Oversikt</button>
+      <button>Detaljer</button>
+      <button>Sammenligning</button>
     </header>
     <main>
       <div id="tabs">
         <div class="intro active">
-          <div>
-            <h3>Befolkningsstatistikk</h3>
-            <p>Paragraf 1 placeholder tekst.
-            </p>
-          </div>
-          <div>
-            <h3>Hvordan bruker jeg applikasjonen?</h3>
-            <p>paragraf 2 placeholder tekst.
-            </p>
-          </div>
-          <h3>Kilder</h3>
-          <div class="kilder">
-            <h4>Befolkning:</h4><a href="http://data.ssb.no/api/v0/dataset/104857?lang=no">http://data.ssb.no/api/v0/dataset/104857?lang=no</a>
-          </div>
-          <div class="kilder">
-            <h4>Sysselsatte:</h4><a href="http://data.ssb.no/api/v0/dataset/100145?lang=no">http://data.ssb.no/api/v0/dataset/100145?lang=no</a>
-          </div>
-          <div class="kilder">
-            <h4>Utdanning:</h4><a href="http://data.ssb.no/api/v0/dataset/85432?lang=no">http://data.ssb.no/api/v0/dataset/85432?lang=no</a>
+          <div class="content">
+            <div>
+              <h3>Befolkningsstatistikk</h3>
+              <p>placeholder text.</p>
+            </div>
+            <div>
+              <h3>Hvordan bruker jeg applikasjonen?</h3>
+              <p>placeholder text.</p>
+            </div>
+            <h3>Kilder</h3>
+            <div class="kilder">
+              <h4>Befolkning:</h4><a href="http://data.ssb.no/api/v0/dataset/104857?lang=no">http://data.ssb.no/api/v0/dataset/104857?lang=no</a>
+            </div>
+            <div class="kilder">
+              <h4>Sysselsatte:</h4><a href="http://data.ssb.no/api/v0/dataset/100145?lang=no">http://data.ssb.no/api/v0/dataset/100145?lang=no</a>
+            </div>
+            <div class="kilder">
+              <h4>Utdanning:</h4><a href="http://data.ssb.no/api/v0/dataset/85432?lang=no">http://data.ssb.no/api/v0/dataset/85432?lang=no</a>
+            </div>
           </div>
         </div>
         <div class="oversikt">
-          <h3>Oversikt</h3>
-          <p>Her kan du se oversikten.</p>
+          <div class="content">
+            <h3>Oversikt</h3>
+            <p>Her kan du se oversikten.</p>
+          </div>
         </div>
         <div class="detaljer">
-          <h3>Detaljer</h3>
-          <p>Her finner du masse detaljer.</p>
+          <div class="content">
+            <input type="text" placeholder="kommunenr." class="search search3"/>
+            <button type="submit">SØK</button>
+          </div>
         </div>
         <div class="sammenligning">
-          <div class="header">
+          <div class="content">
             <h3 class="tabTitle">Sammenlign</h3>
-            <div class="search1 search">
-              <input type="text" placeholder="kommunenr."/>
-            </div>
-            <h3>med</h3>
-            <div class="search2 search">
-              <input type="text" placeholder="kommunenr."/>
-            </div>
-            <div class="submit">
-              <button type="submit">SØK</button>
-            </div>
+            <input type="text" placeholder="kommunenr." class="search search2"/>
+            <h3 class="binder">med</h3>
+            <input type="text" placeholder="kommunenr." class="search search2"/>
+            <button type="submit">SØK</button>
           </div>
         </div>
       </div>
     </main>
-    <script src="./js/tabs.js"></script>
   </body>
 </html>

@@ -18,7 +18,7 @@
     font-weight: 300;
 }
 
-h1, h2, h3, h4, h5, h6, p, body, div {
+body {
     padding: 0;
     margin: 0;
 }
@@ -30,6 +30,9 @@ button {
     font-weight: 400;
     font-size: inherit;
 }
+input {
+    outline: none;
+}
 
 /* For å fjerne irriterende blå outline til knapper og tekstbokser som er trykket på. */
 button:focus, input:focus {outline:0;}
@@ -37,7 +40,7 @@ button:focus, input:focus {outline:0;}
 /* Header-styling */
 h1 {font-size: 6vh; font-weight: 600;}
 h2 {font-size: 3.5vh;}
-h3 {font-size: 3.5vh; font-weight: 400; text-align: center; padding: 3vh;}
+h3 {font-size: 24px; font-weight: 400; text-align: center; padding: 3vh;}
 h4 {font-size: 3vh; font-style: italic;}
 
 /* Generell paragraf-tekst styling */
