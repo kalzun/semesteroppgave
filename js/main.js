@@ -232,6 +232,7 @@ var People = function(id) {
 	this.inhabitants = this._kommuner.getInhabitants(id);
 	this.employment = this._kommuner.getEmploymentRates(id);
 	this.education = this._kommuner.getEducation(id);
+
 };
 
 People.prototype = {
@@ -240,6 +241,8 @@ People.prototype = {
 		return this._kommuner;
 	},
 
+
+
 	// INHABITANTS methods:
 
 	getInhabitantsGenderByYear: function(gender, year) {
@@ -247,6 +250,10 @@ People.prototype = {
 	},
 
 	getInhabitants: function() {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return [];
+
 		this.befolkningTotal = {};
 
 		// Kontroller hvilke kjønn har flest målinger.
@@ -266,6 +273,10 @@ People.prototype = {
 	},
 
 	getInhabitantsLastYearTotal: function() {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return null;
+
 		this.menn = this.inhabitants[MENN];
 		this.kvinner = this.inhabitants[KVINNER];
 
@@ -288,10 +299,16 @@ People.prototype = {
 	// EMPLOYMENT methods:
 
 	getEmploymentRates: function() {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return [];
+
 		return this.employment[BEGGE];
 	},
 
 	getEmploymentRatesLastYear: function() {
+		if (isContentInCategory(this.employment)) return [];
+
 		this.emp = this.employment[BEGGE];
 		this.empAllNumbers = Object.keys(this.employment[BEGGE]).sort();
 		this.empLastNumber = this.emp[this.empAllNumbers[this.empAllNumbers.length-1]];
@@ -299,14 +316,25 @@ People.prototype = {
 	},
 
 	getEmploymentRatesByYear: function(year) {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return [];
+
 		return this.employment[BEGGE][year];
 	},
 
 	getEmploymentRatesByGender: function(gender) {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return [];
+		
 		return this.employment[gender];
 	},
 
 	getEmploymentRatesByGenderAndYear: function(gender, year) {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return [];
 		return this.employment[gender][year];
 	},
 
@@ -395,6 +423,11 @@ var Kommuneobj = function(navn, id) {
 	this.id = id;
 	this.people = new People(id);
 }
+
+// Helper-funksjon
+	function isContentInCategory(cat) {
+		return cat == "Ingen tilgjengelige data.";
+	}
 
 var ds = new DataSet(allUrls);
 ds.load()
