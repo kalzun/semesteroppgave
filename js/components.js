@@ -169,6 +169,12 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const kommune1 = singleton.getInfo(kommunenr1);
 		const kommune2 = singleton.getInfo(kommunenr2);
 
+		// Sjekk om begge kommuner er definert.
+		if([kommune1, kommune2].some((kom) => kom === "None found")){
+			console.log("EN kommune er undefined.");
+			return;
+		}
+
 		const kommune1Menn = kommune1.people.getEmploymentRatesByGender(MENN);
 		const kommune1Kvinner = kommune1.people.getEmploymentRatesByGender(KVINNER);
 		const kommune2Menn = kommune2.people.getEmploymentRatesByGender(MENN);
