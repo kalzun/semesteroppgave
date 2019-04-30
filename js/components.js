@@ -169,6 +169,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 	}
 
 	function sammenligning(){
+		console.log("koommunne ", kommunenr1, kommunenr2)
 		// Allekommuner.people.getEducation(kommunenr1)
 
 		const singleton = AlleKommunerSingleton.getInstance();
