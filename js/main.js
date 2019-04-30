@@ -313,6 +313,23 @@ People.prototype = {
 
 	// EDUCATION methods:
 
+	getEduCodes() {
+		const allCodes = ["01", "02a", "11", "03a", "04a", "09a"];
+		return allCodes;
+	},
+
+	getEduName(eduCode) {
+		const categories = {
+			"01": "Grunnskolenivå",
+	    	"02a": "Videregående skole-nivå",
+	    	"11": "Fagskolenivå",
+	    	"03a": "Universitets- og høgskolenivå kort",
+	    	"04a": "Universitets- og høgskolenivå lang",
+	     	"09a": "Uoppgitt eller ingen fullført utdanning"
+    	};
+    	return categories[eduCode];
+	},
+
 	getAllEducationRates() {
 		const educodes = [
 			GRUNNSKOLE,

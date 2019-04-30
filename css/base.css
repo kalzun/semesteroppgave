@@ -7,6 +7,9 @@
     --colorSecondary: #be2b38;
     --colorThird: #000000;
     --colorSecondaryHover: #e04d59;
+
+    --tableCell_1: #ffffff;
+    --tableCell_2: #f1eeee;
 }
 
 /* Forandring av fryktelige deafult-settings */
@@ -25,6 +28,7 @@ button {
     border: none;
     color: inherit;
     font-weight: 400;
+    font-size: inherit;
 }
 
 /* For å fjerne irriterende blå outline til knapper og tekstbokser som er trykket på. */
@@ -41,3 +45,7 @@ p{font-size: 3vh;}
 
 /* hyperlink-styling */
 a {font-size: 3vh; font-style: italic;}
+
+table {
+    border-spacing: 0;
+}

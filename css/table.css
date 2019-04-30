@@ -1,0 +1,57 @@
+.sammenligning h3 {
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  font-size: 42px;
+}
+
+.sammenligning > .header {
+  margin-left: 5vw;
+  margin-right: 5vw;
+  margin-top: 5vw;
+  margin-bottom: 2vw;
+  background-color: var(--colorSecondary);
+  color: var(--colorMain);
+}
+
+.sammenligning > .header > .search {
+  display: flex;
+  align-items: center;
+}
+
+.sammenligning > .header > .submit {
+  display: flex;
+  align-items: center;
+  font-size: 5vh;
+}
+
+.sammenligning input {
+  width: 90%;
+  font-size: 5vh;
+  border: 5px solid var(--colorMain);
+  margin: auto;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.sammenligning > table > tbody > tr:nth-child(odd) {
+  background: var(--tableCell_1);
+}
+.sammenligning > table > tbody > tr:nth-child(even) {
+  background: var(--tableCell_2);
+}
+
+.sammenligning > table > thead {
+  background-color: var(--colorSecondary);
+  color: var(--colorMain);
+}
+
+.sammenligning > table {
+  margin-left: 5vw;
+  margin-right: 5vw;
+  margin-bottom: 10vw;
+}
+
+.sammenligning td {
+  padding: 2vh;
+  text-align: center;
+}
