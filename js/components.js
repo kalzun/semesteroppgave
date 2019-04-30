@@ -170,11 +170,9 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 	function sammenligning(){
 		// Allekommuner.people.getEducation(kommunenr1)
-		console.log(12, kommunenr1, kommunenr2)
 		const singleton = AlleKommunerSingleton.getInstance();
 		const kommune1 = singleton.getInfo(kommunenr1);
 		const kommune2 = singleton.getInfo(kommunenr2);
-		console.log(kommune1, kommune2)
 
 		// Sjekk om begge kommuner er definert.
 		if([kommune1, kommune2].some((kom) => kom === "None found")){
@@ -263,19 +261,3 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		}
 	}
 };
-
-function addChild(parent, input, type, attr){
-	const node = document.createElement(type);
-	if (input == 'undefined' || input === undefined){
-		node.innerHTML = null;
-		node.classList += "no-data";
-	}
-	else
-		node.innerHTML = input;
-	parent.appendChild(node);
-	return node;
-}
-
-function outputNotFound(){
-	console.log("En kommune er undefined.");
-}

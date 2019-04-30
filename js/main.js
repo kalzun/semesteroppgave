@@ -146,8 +146,6 @@ AlleKommunerSingleton = (function() {
 			return _loaded
 		}
 
-		loaded()
-
 		return {
 			// Følgende metoder blir tilgjengelige utenfor singleton:
 			setup: setup,
@@ -160,6 +158,7 @@ AlleKommunerSingleton = (function() {
 			getInhabitants: getInhabitants,
 			getEmploymentRates: getEmploymentRates,
 			getEducation: getEducation,
+			loaded: loaded,
 			isLoaded: isLoaded,
 
 		}
@@ -220,16 +219,16 @@ var DataSet = function(urls) {
 					var timer1 = performance.now();
 					console.log(`All datasets are loaded. It took approximately: ${timer1-timer0} milliseconds.`);
 
-					if (this.onload) {
-						console.log('kjører')
-						this.onload();
-					}
-
 					var t2 = performance.now();
 					this.singleton = AlleKommunerSingleton.getInstance();
 					this.singleton.setup(this.data);
+					this.singleton.loaded();
 					var t3 = performance.now();
 					console.log(`Datasets are setup in Singleton. It took approximately: ${t3-t2} milliseconds.`);
+
+					if (this.onload) {
+						this.onload();
+					}
 				});
 			});
 		});
@@ -442,33 +441,26 @@ var Kommuneobj = function(navn, id) {
 	this.people = new People(id);
 }
 
-// Helper-funksjon
-	function isContentInCategory(cat) {
-		return cat == "Ingen tilgjengelige data.";
-	}
+function search(){
+    const iD = event.target.id;
+    const domElem = document.getElementsByClassName(iD)[0];
+    const aParent = event.target.parentElement.parentElement;
+    const alleInputs = aParent.querySelectorAll("div > .inputfield");
+
+    ds.onload = function(){
+		removeLoadingMessage()
+        tabell(domElem, iD, alleInputs[0].value, alleInputs[1].value);
+    }
+    if (l.isLoaded() == true) {
+        ds.onload();
+    }else{
+        displayLoadingMessage(domElem)
+    }
+}
 
 var ds = new DataSet(allUrls);
 ds.load()
 var l = AlleKommunerSingleton.getInstance()
-
-function search(){
-	const iD = event.target.id;
-	const div = document.getElementsByClassName(iD)[0];
-	//if(event.target.id == "") return;
-	const aParent = event.target.parentElement.parentElement;
-	const alleInputs = aParent.querySelectorAll("div > .inputfield");
-	//console.log(aParent.children[event.target.id+"-input"]);
-
-	//const inputvalues = document.querySelectorAll(aParent > input);
-	ds.onload = function(){
-			tabell(div, iD, alleInputs[0].value, alleInputs[1].value);
-		}
-	console.log(l.isLoaded())
-	if (l.isLoaded()) {
-		ds.onload()
-	}
-	tabell(document.getElementsByClassName(event.target.id)[0], event.target.id, alleInputs[0].value, alleInputs[1].value);
-}
 
 document.addEventListener("DOMContentLoaded", function(event){
 	const searchButtons = document.querySelector(".searchbutton");
