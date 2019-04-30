@@ -206,6 +206,9 @@ var DataSet = function(urls) {
 		if (this.data) return "Data is already loaded.";
 		this.data = new Array();
 
+		// Gi tilbakmelding om at den laster inn.
+		//lastInn();
+
 		var timer0 = performance.now();
 		httpRequest(this.urls[0], (response0) => { 			// Befolkning
 			httpRequest(this.urls[1], (response1) => { 		// Sysselsatte
@@ -248,6 +251,7 @@ var People = function(id) {
 	this.inhabitants = this._kommuner.getInhabitants(id);
 	this.employment = this._kommuner.getEmploymentRates(id);
 	this.education = this._kommuner.getEducation(id);
+
 };
 
 People.prototype = {
@@ -256,6 +260,8 @@ People.prototype = {
 		return this._kommuner;
 	},
 
+
+
 	// INHABITANTS methods:
 
 	getInhabitantsGenderByYear: function(gender, year) {
@@ -263,6 +269,10 @@ People.prototype = {
 	},
 
 	getInhabitants: function() {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return [];
+
 		this.befolkningTotal = {};
 
 		// Kontroller hvilke kjønn har flest målinger.
@@ -276,7 +286,6 @@ People.prototype = {
 				this.befolkningTotal[year] = this.inhabitants[MENN][year] + this.inhabitants[KVINNER][year];
 			}
 		}
-
 
 		console.log("BefolkningTotal: " + this.befolkningTotal);
 		return this.befolkningTotal;
@@ -337,7 +346,6 @@ People.prototype = {
 		// Sjekk om det er noe tilgjengelige data,
 		// return null om ikke.
 		if (isContentInCategory(this.employment)) return [];
-
 		return this.employment[gender];
 	},
 
@@ -449,12 +457,9 @@ function search(){
 	//if(event.target.id == "") return;
 	const aParent = event.target.parentElement.parentElement;
 	const alleInputs = aParent.querySelectorAll("div > .inputfield");
-
 	//console.log(aParent.children[event.target.id+"-input"]);
 
 	//const inputvalues = document.querySelectorAll(aParent > input);
-	//console.log("Input values: " + inputvalues);
-	//console.log(inputvalues);
 	ds.onload = function(){
 			tabell(div, iD, alleInputs[0].value, alleInputs[1].value);
 		}
@@ -462,6 +467,7 @@ function search(){
 	if (l.isLoaded()) {
 		ds.onload()
 	}
+	tabell(document.getElementsByClassName(event.target.id)[0], event.target.id, alleInputs[0].value, alleInputs[1].value);
 }
 
 document.addEventListener("DOMContentLoaded", function(event){

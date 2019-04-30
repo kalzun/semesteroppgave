@@ -3,6 +3,7 @@
 
 // Tabell
 function tabell(div, category, kommunenr1, kommunenr2){
+	console.log("Tabell: " ,div, category);
 	switch (category){
 		case "oversikt":
 			oversikt();
@@ -37,6 +38,11 @@ function tabell(div, category, kommunenr1, kommunenr2){
 	function detaljer(){
 		const singleton = AlleKommunerSingleton.getInstance();
 		const kommune = singleton.getInfo(kommunenr1);
+
+		if (kommune === "None found"){
+			outputNotFound();
+			return;
+		}
 
 		const sisteBefolkning = kommune.people.getInhabitantsLastYearTotal();
 		const sisteSysselsatteProsent = kommune.people.getEmploymentRatesLastYear();
@@ -170,6 +176,12 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const kommune2 = singleton.getInfo(kommunenr2);
 		console.log(kommune1, kommune2)
 
+		// Sjekk om begge kommuner er definert.
+		if([kommune1, kommune2].some((kom) => kom === "None found")){
+			outputNotFound();
+			return;
+		}
+
 		const kommune1Menn = kommune1.people.getEmploymentRatesByGender(MENN);
 		const kommune1Kvinner = kommune1.people.getEmploymentRatesByGender(KVINNER);
 		const kommune2Menn = kommune2.people.getEmploymentRatesByGender(MENN);
@@ -262,4 +274,8 @@ function addChild(parent, input, type, attr){
 		node.innerHTML = input;
 	parent.appendChild(node);
 	return node;
+}
+
+function outputNotFound(){
+	console.log("En kommune er undefined.");
 }
