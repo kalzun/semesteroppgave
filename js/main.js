@@ -194,6 +194,9 @@ var DataSet = function(urls) {
 		if (this.data) return "Data is already loaded.";
 		this.data = new Array();
 
+		// Gi tilbakmelding om at den laster inn.
+		//lastInn();
+
 		var timer0 = performance.now();
 		httpRequest(this.urls[0], (response0) => { 			// Befolkning
 			httpRequest(this.urls[1], (response1) => { 		// Sysselsatte
@@ -206,6 +209,7 @@ var DataSet = function(urls) {
 					console.log(`All datasets are loaded. It took approximately: ${timer1-timer0} milliseconds.`);
 
 					if (this.onload) this.onload();
+
 					var t2 = performance.now();
 					this.singleton = AlleKommunerSingleton.getInstance();
 					this.singleton.setup(this.data);
@@ -433,3 +437,24 @@ var ds = new DataSet(allUrls);
 ds.load()
 var l = AlleKommunerSingleton.getInstance()
 
+function search(){
+	console.log(event.target.id);
+	//if(event.target.id == "") return;
+	console.log("PARENT " +  event.target.parentElement);
+	const aParent = event.target.parentElement.parentElement;
+	const alleInputs = aParent.querySelectorAll("div > .inputfield");
+	console.log(alleInputs[0].value);	
+	console.log(alleInputs[1].value);	
+	
+	//console.log(aParent.children[event.target.id+"-input"]);
+
+	//const inputvalues = document.querySelectorAll(aParent > input);
+	//console.log("Input values: " + inputvalues);
+	//console.log(inputvalues);
+	tabell(document.getElementsByClassName(event.target.id)[0], event.target.id, alleInputs[0].value, alleInputs[1].value);
+}
+
+document.addEventListener("DOMContentLoaded", function(event){
+	const searchButtons = document.querySelector(".searchbutton");
+	searchButtons.addEventListener("click", search);
+});

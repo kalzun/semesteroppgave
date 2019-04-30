@@ -3,14 +3,15 @@
 
 // Tabell
 function tabell(div, category, kommunenr1, kommunenr2){
+	console.log("Tabell: " ,div, category);
 	switch (category){
-		case "Oversikt":
+		case "oversikt":
 			oversikt();
 			break;
-		case "Detaljer":
+		case "detaljer":
 			detaljer();
 			break;
-		case "Sammenligning":
+		case "sammenligning":
 			sammenligning();
 			break;
 	}
