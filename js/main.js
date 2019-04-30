@@ -25,6 +25,7 @@ AlleKommunerSingleton = (function() {
 	var _inhabitants = [];
 	var _employmentRates = [];
 	var _education = [];
+	var _isLoaded = false;
 
 
 	function init(){
@@ -137,6 +138,14 @@ AlleKommunerSingleton = (function() {
 			return "Ingen tilgjengelige data.";
 		}
 
+		function loaded(){
+			_isLoaded = true;
+		}
+
+		function isLoaded(){
+			return _isLoaded;
+		}
+
 		return {
 			// Følgende metoder blir tilgjengelige utenfor singleton:
 			setup: setup,
@@ -149,6 +158,8 @@ AlleKommunerSingleton = (function() {
 			getInhabitants: getInhabitants,
 			getEmploymentRates: getEmploymentRates,
 			getEducation: getEducation,
+			loaded: loaded,
+			isLoaded: isLoaded,
 
 		}
 	}
@@ -172,7 +183,7 @@ function httpRequest(url, callback) {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			//callback(xhr.responseText);
 			// Uncomment to test for latency:
-			setTimeout(() => {callback(xhr.responseText);}, 5000);
+			setTimeout(() => {callback(xhr.responseText);}, 2000);
 		}
 	};
 	xhr.send();
@@ -213,6 +224,8 @@ var DataSet = function(urls) {
 					var t2 = performance.now();
 					this.singleton = AlleKommunerSingleton.getInstance();
 					this.singleton.setup(this.data);
+					this.singleton.loaded();
+					console.log("Is loaded: " + this.singleton.isLoaded());
 					var t3 = performance.now();
 					console.log(`Datasets are setup in Singleton. It took approximately: ${t3-t2} milliseconds.`);
 				});
@@ -445,13 +458,23 @@ function search(){
 	const alleInputs = aParent.querySelectorAll("div > .inputfield");
 	console.log(alleInputs[0].value);	
 	console.log(alleInputs[1].value);	
+
+	clickevent = event;
 	
 	//console.log(aParent.children[event.target.id+"-input"]);
 
 	//const inputvalues = document.querySelectorAll(aParent > input);
 	//console.log("Input values: " + inputvalues);
 	//console.log(inputvalues);
-	tabell(document.getElementsByClassName(event.target.id)[0], event.target.id, alleInputs[0].value, alleInputs[1].value);
+	ds.load = tabell.bind(
+				document.getElementsByClassName(event.target.id)[0], 
+				event.target.id, 
+				alleInputs[0].value, 
+				alleInputs[1].value);
+	
+	if (l.isLoaded()){
+		ds.onload();
+	}
 }
 
 document.addEventListener("DOMContentLoaded", function(event){
