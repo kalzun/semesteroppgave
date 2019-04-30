@@ -261,7 +261,7 @@ People.prototype = {
 			}
 		}
 
-
+		console.log("BefolkningTotal: " + this.befolkningTotal);
 		return this.befolkningTotal;
 	},
 
