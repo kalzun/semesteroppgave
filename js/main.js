@@ -25,6 +25,7 @@ AlleKommunerSingleton = (function() {
 	var _inhabitants = [];
 	var _employmentRates = [];
 	var _education = [];
+	var _loaded = false
 
 
 	function init(){
@@ -137,6 +138,16 @@ AlleKommunerSingleton = (function() {
 			return "Ingen tilgjengelige data.";
 		}
 
+		function loaded(){
+			_loaded = true
+		}
+
+		function isLoaded(){
+			return _loaded
+		}
+
+		loaded()
+
 		return {
 			// Følgende metoder blir tilgjengelige utenfor singleton:
 			setup: setup,
@@ -149,6 +160,7 @@ AlleKommunerSingleton = (function() {
 			getInhabitants: getInhabitants,
 			getEmploymentRates: getEmploymentRates,
 			getEducation: getEducation,
+			isLoaded: isLoaded,
 
 		}
 	}
@@ -170,9 +182,9 @@ function httpRequest(url, callback) {
 
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
-			callback(xhr.responseText);
+			//callback(xhr.responseText);
 			// Uncomment to test for latency:
-			//setTimeout(() => {callback(xhr.responseText);}, 2000);
+			setTimeout(() => {callback(xhr.responseText);}, 2000);
 		}
 	};
 	xhr.send();
@@ -205,7 +217,11 @@ var DataSet = function(urls) {
 					var timer1 = performance.now();
 					console.log(`All datasets are loaded. It took approximately: ${timer1-timer0} milliseconds.`);
 
-					if (this.onload) this.onload();
+					if (this.onload) {
+						console.log('kjører')
+						this.onload();
+					}
+
 					var t2 = performance.now();
 					this.singleton = AlleKommunerSingleton.getInstance();
 					this.singleton.setup(this.data);
@@ -262,10 +278,15 @@ People.prototype = {
 		}
 
 
+		console.log("BefolkningTotal: " + this.befolkningTotal);
 		return this.befolkningTotal;
 	},
 
 	getInhabitantsLastYearTotal: function() {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return null;
+
 		this.menn = this.inhabitants[MENN];
 		this.kvinner = this.inhabitants[KVINNER];
 
@@ -288,10 +309,16 @@ People.prototype = {
 	// EMPLOYMENT methods:
 
 	getEmploymentRates: function() {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return [];
+
 		return this.employment[BEGGE];
 	},
 
 	getEmploymentRatesLastYear: function() {
+		if (isContentInCategory(this.employment)) return [];
+
 		this.emp = this.employment[BEGGE];
 		this.empAllNumbers = Object.keys(this.employment[BEGGE]).sort();
 		this.empLastNumber = this.emp[this.empAllNumbers[this.empAllNumbers.length-1]];
@@ -299,14 +326,25 @@ People.prototype = {
 	},
 
 	getEmploymentRatesByYear: function(year) {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return [];
+
 		return this.employment[BEGGE][year];
 	},
 
 	getEmploymentRatesByGender: function(gender) {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return [];
+
 		return this.employment[gender];
 	},
 
 	getEmploymentRatesByGenderAndYear: function(gender, year) {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return [];
 		return this.employment[gender][year];
 	},
 
@@ -396,7 +434,37 @@ var Kommuneobj = function(navn, id) {
 	this.people = new People(id);
 }
 
+// Helper-funksjon
+	function isContentInCategory(cat) {
+		return cat == "Ingen tilgjengelige data.";
+	}
+
 var ds = new DataSet(allUrls);
 ds.load()
 var l = AlleKommunerSingleton.getInstance()
 
+function search(){
+	const iD = event.target.id;
+	const div = document.getElementsByClassName(iD)[0];
+	//if(event.target.id == "") return;
+	const aParent = event.target.parentElement.parentElement;
+	const alleInputs = aParent.querySelectorAll("div > .inputfield");
+
+	//console.log(aParent.children[event.target.id+"-input"]);
+
+	//const inputvalues = document.querySelectorAll(aParent > input);
+	//console.log("Input values: " + inputvalues);
+	//console.log(inputvalues);
+	ds.onload = function(){
+			tabell(div, iD, alleInputs[0].value, alleInputs[1].value);
+		}
+	console.log(l.isLoaded())
+	if (l.isLoaded()) {
+		ds.onload()
+	}
+}
+
+document.addEventListener("DOMContentLoaded", function(event){
+	const searchButtons = document.querySelector(".searchbutton");
+	searchButtons.addEventListener("click", search);
+});

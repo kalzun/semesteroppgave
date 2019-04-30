@@ -4,13 +4,13 @@
 // Tabell
 function tabell(div, category, kommunenr1, kommunenr2){
 	switch (category){
-		case "Oversikt":
+		case "oversikt":
 			oversikt();
 			break;
-		case "Detaljer":
+		case "detaljer":
 			detaljer();
 			break;
-		case "Sammenligning":
+		case "sammenligning":
 			sammenligning();
 			break;
 	}
@@ -22,12 +22,14 @@ function tabell(div, category, kommunenr1, kommunenr2){
 	    let table = addChild(div, null, 'table');
 	    const tHead = addChild(table, null, 'tHead');
 	    const tBody = addChild(table, null, 'tbody');
-	    const headerRow = addChild(tHead, 'Kommunenavn', 'th');
-	    addChild(tHead, 'Kommunenummer', 'th');
+	    const headerRow = addChild(tHead, 'Kommunenummer', 'th');
+	    addChild(tHead, 'Kommunenavn', 'th');
+	    addChild(tHead, 'Siste målte befolkningsantall', 'th');
 
 	    for (let index in alleKommuner) {
-	        const currentRow = addChild(tBody, alleKommuner[index].navn, 'tr');
-	        addChild(currentRow, alleKommuner[index].id, 'td');
+	        const currentRow = addChild(tBody, alleKommuner[index].id, 'tr');
+	        addChild(currentRow, alleKommuner[index].navn, 'td');
+	        addChild(currentRow, alleKommuner[index].people.getInhabitantsLastYearTotal(), 'td');
 	    }
 	}
 
@@ -162,10 +164,11 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 	function sammenligning(){
 		// Allekommuner.people.getEducation(kommunenr1)
-
+		console.log(12, kommunenr1, kommunenr2)
 		const singleton = AlleKommunerSingleton.getInstance();
 		const kommune1 = singleton.getInfo(kommunenr1);
 		const kommune2 = singleton.getInfo(kommunenr2);
+		console.log(kommune1, kommune2)
 
 		const kommune1Menn = kommune1.people.getEmploymentRatesByGender(MENN);
 		const kommune1Kvinner = kommune1.people.getEmploymentRatesByGender(KVINNER);
@@ -251,7 +254,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 function addChild(parent, input, type, attr){
 	const node = document.createElement(type);
-	if (input == 'undefined'){
+	if (input == 'undefined' || input === undefined){
 		node.innerHTML = null;
 		node.classList += "no-data";
 	}
