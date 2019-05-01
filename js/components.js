@@ -44,6 +44,8 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			return;
 		}
 
+		removeTable(div, 2); // Fjerne tabell funnet som child av div, og fjern 2 tabeller
+
 		const sisteBefolkning = kommune.people.getInhabitantsLastYearTotal();
 		const sisteSysselsatteProsent = kommune.people.getEmploymentRatesLastYear();
 		const sisteSysselsatteAntall = Math.floor(sisteBefolkning * sisteSysselsatteProsent / 100);
@@ -180,6 +182,8 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			return;
 		}
 
+		removeTable(div, 1);
+
 		const kommune1Menn = kommune1.people.getEmploymentRatesByGender(MENN);
 		const kommune1Kvinner = kommune1.people.getEmploymentRatesByGender(KVINNER);
 		const kommune2Menn = kommune2.people.getEmploymentRatesByGender(MENN);
@@ -253,10 +257,10 @@ function tabell(div, category, kommunenr1, kommunenr2){
 				}
 			}
 			if (largestDiff["menn"][0] != undefined) {
-				largestDiff["menn"][0].setAttribute("style", "green-highlight")
+				largestDiff["menn"][0].setAttribute("style", "background-color: green")//"green-highlight")
 			}
 			if (largestDiff["kvinner"][0] != undefined) {
-				largestDiff["kvinner"][0].setAttribute("class", "green-highlight")
+				largestDiff["kvinner"][0].setAttribute("style", "background-color: green")//"green-highlight")
 			}
 		}
 	}
