@@ -445,12 +445,25 @@ var Kommuneobj = function(navn, id) {
 function search(){
     const iD = event.target.id;
     const domElem = document.getElementsByClassName(iD)[0];
+    console.log(domElem)
     const aParent = event.target.parentElement.parentElement;
-    const alleInputs = aParent.querySelectorAll("div > .inputfield");
+    const alleInputs = aParent.querySelectorAll("div .search");
+    console.log(alleInputs)
+
+    switch (iD){
+    	case "detaljer":
+			var kommunenr1 = alleInputs[0].value;
+			var kommunenr2 = undefined;
+    		break;
+    	case "sammenligning":
+    		var kommunenr1 = alleInputs[0].value;
+    		var kommunenr2 = alleInputs[1].value;
+    		break;
+    };
 
     ds.onload = function(){
 		removeLoadingMessage()
-        tabell(domElem, iD, alleInputs[0].value, alleInputs[1].value);
+        tabell(domElem, iD, kommunenr1, kommunenr2);
     }
     if (l.isLoaded() == true) {
         ds.onload();
@@ -459,11 +472,15 @@ function search(){
     }
 }
 
+
+//Må gjøres penere
 var ds = new DataSet(allUrls);
 ds.load()
 var l = AlleKommunerSingleton.getInstance()
 
 document.addEventListener("DOMContentLoaded", function(event){
-	const searchButtons = document.querySelector(".searchbutton");
-	searchButtons.addEventListener("click", search);
+	const searchButtons = document.querySelectorAll(".searchbutton");
+	for (let index = 0; index < 2; index++){
+		searchButtons[index].addEventListener("click", search);
+	}
 });
