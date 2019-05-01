@@ -228,8 +228,6 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 		const tableData = tBody.childNodes;
 		// Itererer gjennom hvert år (kolonne) i tabellen
-		console.log(tableData[0].childElementCount)
-		console.log(tableData[0])
 		for (let colIndex = 2; colIndex <= tableData[0].childElementCount; colIndex++) {
 			let largestDiff = {
 				"menn": [undefined, null],
