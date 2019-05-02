@@ -25,6 +25,7 @@ AlleKommunerSingleton = (function() {
 	var _inhabitants = [];
 	var _employmentRates = [];
 	var _education = [];
+	var _loaded = false
 
 
 	function init(){
@@ -137,6 +138,14 @@ AlleKommunerSingleton = (function() {
 			return "Ingen tilgjengelige data.";
 		}
 
+		function loaded(){
+			_loaded = true
+		}
+
+		function isLoaded(){
+			return _loaded
+		}
+
 		return {
 			// Følgende metoder blir tilgjengelige utenfor singleton:
 			setup: setup,
@@ -149,6 +158,8 @@ AlleKommunerSingleton = (function() {
 			getInhabitants: getInhabitants,
 			getEmploymentRates: getEmploymentRates,
 			getEducation: getEducation,
+			loaded: loaded,
+			isLoaded: isLoaded,
 
 		}
 	}
@@ -194,6 +205,9 @@ var DataSet = function(urls) {
 		if (this.data) return "Data is already loaded.";
 		this.data = new Array();
 
+		// Gi tilbakmelding om at den laster inn.
+		//lastInn();
+
 		var timer0 = performance.now();
 		httpRequest(this.urls[0], (response0) => { 			// Befolkning
 			httpRequest(this.urls[1], (response1) => { 		// Sysselsatte
@@ -205,12 +219,17 @@ var DataSet = function(urls) {
 					var timer1 = performance.now();
 					console.log(`All datasets are loaded. It took approximately: ${timer1-timer0} milliseconds.`);
 
-					if (this.onload) this.onload();
 					var t2 = performance.now();
 					this.singleton = AlleKommunerSingleton.getInstance();
 					this.singleton.setup(this.data);
+					this.singleton.loaded();
 					var t3 = performance.now();
 					console.log(`Datasets are setup in Singleton. It took approximately: ${t3-t2} milliseconds.`);
+
+					if (this.onload) {
+						this.onload();
+					}
+					tabell(document.querySelector('.oversikt'), 'oversikt') // Konstruere oversiktstabell
 				});
 			});
 		});
@@ -232,6 +251,7 @@ var People = function(id) {
 	this.inhabitants = this._kommuner.getInhabitants(id);
 	this.employment = this._kommuner.getEmploymentRates(id);
 	this.education = this._kommuner.getEducation(id);
+
 };
 
 People.prototype = {
@@ -240,6 +260,8 @@ People.prototype = {
 		return this._kommuner;
 	},
 
+
+
 	// INHABITANTS methods:
 
 	getInhabitantsGenderByYear: function(gender, year) {
@@ -247,6 +269,10 @@ People.prototype = {
 	},
 
 	getInhabitants: function() {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return [];
+
 		this.befolkningTotal = {};
 
 		// Kontroller hvilke kjønn har flest målinger.
@@ -261,11 +287,15 @@ People.prototype = {
 			}
 		}
 
-
+		console.log("BefolkningTotal: " + this.befolkningTotal);
 		return this.befolkningTotal;
 	},
 
 	getInhabitantsLastYearTotal: function() {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return null;
+
 		this.menn = this.inhabitants[MENN];
 		this.kvinner = this.inhabitants[KVINNER];
 
@@ -288,10 +318,16 @@ People.prototype = {
 	// EMPLOYMENT methods:
 
 	getEmploymentRates: function() {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return [];
+
 		return this.employment[BEGGE];
 	},
 
 	getEmploymentRatesLastYear: function() {
+		if (isContentInCategory(this.employment)) return [];
+
 		this.emp = this.employment[BEGGE];
 		this.empAllNumbers = Object.keys(this.employment[BEGGE]).sort();
 		this.empLastNumber = this.emp[this.empAllNumbers[this.empAllNumbers.length-1]];
@@ -299,19 +335,46 @@ People.prototype = {
 	},
 
 	getEmploymentRatesByYear: function(year) {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return [];
+
 		return this.employment[BEGGE][year];
 	},
 
 	getEmploymentRatesByGender: function(gender) {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return [];
 		return this.employment[gender];
 	},
 
 	getEmploymentRatesByGenderAndYear: function(gender, year) {
+		// Sjekk om det er noe tilgjengelige data,
+		// return null om ikke.
+		if (isContentInCategory(this.employment)) return [];
 		return this.employment[gender][year];
 	},
 
 
 	// EDUCATION methods:
+
+	getEduCodes() {
+		const allCodes = ["01", "02a", "11", "03a", "04a", "09a"];
+		return allCodes;
+	},
+
+	getEduName(eduCode) {
+		const categories = {
+			"01": "Grunnskolenivå",
+	    	"02a": "Videregående skole-nivå",
+	    	"11": "Fagskolenivå",
+	    	"03a": "Universitets- og høgskolenivå kort",
+	    	"04a": "Universitets- og høgskolenivå lang",
+	     	"09a": "Uoppgitt eller ingen fullført utdanning"
+    	};
+    	return categories[eduCode];
+	},
 
 	getAllEducationRates() {
 		const educodes = [
@@ -373,13 +436,51 @@ People.prototype = {
 	}
 }
 
+
 var Kommuneobj = function(navn, id) {
 	this.navn = navn;
 	this.id = id;
 	this.people = new People(id);
 }
 
+// Kjøres når brukeren trykker på en søkeknapp
+function search(){
+    const iD = event.target.id;
+    const domElem = document.getElementsByClassName(iD)[0];
+    const aParent = event.target.parentElement.parentElement;
+    const alleInputs = aParent.querySelectorAll("div .search");
+
+    switch (iD){
+    	case "detaljer":
+			var kommunenr1 = alleInputs[0].value;
+			var kommunenr2 = undefined;
+    		break;
+    	case "sammenligning":
+    		var kommunenr1 = alleInputs[0].value;
+    		var kommunenr2 = alleInputs[1].value;
+    		break;
+    };
+
+    ds.onload = function(){
+		removeLoadingMessage()
+        tabell(domElem, iD, kommunenr1, kommunenr2);
+    }
+    if (l.isLoaded() == true) {
+        ds.onload();
+    }else{
+        displayLoadingMessage(domElem)
+    }
+}
+
+
+//Må gjøres penere
 var ds = new DataSet(allUrls);
 ds.load()
 var l = AlleKommunerSingleton.getInstance()
 
+document.addEventListener("DOMContentLoaded", function(event){
+	const searchButtons = document.querySelectorAll(".searchbutton");
+	for (let index = 0; index < 2; index++){
+		searchButtons[index].addEventListener("click", search);
+	}
+});
