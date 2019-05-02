@@ -445,8 +445,10 @@ var Kommuneobj = function(navn, id) {
 function search(){
     const iD = event.target.id;
     const domElem = document.getElementsByClassName(iD)[0];
+    console.log(domElem)
     const aParent = event.target.parentElement.parentElement;
-    const alleInputs = aParent.querySelectorAll("div > .inputfield");
+    const alleInputs = aParent.querySelectorAll("div .search");
+    console.log(alleInputs)
 
     switch (iD){
     	case "detaljer":
