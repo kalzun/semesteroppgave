@@ -88,13 +88,13 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		addChild(headerRow, 'Antall', 'th');
 		addChild(headerRow, 'Prosent', 'th');
 
-		addChild(befRow, sisteBefolkning, 'td');
-		addChild(sysselRow, sisteSysselsatteAntall, 'td');
-		addChild(sysselRow, sisteSysselsatteProsent, 'td');
-		addChild(utdKortRow, sisteUtdanningAntallUniKort, 'td');
-		addChild(utdKortRow, sisteUtdanningProsentUniKort, 'td');
-		addChild(utdLangRow, sisteUtdanningAntallUniLang, 'td');
-		addChild(utdLangRow, sisteUtdanningProsentUniLang, 'td');
+		addChild(befRow, sisteBefolkning, 'td', "class", "data-cell");
+		addChild(sysselRow, sisteSysselsatteAntall, 'td', "class", "data-cell");
+		addChild(sysselRow, sisteSysselsatteProsent, 'td', "class", "data-cell");
+		addChild(utdKortRow, sisteUtdanningAntallUniKort, 'td', "class", "data-cell");
+		addChild(utdKortRow, sisteUtdanningProsentUniKort, 'td', "class", "data-cell");
+		addChild(utdLangRow, sisteUtdanningAntallUniLang, 'td', "class", "data-cell");
+		addChild(utdLangRow, sisteUtdanningProsentUniLang, 'td', "class", "data-cell");
 
 
 /*
@@ -197,15 +197,15 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 		//Presentasjon
 		// Konstruerer tabellen
-		console.log("Creating table...")
-		let table = addChild(div, null, 'table')
+		let table = addChild(div, null, 'table');
 		const tHead = addChild(table, null, 'tHead');
 		const tBody = addChild(table, null, 'tbody');
-		const headerRow = addChild(tHead, 'Kommune (Kjønn)/År', 'tr');
-		const kommune1MennRow = addChild(tBody, `${kommune1['navn']} (Menn)`, 'tr');
-		const kommune2MennRow = addChild(tBody, `${kommune2['navn']} (Menn)`, 'tr');
-		const kommune1KvinnerRow = addChild(tBody, `${kommune1['navn']} (Kvinner)`, 'tr');
-		const kommune2KvinnerRow = addChild(tBody, `${kommune2['navn']} (Kvinner)`, 'tr');
+		const headerRow = addChild(tHead, 'Kommune (Kjønn)/År', 'tr', "class", "header-row");
+		// Eksempel input på addChild: Oslo kommune (0301) (Menn)
+		const kommune1MennRow = addChild(tBody, `${kommune1['navn']} (${kommunenr1}) (Menn)`, 'tr', "class", "data-cell");
+		const kommune2MennRow = addChild(tBody, `${kommune2['navn']} (${kommunenr2}) (Menn)`, 'tr', "class", "data-cell");
+		const kommune1KvinnerRow = addChild(tBody, `${kommune1['navn']} (${kommunenr1}) (Kvinner)`, 'tr', "class", "data-cell");
+		const kommune2KvinnerRow = addChild(tBody, `${kommune2['navn']} (${kommunenr2}) (Kvinner)`, 'tr', "class", "data-cell");
 
 		//Years-objektet henter årstall fra det lengste av menn(1/2)/kvinner(1/2) objektene.
 		let years = Object.keys(kommune1Menn);
@@ -263,10 +263,10 @@ function tabell(div, category, kommunenr1, kommunenr2){
 				}
 			}
 			if (largestDiff["menn"][0] != undefined) {
-				largestDiff["menn"][0].setAttribute("style", "background-color: green")//("class", "green-highlight")
+				largestDiff["menn"][0].setAttribute("style", "background-color: green")//("class", "green-highlight");
 			}
 			if (largestDiff["kvinner"][0] != undefined) {
-				largestDiff["kvinner"][0].setAttribute("style", "background-color: green")//("class", "green-highlight")
+				largestDiff["kvinner"][0].setAttribute("style", "background-color: green")//("class", "green-highlight");
 			}
 		}
 	}

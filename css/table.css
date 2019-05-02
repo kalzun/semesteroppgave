@@ -1,22 +1,22 @@
-.sammenligning > table > tbody > tr:nth-child(odd) {
+table > tbody > tr:nth-child(odd) {
   background: var(--tableCell_1);
 }
-.sammenligning > table > tbody > tr:nth-child(even) {
+table > tbody > tr:nth-child(even) {
   background: var(--tableCell_2);
 }
 
-.sammenligning > table > thead {
+table > thead {
   background-color: var(--colorSecondary);
   color: var(--colorMain);
 }
 
-.sammenligning > table {
+table {
   margin-left: 5vw;
   margin-right: 5vw;
   margin-bottom: 10vw;
 }
 
-.sammenligning td {
+td {
   padding: 2vh;
   text-align: center;
 }
