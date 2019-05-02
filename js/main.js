@@ -501,7 +501,7 @@ function regexChecker(event){
 	for (i in names) {
 		if (names[i].search(regexp) !== -1){
 			console.log("Navn: " + names[i]);
-			outputRegexHit(names[i], output);
+			//outputRegexHit(names[i], output);
 		}
 	}
 
