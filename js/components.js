@@ -119,7 +119,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			const utdanningHistorisk = kommune.people.getAllEducationRates();
 
 			//Presentasjon
-			let table = addChild(div, null, "table")
+			let table = addChild(div, null, "table", "class", "hisoric-table")
 			const tHead = addChild(table, null, "tHead");
 			const tBody = addChild(table, null, "tbody");
 			const headerRow = addChild(tHead, null, "tr");

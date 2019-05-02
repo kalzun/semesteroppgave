@@ -3,7 +3,7 @@
 function addChild(parent, input, type, attrType, attrVal){
     const node = document.createElement(type);
     if (input == 'undefined' || input === undefined){
-        node.innerHTML = "N/A";
+        node.innerHTML = "-";
         node.classList += "no-data";
     }
     else
@@ -14,6 +14,21 @@ function addChild(parent, input, type, attrType, attrVal){
     }
     parent.appendChild(node);
     return node;
+}
+
+function getYears(dataArray){
+    let allYears = [];
+    for (i in dataArray) {
+        for (gender in dataArray[i]) {
+            let currentYears = Object.keys(dataArray[i][gender]);
+            for (j in currentYears) {
+                if (allYears.includes(currentYears[j]) != true) {
+                    allYears.push.apply(allYears, currentYears)
+                }
+            }
+        }
+    }
+    console.log(allYears)
 }
 
 // Legger til tekst som forteller brukeren at en eller begge kommunenr han søkte på ikke finnes, samt hvilke(t)
