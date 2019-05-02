@@ -1,29 +1,14 @@
-table > tbody > tr:nth-child(odd) {
-  background: var(--tableCell_1);
-}
-table > tbody > tr:nth-child(even) {
-  background: var(--tableCell_2);
-}
-
-table > thead {
-  background-color: var(--colorSecondary);
-  color: var(--colorMain);
-}
 table {
-  margin-left: 5vw;
-  margin-right: 5vw;
-  margin-bottom: 10vw;
+  width: 100%;
 
   font-size: 1.5vw;
 }
-td {
-  padding: 1vw 0.5vw;
-  text-align: center;
-}
-tr {
-  
-}
+
+
 .green-highlight {
   background-color: #c6ffab;
+}
+.no-data {
+  background-color: #f0ee8f;
 }
 
