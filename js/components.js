@@ -115,10 +115,15 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			let table = addChild(div, null, 'table')
 			const tHead = addChild(table, null, 'tHead');
 			const tBody = addChild(table, null, 'tbody');
-			const headerRow = addChild(tHead, ``, 'tr');
+			const headerRow = addChild(tHead, null, 'tr');
+			addChild(headerRow, "kategori/år", 'th');
 
-			const befRow = addChild(tBody, 'Befolkning', 'tr');
-			const sysRow = addChild(tBody, 'Sysselsatte', 'tr');
+			const befRow = addChild(tBody, null, 'tr');
+			const sysRow = addChild(tBody, null, 'tr');
+
+			addChild(befRow, 'Befolkning', 'td');
+			addChild(sysRow, 'Sysselsatte', 'td')
+
 			const eduCodes = kommune.people.getEduCodes();
 
 			let eduRow = {};
@@ -128,14 +133,12 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			}
 
 			// Bruker education-datasett for å finne flest år.
-
 			// Sjekker kun antall år i grunnskole for menn og kvinner, da det er rimelig å anta at det er her det er kjørt flest målinger.
 			/* Vurdere å gå over til metode hvor vi itererer gjennom alle utdanningskategorier og kjønn og samler alle år til et array */
 			const eduYears = Object.keys(utdanningHistorisk[GRUNNSKOLE][MENN]);
 			if (Object.keys(utdanningHistorisk[GRUNNSKOLE][KVINNER]).length > eduYears.length) eduYears = Object.keys(utdanningHistorisk[GRUNNSKOLE][KVINNER]).length;
 
 			for (let i = 0, len = eduYears.length; i < len; i++) {
-				addChild(headerRow, ``, 'th');
 				addChild(headerRow, `${eduYears[i]}`, 'th');
 				addChild(befRow, `${befolkningHistorisk[eduYears[i]]}`, 'td');
 				addChild(sysRow, `${sysselsatteHistorisk[eduYears[i]]}`, 'td');
@@ -143,7 +146,8 @@ function tabell(div, category, kommunenr1, kommunenr2){
 				for (let j = 0, eduLen = eduCodes.length; j < eduLen; j++){
 					const avgEduPerc = ((utdanningHistorisk[eduCodes[j]][MENN][eduYears[i]] +
 										utdanningHistorisk[eduCodes[j]][KVINNER][eduYears[i]]) / 2).toFixed(2);
-					addChild(eduRow[j], `${avgEduPerc}`, 'td');
+					const currentRow = addChild(eduRow[j], null, 'td');
+					addChild(currentRow, `${avgEduPerc}`, 'td');
 				}
 			}
 		})()
@@ -202,10 +206,15 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const tBody = addChild(table, null, 'tbody');
 		const headerRow = addChild(tHead, 'Kommune (Kjønn)/År', 'tr');
 		// Eksempel input på addChild: Oslo kommune (0301) (Menn)
-		const kommune1MennRow = addChild(tBody, `${kommune1['navn']} (${kommunenr1}) (Menn)`, 'tr');
-		const kommune2MennRow = addChild(tBody, `${kommune2['navn']} (${kommunenr2}) (Menn)`, 'tr');
-		const kommune1KvinnerRow = addChild(tBody, `${kommune1['navn']} (${kommunenr1}) (Kvinner)`, 'tr');
-		const kommune2KvinnerRow = addChild(tBody, `${kommune2['navn']} (${kommunenr2}) (Kvinner)`, 'tr');
+		const kommune1MennRow = addChild(tBody, null, 'tr');
+		const kommune2MennRow = addChild(tBody, null, 'tr')
+		const kommune1KvinnerRow = addChild(tBody, null, 'tr');
+		const kommune2KvinnerRow = addChild(tBody, null, 'tr');
+
+		addChild(kommune1MennRow, `${kommune1['navn']} (${kommunenr1}) (Menn)`, 'td');
+		addChild(kommune2MennRow, `${kommune2['navn']} (${kommunenr2}) (Menn)`, 'td');
+		addChild(kommune1KvinnerRow, `${kommune1['navn']} (${kommunenr1}) (Kvinner)`, 'td');
+		addChild(kommune2KvinnerRow, `${kommune2['navn']} (${kommunenr2}) (Kvinner)`, 'td');
 
 		//Years-objektet henter årstall fra det lengste av menn(1/2)/kvinner(1/2) objektene.
 		let years = Object.keys(kommune1Menn);
@@ -221,8 +230,9 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 		console.log('Adding data to table...');
 		for (let i = 0; i < years.length; i++) {
-			addChild(headerRow, years[i], 'th', "class", "row-header");
-			addChild(kommune1MennRow, kommune1Menn[years[i]], 'td', "class", "data-cell");
+			addChild(headerRow, years[i], 'th', "class", "");
+			let x = addChild(kommune1MennRow, kommune1Menn[years[i]], 'td', "class", "data-cell");
+			console.log(x)
 			addChild(kommune1KvinnerRow, kommune1Kvinner[years[i]], 'td', "class", "data-cell");
 			addChild(kommune2MennRow, kommune2Menn[years[i]], 'td', "class", "data-cell");
 			addChild(kommune2KvinnerRow, kommune2Kvinner[years[i]], 'td', "class", "data-cell");
@@ -266,7 +276,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 				largestDiff["menn"][0].setAttribute("class", "green-highlight");
 			}
 			if (largestDiff["kvinner"][0] != undefined) {
-				largestDiff["kvinner"][0].setAttribute("class", "green-highlight");
+				largestDiff["kvinner"][0].classList.add("green-highlight");
 			}
 		}
 	}
