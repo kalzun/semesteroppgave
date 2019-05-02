@@ -1,6 +1,8 @@
 #tabs > .active {
     display: flex;
     flex-direction: column;
+
+    margin: 5vw;
 }
 #tabs > div:not(.active) {
     display: none;
@@ -17,7 +19,6 @@
 
     background-color: var(--colorSecondary);
     color: var(--colorMain);
-    margin: 10vw;
     padding: 5vw;
 }
 
