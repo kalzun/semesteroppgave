@@ -490,8 +490,35 @@ document.addEventListener("DOMContentLoaded", function(event){
 	// Input-listener som sjekker for hver bokstav skrevet inn
 	inputFields = document.querySelectorAll(".search");
 	for (let i = 0; i < inputFields.length; i++){
-		inputFields[i].addEventListener("keyup", () => console.log("Up " + event.target))
+		inputFields[i].addEventListener("keyup", regexChecker);
 	}
 });
+
+function regexChecker(event){
+	const output = document.querySelector(".output");
+	const names = l.getAllNames();
+	let regexp = new RegExp(`${event.target.value}`);
+	for (i in names) {
+		if (names[i].search(regexp) !== -1){
+			console.log("Navn: " + names[i]);
+			outputRegexHit(names[i], output);
+		}
+	}
+
+}
+
+function clearOutput(out){
+	n = out
+	for (let i = 0, len = out.childNodes.length; i < out.childNodes.length; i++) {
+		//console.log("OUTPUT" + out.children[i]);
+		out.removeChild(out.childNodes[i]);
+	}
+}
+
+function outputRegexHit(hits, output){
+	const li = document.createElement("li");
+	li.innerHTML = hits;
+	output.appendChild(li);
+}
 
 
