@@ -77,7 +77,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		let table = addChild(div, null, "table")
 		const tHead = addChild(table, null, "tHead");
 		const tBody = addChild(table, null, "tbody");
-		const headerRow = addChild(tHead, `${kommune["navn"]}`, "tr");
+		const headerRow = addChild(tHead, null, "tr");
 		//const infoRow = addChild(tBody, null, "tr");
 
 		console.log("Adding data to table...");
@@ -86,6 +86,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const utdKortRow = addChild(tBody, null, "tr");
 		const utdLangRow = addChild(tBody, null, "tr");
 
+		addChild(headerRow, `${kommune["navn"]}`, "th");
 		addChild(befRow, "Befolkning", "td");
 		addChild(sysRow, "Sysselsatte", "td");
 		addChild(utdKortRow, "Utdanning (Universitets- og høgskolenivå kort)", "td");
@@ -122,7 +123,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			const tHead = addChild(table, null, "tHead");
 			const tBody = addChild(table, null, "tbody");
 			const headerRow = addChild(tHead, null, "tr");
-			addChild(headerRow, "kategori/år", "th");
+			addChild(headerRow, "Kategori/år", "th");
 
 			const befRow = addChild(tBody, null, "tr");
 			const sysRow = addChild(tBody, null, "tr");
@@ -211,17 +212,18 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		let table = addChild(div, null, "table");
 		const tHead = addChild(table, null, "tHead");
 		const tBody = addChild(table, null, "tbody");
-		const headerRow = addChild(tHead, "Kommune (Kjønn)/År", "tr");
+		const headerRow = addChild(tHead, null, "tr");
 		// Eksempel input på addChild: Oslo kommune (0301) (Menn)
 		const kommune1MennRow = addChild(tBody, null, "tr");
 		const kommune2MennRow = addChild(tBody, null, "tr")
 		const kommune1KvinnerRow = addChild(tBody, null, "tr");
 		const kommune2KvinnerRow = addChild(tBody, null, "tr");
 
-		addChild(kommune1MennRow, `${kommune1["navn"]} (${kommunenr1}) (Menn)`, "td");
-		addChild(kommune2MennRow, `${kommune2["navn"]} (${kommunenr2}) (Menn)`, "td");
-		addChild(kommune1KvinnerRow, `${kommune1["navn"]} (${kommunenr1}) (Kvinner)`, "td");
-		addChild(kommune2KvinnerRow, `${kommune2["navn"]} (${kommunenr2}) (Kvinner)`, "td");
+		addChild(headerRow, "Kommune (Kjønn)/År", "th")
+		addChild(kommune1MennRow, `${kommunenr1} ${kommune1["navn"]} (Menn)`, "td");
+		addChild(kommune2MennRow, `${kommunenr2}: ${kommune2["navn"]} (Menn)`, "td");
+		addChild(kommune1KvinnerRow, `${kommunenr1}: ${kommune1["navn"]} (Kvinner)`, "td");
+		addChild(kommune2KvinnerRow, `${kommunenr2}: ${kommune2["navn"]} (Kvinner)`, "td");
 
 		//Years-objektet henter årstall fra det lengste av menn(1/2)/kvinner(1/2) objektene.
 		let years = Object.keys(kommune1Menn);

@@ -3,7 +3,7 @@
 function addChild(parent, input, type, attrType, attrVal){
     const node = document.createElement(type);
     if (input == 'undefined' || input === undefined){
-        node.innerHTML = null;
+        node.innerHTML = "N/A";
         node.classList += "no-data";
     }
     else
