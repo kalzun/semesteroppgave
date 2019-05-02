@@ -20,3 +20,9 @@
   padding: 2vh;
   text-align: center;
 }
+
+@media screen and (max-width: 768px){
+	table, thead, tbody, tr, td {
+		display: block;
+	}
+}

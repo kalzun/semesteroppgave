@@ -7,12 +7,13 @@ const KOMNR = "kommunenummer";
 const MENN = "Menn";
 const KVINNER = "Kvinner";
 const BEGGE = "Begge kjønn";
-const GRUNNSKOLE = "01",
-	VGS = "02a",
-	FAGSKOLE = "11",
-	UNIKORT = "03a",
-	UNILANG = "04a",
-	UTENUTD =  "09a";
+
+const [GRUNNSKOLE, 
+	   VGS, 
+	   FAGSKOLE, 
+	   UNIKORT, 
+	   UNILANG, 
+	   UTENUTD] = ["01", "02a", "11", "03a", "04a", "09a"];
 
 // Benytter Singleton-pattern, for å ha ett samlet objekt å forholde seg til ved spørringer.
 // Denne funksjonen kjøres umiddelbart, og er ti
@@ -40,7 +41,7 @@ AlleKommunerSingleton = (function() {
 				education (utdanning)
 			*/
 
-			function buildIds() {
+			(function buildIds() {
 
 				// Første datasett (innbyggere)
 				// Her legger vi til alle ID vi finner.
@@ -52,7 +53,7 @@ AlleKommunerSingleton = (function() {
 				}
 
 				// Andre datasett (sysselsatte).
-				// Her legger vi til alle info om sysselsatte.
+				// Her legger vi til all info om sysselsatte.
 				// Men vi sjekker om ID allerede er lagt til, og legger IKKE til ID og navn til i så fall.
 
 				for (i in dataset[1].elementer){
@@ -74,9 +75,8 @@ AlleKommunerSingleton = (function() {
 						_names.push(i);
 					}
 				}
-			}
 
-			buildIds();
+			}());
 
 			// Oppretter alle kommuneobjektene, som vi samler i _all.
 			// _all blir gjort offentlig tilgjengelig via funksjonen getAlleKommuner()
@@ -445,6 +445,8 @@ var Kommuneobj = function(navn, id) {
 
 // Kjøres når brukeren trykker på en søkeknapp
 function search(){
+	let kommunenr1,
+		kommunenr2;
     const iD = event.target.id;
     const domElem = document.getElementsByClassName(iD)[0];
     const aParent = event.target.parentElement.parentElement;
@@ -452,12 +454,13 @@ function search(){
 
     switch (iD){
     	case "detaljer":
-			var kommunenr1 = alleInputs[0].value;
-			var kommunenr2 = undefined;
+    		// Hvis bruker skriver inn kommunenavn:
+			// Convert name to id
+			(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = convertToId(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
     		break;
     	case "sammenligning":
-    		var kommunenr1 = alleInputs[0].value;
-    		var kommunenr2 = alleInputs[1].value;
+    		(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = convertToId(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
+    		(isNameInDataset(alleInputs[1].value)) ? kommunenr2 = convertToId(alleInputs[1].value) : kommunenr2 = alleInputs[1].value;
     		break;
     };
 

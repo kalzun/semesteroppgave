@@ -66,3 +66,15 @@ function removeTable(div, numberOfTables){
     }
 }
 
+function isNameInDataset(name) {
+    const names = l.getAllNames();
+    console.log("In dataset : "+names.includes(name))
+    return names.includes(name);
+}
+
+function convertToId(name) {
+    const id = l.getID(name);
+    console.log("Convert to id : "+l.getID(name))
+    return id;
+}
+
