@@ -10,12 +10,6 @@ table > thead {
   color: var(--colorMain);
 }
 table {
-  table-layout: fixed;
-
-<<<<<<< HEAD
-=======
-table {
->>>>>>> sias
   margin-left: 5vw;
   margin-right: 5vw;
   margin-bottom: 10vw;
@@ -24,13 +18,7 @@ table {
 }
 
 td {
-<<<<<<< HEAD
   padding: 1vw 0.5vw;
   text-align: center;
 }
 
-=======
-  padding: 2vh;
-  text-align: center;
-}
->>>>>>> sias
