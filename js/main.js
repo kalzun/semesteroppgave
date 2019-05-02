@@ -486,4 +486,12 @@ document.addEventListener("DOMContentLoaded", function(event){
 	for (let index = 0; index < 2; index++){
 		searchButtons[index].addEventListener("click", search);
 	}
+
+	// Input-listener som sjekker for hver bokstav skrevet inn
+	inputFields = document.querySelectorAll(".search");
+	for (let i = 0; i < inputFields.length; i++){
+		inputFields[i].addEventListener("keyup", () => console.log("Up " + event.target))
+	}
 });
+
+
