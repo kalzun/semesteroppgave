@@ -1,28 +1,14 @@
-.sammenligning > table > tbody > tr:nth-child(odd) {
-  background: var(--tableCell_1);
-}
-.sammenligning > table > tbody > tr:nth-child(even) {
-  background: var(--tableCell_2);
+table {
+  width: 100%;
+
+  font-size: 1.5vw;
 }
 
-.sammenligning > table > thead {
-  background-color: var(--colorSecondary);
-  color: var(--colorMain);
+
+.green-highlight {
+  background-color: #c6ffab;
 }
 
-.sammenligning > table {
-  margin-left: 5vw;
-  margin-right: 5vw;
-  margin-bottom: 10vw;
-}
-
-.sammenligning td {
-  padding: 2vh;
-  text-align: center;
-}
-
-@media screen and (max-width: 768px){
-	table, thead, tbody, tr, td {
-		display: block;
-	}
+.no-data {
+  background-color: #f0ee8f;
 }

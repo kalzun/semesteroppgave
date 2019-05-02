@@ -51,4 +51,24 @@ a {font-size: 3vh; font-style: italic;}
 
 table {
     border-spacing: 0;
+    font-size: 1.5vw;
+    
+}
+table > tbody > tr:nth-child(odd) {
+    background: var(--tableCell_1);
+}
+table > tbody > tr:nth-child(even) {
+background: var(--tableCell_2);
+}
+
+table > thead {
+background-color: var(--colorSecondary);
+color: var(--colorMain);
+}
+table td, table th {
+    text-align: center;
+    vertical-align: middle;
+
+    padding-top: 2vh;
+    padding-bottom: 2vh;
 }
