@@ -16,8 +16,30 @@ function addChild(parent, input, type, attrType, attrVal){
     return node;
 }
 
-function outputNotFound(){
-    console.log("En kommune er undefined.");
+// Legger til tekst som forteller brukeren at en eller begge kommunenr han søkte på ikke finnes, samt hvilke(t)
+function outputNotFound(div, kommune1, kommune2, kommunenr1, kommunenr2){
+    const target = div.querySelector(`.content`)
+    if ([kommune1, kommune2].every((kom) => kom === "None found")){
+        let message = `Ingen treff på kommunenr ${kommunenr1} eller ${kommunenr2}`;
+        addChild(target, message, "p", "class", "error-message");
+        console.log("En kommune er undefined.");
+    }else if(kommune2 === "None found") {
+        let message = `Ingen treff på kommunenr ${kommunenr2}`;
+        addChild(target, message, "p", "class", "error-message");
+    }else if(kommune1 === "None found") {
+        let message = `Ingen treff på kommunenr ${kommunenr1}`;
+        addChild(target, message, "p", "class", "error-message");
+    };
+}
+
+function removeErrorMessages(div) {
+    errorMessages = div.querySelectorAll(".content .error-message");
+    for (let i = 0; i < errorMessages.length; i++) {
+        let elem = errorMessages[i]
+        console.log(1, i)
+        console.log(elem)
+        if (elem != undefined) elem.parentNode.removeChild(elem)
+    }
 }
 
 function isContentInCategory(cat) {

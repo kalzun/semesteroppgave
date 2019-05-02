@@ -3,7 +3,7 @@
 
 // Tabell
 function tabell(div, category, kommunenr1, kommunenr2){
-	console.log("Tabell: " ,div, category);
+	removeErrorMessages(div)
 	switch (category){
 		case "oversikt":
 			oversikt();
@@ -16,6 +16,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			break;
 	}
 
+	// Lager tabellen til oversikt-fanen
 	function oversikt() {
 	    const alleKommuner = l.getAlleKommuner();
 
@@ -34,13 +35,13 @@ function tabell(div, category, kommunenr1, kommunenr2){
 	    }
 	}
 
-
+	// Lager tabellen til detaljer-fanen
 	function detaljer(){
 		const singleton = AlleKommunerSingleton.getInstance();
 		const kommune = singleton.getInfo(kommunenr1);
 
 		if (kommune === "None found"){
-			outputNotFound();
+			outputNotFound(div, kommune, null, kommunenr1, null);
 			return;
 		}
 
@@ -128,7 +129,10 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 			// Bruker education-datasett for å finne flest år.
 
+			// Sjekker kun antall år i grunnskole for menn og kvinner, da det er rimelig å anta at det er her det er kjørt flest målinger.
+			/* Vurdere å gå over til metode hvor vi itererer gjennom alle utdanningskategorier og kjønn og samler alle år til et array */
 			const eduYears = Object.keys(utdanningHistorisk[GRUNNSKOLE][MENN]);
+			if (Object.keys(utdanningHistorisk[GRUNNSKOLE][KVINNER]).length > eduYears.length) eduYears = Object.keys(utdanningHistorisk[GRUNNSKOLE][KVINNER]).length;
 
 			for (let i = 0, len = eduYears.length; i < len; i++) {
 				addChild(headerRow, ``, 'th');
@@ -170,19 +174,20 @@ function tabell(div, category, kommunenr1, kommunenr2){
 */
 	}
 
+	// Lager tabellen til sammenligning-fanen
 	function sammenligning(){
-		// Allekommuner.people.getEducation(kommunenr1)
 		const singleton = AlleKommunerSingleton.getInstance();
 		const kommune1 = singleton.getInfo(kommunenr1);
 		const kommune2 = singleton.getInfo(kommunenr2);
 
-		// Sjekk om begge kommuner er definert.
+		// Sjekk at begge kommuner er definert, hvis ikke output feilmelding om ingen treff på kommunenr.
 		if([kommune1, kommune2].some((kom) => kom === "None found")){
-			outputNotFound();
+			console.log("not found")
+			outputNotFound(div, kommune1, kommune2, kommunenr1, kommunenr2);
 			return;
 		}
 
-		removeTable(div, 1);
+		removeTable(div, 1); // Parametere: parent-element og antall tabeller
 
 		const kommune1Menn = kommune1.people.getEmploymentRatesByGender(MENN);
 		const kommune1Kvinner = kommune1.people.getEmploymentRatesByGender(KVINNER);
@@ -230,6 +235,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		// Itererer gjennom hvert år (kolonne) i tabellen
 		for (let colIndex = 2; colIndex <= tableData[0].childElementCount; colIndex++) {
 			let largestDiff = {
+				//kjønn: [DOM-element, verdi]
 				"menn": [undefined, null],
 				"kvinner": [undefined, null]
 			};
@@ -257,10 +263,10 @@ function tabell(div, category, kommunenr1, kommunenr2){
 				}
 			}
 			if (largestDiff["menn"][0] != undefined) {
-				largestDiff["menn"][0].setAttribute("style", "background-color: green")//"green-highlight")
+				largestDiff["menn"][0].setAttribute("style", "background-color: green")//("class", "green-highlight")
 			}
 			if (largestDiff["kvinner"][0] != undefined) {
-				largestDiff["kvinner"][0].setAttribute("style", "background-color: green")//"green-highlight")
+				largestDiff["kvinner"][0].setAttribute("style", "background-color: green")//("class", "green-highlight")
 			}
 		}
 	}

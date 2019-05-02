@@ -436,19 +436,19 @@ People.prototype = {
 	}
 }
 
+
 var Kommuneobj = function(navn, id) {
 	this.navn = navn;
 	this.id = id;
 	this.people = new People(id);
 }
 
+// Kjøres når brukeren trykker på en søkeknapp
 function search(){
     const iD = event.target.id;
     const domElem = document.getElementsByClassName(iD)[0];
-    console.log(domElem)
     const aParent = event.target.parentElement.parentElement;
     const alleInputs = aParent.querySelectorAll("div .search");
-    console.log(alleInputs)
 
     switch (iD){
     	case "detaljer":
