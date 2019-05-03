@@ -79,7 +79,7 @@ AlleKommunerSingleton = (function() {
 			}());
 
 			// Oppretter alle kommuneobjektene, som vi samler i _all.
-			// _all blir gjort offentlig tilgjengelig via funksjonen getAlleKommuner()
+			// _all blir gjort offentlig tilgjengelige via funksjonen getAlleKommuner()
 			for (id in _IDs){
 				var _ = new Kommuneobj(_names[id], _IDs[id]);
 				_all.push(_);
@@ -393,6 +393,14 @@ People.prototype = {
 	},
 
 	getEducationRatesLastYearSpecified: function(educode) {
+		
+		// Sjekk om vi har data på utdanning på kommunen.
+		
+		if (this.education == "Ingen tilgjengelige data."){
+			this.edu == this.education;
+			return;
+		}
+
 		this.edu = this.education[educode];
 		this.eduMAllYears = Object.keys(this.edu[MENN]).sort();
 		this.eduKAllYears = Object.keys(this.edu[KVINNER]).sort();
@@ -490,21 +498,24 @@ document.addEventListener("DOMContentLoaded", function(event){
 	// Input-listener som sjekker for hver bokstav skrevet inn
 	inputFields = document.querySelectorAll(".search");
 	for (let i = 0; i < inputFields.length; i++){
-		inputFields[i].addEventListener("keyup", regexChecker);
+		inputFields[i].addEventListener("input", regexChecker);
 	}
 });
 
 function regexChecker(event){
-	const output = document.querySelector(".output");
 	const names = l.getAllNames();
-	let regexp = new RegExp(`${event.target.value}`);
-	for (i in names) {
-		if (names[i].search(regexp) !== -1){
-			console.log("Navn: " + names[i]);
-			//outputRegexHit(names[i], output);
+	let userInput = event.target.value;
+	const output = document.querySelector(".output");
+	let regexp = new RegExp(`${userInput}`, 'gi');
+	if (userInput.length > 0){
+		console.log(names.filter((name) => name.search(regexp) !== -1));
+		for (i in names) {
+			if (names[i].search(regexp) !== -1){
+				console.log("Navn: " + names[i]);
+				//outputRegexHit(names[i], output);
+			}
 		}
 	}
-
 }
 
 function clearOutput(out){
@@ -517,7 +528,8 @@ function clearOutput(out){
 
 function outputRegexHit(hits, output){
 	const li = document.createElement("li");
-	li.innerHTML = hits;
+	li.className = "suggestions";
+	
 	output.appendChild(li);
 }
 
