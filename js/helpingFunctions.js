@@ -2,15 +2,15 @@
 
 function addChild(parent, input, type, attrType, attrVal){
     const node = document.createElement(type);
-    if (input == "undefined" || input === undefined){
+    if (input == "undefined" || input === undefined || input == "NaN"){
         node.innerHTML = "-";
-        node.classList += "no-data";
+        node.classList.add("no-data");
     }
     else
         node.innerHTML = input;
 
-    if (attrType != undefined) {
-        node.setAttribute(attrType, attrVal);
+    if (attrType == "class") {
+        node.classList.add(attrVal);
     }
     parent.appendChild(node);
     return node;
@@ -18,7 +18,7 @@ function addChild(parent, input, type, attrType, attrVal){
 
 // Legger til data i hver celle i en rad.
 
-function addData(kommune, parent, headerYears, category) {
+function addData(kommune, parent, headerYears, category, tab) {
     let data
     switch (category) {
         case "befolkning":
@@ -26,8 +26,17 @@ function addData(kommune, parent, headerYears, category) {
             addCells(category);
             break;
         case "sysselsetting":
-            data = kommune.people.getEmploymentRates();
-            addCells(category);
+            if (tab == "sammenligning") {
+                const genders = [MENN, KVINNER];
+                for (let i = 0; i < 2; i++) {
+                    const gender = genders[i]
+                    data = kommune.people.getEmploymentRatesByGender(gender);
+                    addCells(category, undefined, tab, gender);
+                }
+            }else{
+                data = kommune.people.getEmploymentRates();
+                addCells(category);
+            }
             break;
         case "utdanning":
             data = kommune.people.getAllEducationRates();
@@ -42,10 +51,16 @@ function addData(kommune, parent, headerYears, category) {
             return;
     }
 
-    function addCells(category, subCategory) {
+    function addCells(category, subCategory, tab, gender) {
         const row = addChild(parent, null, "tr");
         let cellName
-        (kommune.people.getEduName(subCategory) != undefined) ? cellName =kommune.people.getEduName(subCategory) : cellName = category;
+        if (kommune.people.getEduName(subCategory) != undefined) {
+            cellName = kommune.people.getEduName(subCategory);
+        }else if(tab == "sammenligning"){
+            cellName = `${kommune.name} ${gender}`;
+        }else{
+            cellName = category;
+        }
         addChild(row, cellName, "td");
 
         for (j in headerYears) {
@@ -65,34 +80,31 @@ function addData(kommune, parent, headerYears, category) {
 // Itererer gjennom gitt array med datasett, og returnerer årene fra disse i et array med alle årstall (uten duplikater).
 // Tar høyde for at elementene i arrayet har årstall på nivå to eller tre i objektet. Eks. på nivåer: dataSets = [currentDS[menn][årstall], currentDS[kategori][menn][årstall]]
 
-/*function getYears(dataSets){
+function getYears(dataSets){
     let allYears = [];
-    let gatherYears = function(obj){
-
-    };
     for (i in dataSets) {
         let currentDS = dataSets[i];
-        for (j in Object.keys(currentDS)){
-            if (currentDS[j] == "menn" || currentDS == "kvinner") {
-                for (gender in Object.keys(currentDS[j])) {
-                    let currentYears = gatherYears(currentDS[j][gender]);
-                    allYears.push.apply(allYears, currentYears);
+        for (j in currentDS){
+            const objKeys = Object.keys(currentDS[j]);
+            let currentYears;
+            if (objKeys.includes("Menn") || objKeys.includes("Kvinner")) {
+                for (gender in currentDS[j]) {
+                    currentYears = Object.keys(currentDS[j][gender]);
+                    for (i in currentYears) {
+                        if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
+                    }
                 }
-            }
-
+            }else{
+                currentYears = Object.keys(currentDS);
+                for (i in currentYears) {
+                    if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
+                }
+            };
         }
     }
-
-        for (gender in Object.keys(obj)) {
-            let currentYears = Object.keys(dataSets[i][gender]);
-            for (j in currentYears) {
-                if (allYears.includes(currentYears[j]) != true) {
-                    allYears.push.apply(allYears, currentYears);
-                }
-            }
-        }
-    console.log(allYears)
-}*/
+    allYears = allYears.sort();
+    return allYears;
+}
 
 // Legger til tekst som forteller brukeren at en eller begge kommunenr han søkte på ikke finnes, samt hvilke(t)
 function outputNotFound(div, kommune1, kommune2, kommunenr1, kommunenr2){
