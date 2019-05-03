@@ -473,6 +473,7 @@ function search(){
     };
 
     ds.onload = function(){
+    	clearOutput(); // Fjerne regex-forslag
 		removeLoadingMessage()
         tabell(domElem, iD, kommunenr1, kommunenr2);
     }
@@ -504,11 +505,14 @@ document.addEventListener("DOMContentLoaded", function(event){
 
 function regexChecker(event){
 	const names = l.getAllNames();
+	const IDs = l.getAllIDs();
 	let userInput = event.target.value;
-	const output = document.querySelector(".output");
+	const output = document.querySelector(".search-output");
 	let regexp = new RegExp(`^${userInput}`, 'gi');
+	clearOutput(output);
 	if (userInput.length > 0){
-		console.log(names.filter((name) => name.search(regexp) !== -1));
+		outputRegexHits(names.filter((name) => name.search(regexp) !== -1), output);
+		outputRegexHits(IDs.filter((id) => id.search(regexp) !== -1), output);
 		// for (i in names) {
 		// 	if (names[i].search(regexp) !== -1){
 		// 		console.log("Navn: " + names[i]);
@@ -518,19 +522,33 @@ function regexChecker(event){
 	}
 }
 
-function clearOutput(out){
-	n = out
-	for (let i = 0, len = out.childNodes.length; i < out.childNodes.length; i++) {
-		//console.log("OUTPUT" + out.children[i]);
-		out.removeChild(out.childNodes[i]);
+function clearOutput(output){
+	if (output === undefined){
+		output = document.querySelector(".search-output");
+	}
+	while (output.firstChild) { // Fjerner alle barna til output
+		output.removeChild(output.firstChild);
 	}
 }
 
-function outputRegexHit(hits, output){
-	const li = document.createElement("li");
-	li.className = "suggestions";
-	
-	output.appendChild(li);
+function outputRegexHits(hits, output){
+	hits.forEach((hit) => {
+		const li = document.createElement("li");
+		let kommunenr, kommunenavn;
+		(Number(hit)) ? kommunenavn = l.getName(hit): kommunenr = l.getID(hit);  
+		li.className = "search-suggestion";
+
+		li.innerHTML = `${hit} 
+						<span class="search-span">
+						${(kommunenavn) ? kommunenavn : kommunenr}
+						</span>
+							   <span class="search-span">Innbyggertall: 32421</span>`;
+		
+		//li.addEventListener("click", (event) => )
+		output.appendChild(li);
+	});
 }
+
+
 
 
