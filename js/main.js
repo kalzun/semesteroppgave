@@ -506,15 +506,15 @@ function regexChecker(event){
 	const names = l.getAllNames();
 	let userInput = event.target.value;
 	const output = document.querySelector(".output");
-	let regexp = new RegExp(`${userInput}`, 'gi');
+	let regexp = new RegExp(`^${userInput}`, 'gi');
 	if (userInput.length > 0){
 		console.log(names.filter((name) => name.search(regexp) !== -1));
-		for (i in names) {
-			if (names[i].search(regexp) !== -1){
-				console.log("Navn: " + names[i]);
-				//outputRegexHit(names[i], output);
-			}
-		}
+		// for (i in names) {
+		// 	if (names[i].search(regexp) !== -1){
+		// 		console.log("Navn: " + names[i]);
+		// 		//outputRegexHit(names[i], output);
+		// 	}
+		// }
 	}
 }
 
