@@ -3,7 +3,8 @@
 
 // Tabell
 function tabell(div, category, kommunenr1, kommunenr2){
-	removeErrorMessages(div)
+	removeErrorMessages(div);
+
 	switch (category){
 		case "oversikt":
 			oversikt();
@@ -119,46 +120,30 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			const utdanningHistorisk = kommune.people.getAllEducationRates();
 
 			//Presentasjon
-			let table = addChild(div, null, "table", "class", "hisoric-table")
+			let table = addChild(div, null, "table", "class", "historic-table");
 			const tHead = addChild(table, null, "tHead");
 			const tBody = addChild(table, null, "tbody");
 			const headerRow = addChild(tHead, null, "tr");
 			addChild(headerRow, "Kategori/år", "th");
 
-			const befRow = addChild(tBody, null, "tr");
-			const sysRow = addChild(tBody, null, "tr");
-
-			addChild(befRow, "Befolkning", "td");
-			addChild(sysRow, "Sysselsatte", "td")
-
-			const eduCodes = kommune.people.getEduCodes();
-
-			let eduRow = {};
-
-			for (let i = 0, len = eduCodes.length; i < len; i++) {
-				eduRow[i] = addChild(tBody, null, "tr");
-				addChild(eduRow[i], `${kommune.people.getEduName(eduCodes[i])}`, "td")
-			}
-
 			// Bruker education-datasett for å finne flest år.
 			// Sjekker kun antall år i grunnskole for menn og kvinner, da det er rimelig å anta at det er her det er kjørt flest målinger.
 			/* Vurdere å gå over til metode hvor vi itererer gjennom alle utdanningskategorier og kjønn og samler alle år til et array */
+			let dataSets = [befolkningHistorisk, sysselsatteHistorisk, utdanningHistorisk];
+			//const allYears = getYears(dataSets);
+
 			const eduYears = Object.keys(utdanningHistorisk[GRUNNSKOLE][MENN]);
 			if (Object.keys(utdanningHistorisk[GRUNNSKOLE][KVINNER]).length > eduYears.length) eduYears = Object.keys(utdanningHistorisk[GRUNNSKOLE][KVINNER]).length;
 
 			for (let i = 0, len = eduYears.length; i < len; i++) {
 				addChild(headerRow, `${eduYears[i]}`, "th");
-				addChild(befRow, `${befolkningHistorisk[eduYears[i]]}`, "td");
-				addChild(sysRow, `${sysselsatteHistorisk[eduYears[i]]}`, "td");
+			};
 
-				for (let j = 0, eduLen = eduCodes.length; j < eduLen; j++){
-					const avgEduPerc = ((utdanningHistorisk[eduCodes[j]][MENN][eduYears[i]] +
-										utdanningHistorisk[eduCodes[j]][KVINNER][eduYears[i]]) / 2).toFixed(2);
-					const currentRow = addChild(eduRow[j], null, "td");
-					addChild(currentRow, `${avgEduPerc}`, "td");
-				}
-			}
-		})()
+
+			["befolkning", "sysselsetting", "utdanning"].forEach(function(name){
+				addData(kommune, table, eduYears, name);
+			})
+		})();
 
 		// console.log("Siste bef: " + sisteBefolkning);
 		// console.log("Siste Sysselsatte prosent: " + sisteSysselsatteProsent);
@@ -241,7 +226,6 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		for (let i = 0; i < years.length; i++) {
 			addChild(headerRow, years[i], "th", "class", "");
 			let x = addChild(kommune1MennRow, kommune1Menn[years[i]], "td", "class", "data-cell");
-			console.log(x)
 			addChild(kommune1KvinnerRow, kommune1Kvinner[years[i]], "td", "class", "data-cell");
 			addChild(kommune2MennRow, kommune2Menn[years[i]], "td", "class", "data-cell");
 			addChild(kommune2KvinnerRow, kommune2Kvinner[years[i]], "td", "class", "data-cell");

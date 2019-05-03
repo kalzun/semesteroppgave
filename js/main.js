@@ -392,6 +392,11 @@ People.prototype = {
 		return eduRates;
 	},
 
+	getEducationRatesByYearSpecified: function (educode, year) {
+		this.edu = this.education[educode];
+		return this.edu[MENN][year] + this.edu[KVINNER][year];
+	},
+
 	getEducationRatesLastYearSpecified: function(educode) {
 		this.edu = this.education[educode];
 		this.eduMAllYears = Object.keys(this.edu[MENN]).sort();
