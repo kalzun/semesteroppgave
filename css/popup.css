@@ -1,0 +1,31 @@
+.search-output {
+	z-index: 1;
+	position: absolute;
+	margin-top: 100px;
+	min-width: 500px;
+}
+
+.search-output:nth-child(2n+1) {
+	background-color: black; /*var(--colorSubSecondary);*/
+}
+
+.search-output:nth-child(2n+1) {
+	background-color: grey; /*var(--colorSubSecondary);*/
+}
+
+.search-output li {
+	list-style: none;
+}
+
+.search-suggestion{
+	display: grid;
+	grid-gap: 10px;
+	padding: 40px;
+	background-color: var(--colorSecondary);
+}
+
+.search-span {
+	color: var(--colorMain);
+	font-size: 0.8rem;
+	
+}
