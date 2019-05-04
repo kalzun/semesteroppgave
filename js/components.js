@@ -130,7 +130,8 @@ function tabell(div, category, kommunenr1, kommunenr2){
 				addChild(headerRow, `${yearList[i]}`, "th");
 			};
 
-			["befolkning", "sysselsetting", "utdanning"].forEach(function(name){addData(kommune, tBody, yearList, name);});
+			["befolkning", "sysselsetting", "utdanning"].forEach(function(name){addData(kommune, tBody, yearList, name);
+			});
 		})()
 	}
 
@@ -140,6 +141,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const kommune1 = singleton.getInfo(kommunenr1);
 		const kommune2 = singleton.getInfo(kommunenr2);
 		const kommuner = [kommune1, kommune2];
+
 		// Sjekk at begge kommuner er definert, hvis ikke output feilmelding om ingen treff på kommunenr.
 		if ([kommune1, kommune2].some((kom) => kom === "None found")){
 			console.log("not found")
@@ -153,26 +155,33 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		// Konstruerer tabellen
 		let table = addChild(div, null, "table");
 		const tHead = addChild(table, null, "tHead");
-		const tBody = addChild(table, null, "tbody");
+		const tBody = addChild(table, null, "tBody");
 		const headerRow = addChild(tHead, null, "tr");
 
 		addChild(headerRow, "Kommune (Kjønn)/År", "th")
 
+		const dataSets = [
+			kommune1.people.getEmploymentRates(),
+			kommune2.people.getEmploymentRates()
+		]
 		const yearList = getYears(dataSets);
+		console.log(yearList);
 
 		for (let i = 0, len = yearList.length; i < len; i++) {
 			addChild(headerRow, `${yearList[i]}`, "th");
+		}
 
 		for (i in kommuner) {
-			addData(kommuner[i], tbody, yearList, "sysselsetting", "sammenligning")
+			addData(kommuner[i], tBody, yearList, "sysselsetting", "sammenligning")
 		}
 
 		//Itererer gjennom hvert år i tabellen og sammenligner dataene i hver rad med dataene fra forrige år, markerer cellene (menn og kvinner) med høyest økning.
 		//Ikke interresert i første år, da vi ikke har noen tidligere år å regne vekst ut i fra.
 
 		const tableData = tBody.childNodes;
+
 		// Itererer gjennom hvert år (kolonne) i tabellen
-		for (let colIndex = 2; colIndex <= tableData[0].childElementCount; colIndex++) {
+		for (let colIndex = 2; colIndex <= tableData[0].childElementCount -1; colIndex++) {
 			let largestDiff = {
 				//kjønn: [DOM-element, verdi]
 				"menn": [undefined, null],
@@ -192,6 +201,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 					"menn": currentYear["menn"] - lastYear["menn"],
 					"kvinner": currentYear["kvinner"] - lastYear["kvinner"]
 				};
+
 				if (diff["menn"] > largestDiff["menn"][1]) {
 					largestDiff["menn"][1] = diff["menn"];
 					largestDiff["menn"][0] = tableData[rowIndex].childNodes[colIndex];
@@ -201,12 +211,8 @@ function tabell(div, category, kommunenr1, kommunenr2){
 					largestDiff["kvinner"][0] = tableData[rowIndex + 1].childNodes[colIndex];
 				}
 			}
-			if (largestDiff["menn"][0] != undefined) {
-				largestDiff["menn"][0].classlist.add("green-highlight");
-			}
-			if (largestDiff["kvinner"][0] != undefined) {
-				largestDiff["kvinner"][0].classList.add("green-highlight");
-			}
+			if (largestDiff["menn"][0] != undefined) largestDiff["menn"][0].classList.add("green-highlight");
+			if (largestDiff["kvinner"][0] != undefined) largestDiff["kvinner"][0].classList.add("green-highlight");
 		}
 	}
-}
+};

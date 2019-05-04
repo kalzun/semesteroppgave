@@ -16,6 +16,35 @@ function addChild(parent, input, type, attrType, attrVal){
     return node;
 }
 
+// Itererer gjennom gitt array med datasett, og returnerer årene fra disse i et array med alle årstall (uten duplikater).
+// Tar høyde for at elementene i arrayet har årstall på nivå to eller tre i objektet. Eks. på nivåer: dataSets = [currentDS[menn][årstall], currentDS[kategori][menn][årstall]]
+
+function getYears(dataSets){
+    let allYears = [];
+    for (i in dataSets) {
+        let currentDS = dataSets[i];
+        for (j in currentDS){
+            const objKeys = Object.keys(currentDS[j]);
+            let currentYears;
+            if (objKeys.includes("Menn") || objKeys.includes("Kvinner")) {
+                for (gender in currentDS[j]) {
+                    currentYears = Object.keys(currentDS[j][gender]);
+                    for (i in currentYears) {
+                        if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
+                    }
+                }
+            }else{
+                currentYears = Object.keys(currentDS);
+                for (i in currentYears) {
+                    if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
+                }
+            };
+        }
+    }
+    allYears = allYears.sort();
+    return allYears;
+}
+
 // Legger til data i hver celle i en rad.
 
 function addData(kommune, parent, headerYears, category, tab) {
@@ -57,7 +86,7 @@ function addData(kommune, parent, headerYears, category, tab) {
         if (kommune.people.getEduName(subCategory) != undefined) {
             cellName = kommune.people.getEduName(subCategory);
         }else if(tab == "sammenligning"){
-            cellName = `${kommune.name} ${gender}`;
+            cellName = `${kommune.navn} ${gender}`;
         }else{
             cellName = category;
         }
@@ -74,36 +103,6 @@ function addData(kommune, parent, headerYears, category, tab) {
             addChild(row, cellData, "td", "class", "data-cell");
         }
     }
-}
-
-
-// Itererer gjennom gitt array med datasett, og returnerer årene fra disse i et array med alle årstall (uten duplikater).
-// Tar høyde for at elementene i arrayet har årstall på nivå to eller tre i objektet. Eks. på nivåer: dataSets = [currentDS[menn][årstall], currentDS[kategori][menn][årstall]]
-
-function getYears(dataSets){
-    let allYears = [];
-    for (i in dataSets) {
-        let currentDS = dataSets[i];
-        for (j in currentDS){
-            const objKeys = Object.keys(currentDS[j]);
-            let currentYears;
-            if (objKeys.includes("Menn") || objKeys.includes("Kvinner")) {
-                for (gender in currentDS[j]) {
-                    currentYears = Object.keys(currentDS[j][gender]);
-                    for (i in currentYears) {
-                        if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
-                    }
-                }
-            }else{
-                currentYears = Object.keys(currentDS);
-                for (i in currentYears) {
-                    if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
-                }
-            };
-        }
-    }
-    allYears = allYears.sort();
-    return allYears;
 }
 
 // Legger til tekst som forteller brukeren at en eller begge kommunenr han søkte på ikke finnes, samt hvilke(t)
