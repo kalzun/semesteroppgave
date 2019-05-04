@@ -1,9 +1,7 @@
 table {
   width: 100%;
-
-  font-size: 1.5vw;
 }
-
+/* font-size: 0.5vw; */
 
 .green-highlight {
   background-color: #c6ffab;
@@ -11,4 +9,23 @@ table {
 
 .no-data {
   background-color: #f0ee8f;
+}
+
+@media (max-width: 800px) {
+  table {
+    display: flex;
+    flex-direction: row;
+  }
+  tr {
+    display: flex;
+    flex-direction: column;
+  }
+  tbody {
+    display: flex;
+    flex-direction: row;
+  }
+  td, th {
+    height: 50px;
+  }
+  
 }
