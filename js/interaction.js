@@ -8,20 +8,19 @@ document.addEventListener("DOMContentLoaded", function(event){
 	inputFields = document.querySelectorAll(".search");
 	for (let i = 0; i < inputFields.length; i++){
 		inputFields[i].addEventListener("input", regexChecker);
-		// inputFields[i].addEventListener("blur", function() {
-		// 	let clearThisOutput = clearOutput.bind(this);
-		// 	clearThisOutput();
-		// 	});
+		inputFields[i].addEventListener("focusout", function() {
+			let clearThisOutput = clearOutput.bind(this);
+			clearThisOutput();
+			});
 	}
 });
 
 
 // Kjøres når brukeren trykker på en søkeknapp
 function search(suggestion){
-	console.log("Suggestion : " + suggestion);
 	let kommunenr1,
 		kommunenr2;
-	console.log("eventtargetid : " + event.target.id);
+
     const iD = event.target.id;
     const domElem = document.getElementsByClassName(iD)[0];
     const aParent = event.target.parentElement.parentElement;
@@ -51,10 +50,7 @@ function search(suggestion){
 }
 
 function populateSearchField(content, inputElements, isSecondary) {
-	console.log("Is this the right ? " + isSecondary);
 	let output;
-
-	//isSecondary ? inputElements[1].value = content : inputElements[0].value = content;
 
 	if (isSecondary) { // On sammenligning
 		inputElements[1].value = content;
@@ -64,7 +60,6 @@ function populateSearchField(content, inputElements, isSecondary) {
 		output = inputElements[0].parentElement.querySelector(".search-output");
 	}
 	clearOutput(output);
-
 }
 
 function regexChecker(event){
@@ -92,7 +87,7 @@ function regexChecker(event){
 
 function clearOutput(output){
 	if (output === undefined){
-		console.log("THIS ID : " + this.id)
+
 		// Sjekk hvilken id this har, for å kunne fjerne korrekt output
 		// Må gjøres her siden vi har flere forskjellige outputs, og flere steder hvor output fjernes
 		
@@ -129,8 +124,9 @@ function outputRegexHits(hits, output){
 						</span>
 						<span class="search-span">Innbyggertall: 32421</span>`;
 		
-		//li.setAttribute("onclick", "search();");
-		li.addEventListener("click", (event) => {
+
+		// Bruker Mousedown - event i stedenfor click, for å kunne skje FØR blur-eventet (i input)
+		li.addEventListener("mousedown", (event) => { 
 			let clickedName; 
 			if (event.target.nodeName == "LI"){
 				clickedName = event.target.firstChild.textContent;
