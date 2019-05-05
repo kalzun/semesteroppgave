@@ -1,7 +1,7 @@
 // event detaljer
 //tabell(this.target, "Detaljer", inputvalue)
 
-// Tabell
+// Konstruerer tabell som barn av gitt dom-element (div) utifra kategori og kommunenr.
 function tabell(div, category, kommunenr1, kommunenr2){
 	removeErrorMessages(div);
 
@@ -19,7 +19,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 	// Lager tabellen til oversikt-fanen
 	function oversikt() {
-	    const alleKommuner = l.getAlleKommuner();
+	    const alleKommuner = kommuneSingleton.getAlleKommuner();
 
 	    console.log("Creating table...");
 	    let table = addChild(div, null, "table");
@@ -54,9 +54,9 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const sisteSysselsatteAntall = Math.floor(sisteBefolkning * sisteSysselsatteProsent / 100);
 
 		// Høyere utdanningsprosent og antall:
-		const sisteUtdanningProsentUniKort = kommune.people.getEducationRatesLastYearSpecified(UNIKORT);
+		const sisteUtdanningProsentUniKort = kommune.people.getEducationRatesLastYearSpecified(UNIKORT).toFixed(2);
 		const sisteUtdanningAntallUniKort = Math.floor((sisteUtdanningProsentUniKort * sisteBefolkning) / 100);
-		const sisteUtdanningProsentUniLang = kommune.people.getEducationRatesLastYearSpecified(UNILANG);
+		const sisteUtdanningProsentUniLang = kommune.people.getEducationRatesLastYearSpecified(UNILANG).toFixed(2);
 		const sisteUtdanningAntallUniLang = Math.floor((sisteUtdanningProsentUniLang * sisteBefolkning) / 100);
 		const sisteUtdProsentGjennomsnitt = (sisteUtdanningProsentUniKort + sisteUtdanningProsentUniLang) / 2;
 		const sisteUtdAntall = Math.floor(sisteBefolkning * sisteUtdProsentGjennomsnitt / 100);
@@ -165,7 +165,6 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			kommune2.people.getEmploymentRates()
 		]
 		const yearList = getYears(dataSets);
-		console.log(yearList);
 
 		for (let i = 0, len = yearList.length; i < len; i++) {
 			addChild(headerRow, `${yearList[i]}`, "th");
@@ -201,8 +200,6 @@ function tabell(div, category, kommunenr1, kommunenr2){
 					"menn": currentYear["menn"] - lastYear["menn"],
 					"kvinner": currentYear["kvinner"] - lastYear["kvinner"]
 				};
-				console.log(tableData[rowIndex + 1].childNodes[colIndex])
-				console.log(tableData[rowIndex].childNodes[colIndex])
 				if (diff["menn"] > largestDiff["menn"][1]) {
 					largestDiff["menn"][1] = diff["menn"];
 					largestDiff["menn"][0] = tableData[rowIndex].childNodes[colIndex];

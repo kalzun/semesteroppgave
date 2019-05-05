@@ -2,7 +2,7 @@
 
 function addChild(parent, input, type, attrType, attrVal){
     const node = document.createElement(type);
-    if (input == "undefined" || input === undefined || input == "NaN"){
+    if (input === "undefined" || input === undefined || input === "NaN" || input === NaN || input == 0){
         node.innerHTML = "-";
         node.classList.add("no-data");
     }
@@ -124,8 +124,6 @@ function removeErrorMessages(div) {
     errorMessages = div.querySelectorAll(".content .error-message");
     for (let i = 0; i < errorMessages.length; i++) {
         let elem = errorMessages[i]
-        console.log(1, i)
-        console.log(elem)
         if (elem != undefined) elem.parentNode.removeChild(elem)
     }
 }

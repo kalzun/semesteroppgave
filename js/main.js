@@ -229,7 +229,8 @@ var DataSet = function(urls) {
 					if (this.onload) {
 						this.onload();
 					}
-					tabell(document.querySelector('.oversikt'), 'oversikt') // Konstruere oversiktstabell
+					// Konstruerer oversiktstabell
+					tabell(document.querySelector('.oversikt'), 'oversikt')
 				});
 			});
 		});
@@ -439,7 +440,7 @@ People.prototype = {
 		}
 
 	}
-}
+};
 
 
 var Kommuneobj = function(navn, id) {
@@ -466,22 +467,22 @@ function search(){
     		break;
     };
 
-    ds.onload = function(){
+    fullstendigDataSet.onload = function(){
 		removeLoadingMessage()
         tabell(domElem, iD, kommunenr1, kommunenr2);
     }
-    if (l.isLoaded() == true) {
-        ds.onload();
+    if (kommuneSingleton.isLoaded() == true) {
+        fullstendigDataSet.onload();
     }else{
         displayLoadingMessage(domElem)
     }
 }
 
 
-//Må gjøres penere
-var ds = new DataSet(allUrls);
-ds.load()
-var l = AlleKommunerSingleton.getInstance()
+// Konstruerer dataset og singleton objekt for alle kommuner
+var fullstendigDataSet = new DataSet(allUrls);
+fullstendigDataSet.load()
+var kommuneSingleton = AlleKommunerSingleton.getInstance()
 
 document.addEventListener("DOMContentLoaded", function(event){
 	const searchButtons = document.querySelectorAll(".searchbutton");
