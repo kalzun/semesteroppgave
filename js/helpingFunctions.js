@@ -74,7 +74,6 @@ function addData(kommune, parent, headerYears, category, tab) {
                 const eduCode = eduCodes[i];
                 addCells(category, eduCode);
             }
-            console.log(data)
             break;
         default:
             return;
@@ -84,7 +83,7 @@ function addData(kommune, parent, headerYears, category, tab) {
         const row = addChild(parent, null, "tr");
         let cellName
         if (kommune.people.getEduName(subCategory) != undefined) {
-            cellName = kommune.people.getEduName(subCategory);
+            cellName = `Utdanning på ${kommune.people.getEduName(subCategory)}`;
         }else if(tab == "sammenligning"){
             cellName = `${kommune.navn} ${gender}`;
         }else{
