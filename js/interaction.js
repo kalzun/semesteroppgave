@@ -29,11 +29,11 @@ function search(){
     	case "detaljer":
     		// Hvis bruker skriver inn kommunenavn:
 			// Convert name to id
-			(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = convertToId(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
+			(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = l.getID(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
     		break;
     	case "sammenligning":
-    		(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = convertToId(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
-    		(isNameInDataset(alleInputs[1].value)) ? kommunenr2 = convertToId(alleInputs[1].value) : kommunenr2 = alleInputs[1].value;
+    		(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = l.getID(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
+    		(isNameInDataset(alleInputs[1].value)) ? kommunenr2 = l.getID(alleInputs[1].value) : kommunenr2 = alleInputs[1].value;
     		break;
     };
 

@@ -101,7 +101,7 @@ AlleKommunerSingleton = (function() {
 
 		function getID(name){
 			for (n in _names){
-				if (name == _names[n])
+				if (capFirstLetter(name) == _names[n])
 					return _IDs[n];
 			}
 		}

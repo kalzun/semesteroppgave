@@ -68,13 +68,17 @@ function removeTable(div, numberOfTables){
 
 function isNameInDataset(name) {
     const names = l.getAllNames();
-    console.log("In dataset : "+names.includes(name))
-    return names.includes(name);
+    console.log("In dataset : " + names.includes(capFirstLetter(name)));
+    return names.includes(capFirstLetter(name));
 }
 
 function convertToId(name) {
     const id = l.getID(name);
-    console.log("Convert to id : "+l.getID(name))
+    console.log("Convert to id : " + l.getID(name))
     return id;
 }
 
+function capFirstLetter(word) {
+    // Gjør første bokstav i word Stor.
+    return word[0].toUpperCase() + word.slice(1);
+}
