@@ -8,18 +8,20 @@ document.addEventListener("DOMContentLoaded", function(event){
 	inputFields = document.querySelectorAll(".search");
 	for (let i = 0; i < inputFields.length; i++){
 		inputFields[i].addEventListener("input", regexChecker);
-		inputFields[i].addEventListener("blur", function() {
-			let clearThisOutput = clearOutput.bind(this);
-			clearThisOutput();
-			});
+		// inputFields[i].addEventListener("blur", function() {
+		// 	let clearThisOutput = clearOutput.bind(this);
+		// 	clearThisOutput();
+		// 	});
 	}
 });
 
 
 // Kjøres når brukeren trykker på en søkeknapp
-function search(){
+function search(suggestion){
+	console.log("Suggestion : " + suggestion);
 	let kommunenr1,
 		kommunenr2;
+	console.log("eventtargetid : " + event.target.id);
     const iD = event.target.id;
     const domElem = document.getElementsByClassName(iD)[0];
     const aParent = event.target.parentElement.parentElement;
@@ -38,7 +40,6 @@ function search(){
     };
 
     ds.onload = function(){
-    	clearOutput(); // Fjerne regex-forslag
 		removeLoadingMessage()
         tabell(domElem, iD, kommunenr1, kommunenr2);
     }
@@ -49,6 +50,22 @@ function search(){
     }
 }
 
+function populateSearchField(content, inputElements, isSecondary) {
+	console.log("Is this the right ? " + isSecondary);
+	let output;
+
+	//isSecondary ? inputElements[1].value = content : inputElements[0].value = content;
+
+	if (isSecondary) { // On sammenligning
+		inputElements[1].value = content;
+		output = inputElements[1].parentElement.querySelector(".search-output-right");
+	} else {
+		inputElements[0].value = content;
+		output = inputElements[0].parentElement.querySelector(".search-output");
+	}
+	clearOutput(output);
+
+}
 
 function regexChecker(event){
 	const names = l.getAllNames();
@@ -56,28 +73,26 @@ function regexChecker(event){
 	let userInput = event.target.value;
 	let regexp = new RegExp(`^${userInput}`, 'gi');
 	let output;
-	
+
 	// Sjekk hvilken input som skrives inn i, for å bestemme hvor forslagene skal skrives ut:
 	if (this.id === "input-sam2") 
 		output = this.parentElement.querySelector(".search-output-right");
 	else
 		output = this.parentElement.querySelector(".search-output");
 
+	// Rensk output for hver inntasting (eller sletting):
 	clearOutput(output);
+
+	// Bare utfør sjekk dersom det står noe i feltet.
 	if (userInput.length > 0){
 		outputRegexHits(names.filter((name) => name.search(regexp) !== -1), output);
 		outputRegexHits(IDs.filter((id) => id.search(regexp) !== -1), output);
-		// for (i in names) {
-		// 	if (names[i].search(regexp) !== -1){
-		// 		console.log("Navn: " + names[i]);
-		// 		//outputRegexHit(names[i], output);
-		// 	}
-		// }
 	}
 }
 
 function clearOutput(output){
 	if (output === undefined){
+		console.log("THIS ID : " + this.id)
 		// Sjekk hvilken id this har, for å kunne fjerne korrekt output
 		// Må gjøres her siden vi har flere forskjellige outputs, og flere steder hvor output fjernes
 		
@@ -101,19 +116,42 @@ function clearOutput(output){
 }
 
 function outputRegexHits(hits, output){
-	hits.forEach((hit) => {
+	const maxHitsShown = 5;
+	hits.slice(0, maxHitsShown).forEach((hit) => {
 		const li = document.createElement("li");
 		let kommunenr, kommunenavn;
 		(Number(hit)) ? kommunenavn = l.getName(hit): kommunenr = l.getID(hit);  
 		li.className = "search-suggestion";
 
-		li.innerHTML = `${hit} 
+		li.innerHTML = `<span>${hit}</span>
 						<span class="search-span">
 						${(kommunenavn) ? kommunenavn : kommunenr}
 						</span>
 						<span class="search-span">Innbyggertall: 32421</span>`;
 		
-		//li.addEventListener("click", (event) => )
+		//li.setAttribute("onclick", "search();");
+		li.addEventListener("click", (event) => {
+			let clickedName; 
+			if (event.target.nodeName == "LI"){
+				clickedName = event.target.firstChild.textContent;
+			} else if (event.target.nodeName == "SPAN") {
+				clickedName = event.target.parentElement.firstChild.textContent;
+			}
+			let inputElements = event.target.parentElement.parentElement.parentElement.querySelectorAll("input");
+			let isSecondary = event.target.closest(".search-output-right");
+			populateSearchField(clickedName, inputElements, isSecondary);
+		});
 		output.appendChild(li);
 	});
+}
+
+function getCorrectOutput(id, elem) {
+	let output;
+	// Send in this.id som parameter!
+	// Sjekk hvilken input som skrives inn i, for å bestemme hvor forslagene skal skrives ut:
+	if (id === "input-sam2") 
+		output = elem.parentElement.querySelector(".search-output-right");
+	else
+		output = elem.parentElement.querySelector(".search-output");
+	return output
 }

@@ -28,6 +28,10 @@
 	background-color: var(--colorSecondary);
 }
 
+.search-suggestion:hover {
+	background-color: var(--colorSecondaryHover);
+}
+
 .search-span {
 	color: var(--colorMain);
 	font-size: 0.8rem;
