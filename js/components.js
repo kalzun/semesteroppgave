@@ -181,14 +181,14 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const tableData = tBody.childNodes;
 
 		// Itererer gjennom hvert år (kolonne) i tabellen
-		for (let colIndex = 2; colIndex <= tableData[0].childElementCount -1; colIndex++) {
+		for (let colIndex = 2; colIndex < tableData[0].childElementCount; colIndex++) {
 			let largestDiff = {
 				//kjønn: [DOM-element, verdi]
 				"menn": [undefined, null],
 				"kvinner": [undefined, null]
 			};
 			//Itererer gjennom hver rad for hvert år
-			for (let rowIndex = 0; rowIndex < 2; rowIndex++) {
+			for (let rowIndex = 0; rowIndex <= 2; rowIndex += 2) {
 				const currentYear = {
 					"menn": tableData[rowIndex].childNodes[colIndex].innerHTML,
 					"kvinner": tableData[rowIndex + 1].childNodes[colIndex].innerHTML
@@ -201,7 +201,8 @@ function tabell(div, category, kommunenr1, kommunenr2){
 					"menn": currentYear["menn"] - lastYear["menn"],
 					"kvinner": currentYear["kvinner"] - lastYear["kvinner"]
 				};
-
+				console.log(tableData[rowIndex + 1].childNodes[colIndex])
+				console.log(tableData[rowIndex].childNodes[colIndex])
 				if (diff["menn"] > largestDiff["menn"][1]) {
 					largestDiff["menn"][1] = diff["menn"];
 					largestDiff["menn"][0] = tableData[rowIndex].childNodes[colIndex];
