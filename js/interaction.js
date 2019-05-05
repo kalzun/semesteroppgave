@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 	inputFields = document.querySelectorAll(".search");
 	for (let i = 0; i < inputFields.length; i++){
 		inputFields[i].addEventListener("input", regexChecker);
-		inputFields[i].addEventListener("focusout", function() {
+		inputFields[i].addEventListener("blur", function() {
 			let clearThisOutput = clearOutput.bind(this);
 			clearThisOutput();
 			});
