@@ -20,11 +20,9 @@ function addChild(parent, input, type, attrType, attrVal){
 // Tar høyde for at elementene i arrayet har årstall på nivå to eller tre i objektet. Eks. på nivåer: dataSets = [currentDS[menn][årstall], currentDS[kategori][menn][årstall]]
 
 function getYears(dataSets){
-    console.log("DATASET " + dataSets);
     let allYears = [];
     for (i in dataSets) {
         let currentDS = dataSets[i];
-        console.log(currentDS);
         if (currentDS != "Ingen tilgjengelige data."){
             const objKeys = Object.keys(currentDS);
             
@@ -34,20 +32,19 @@ function getYears(dataSets){
                     for (gender in currentDS[j]) {
                         currentYears = Object.keys(currentDS[j][gender]);
                         for (k in currentYears) {
-                            if (allYears.includes(currentYears[k]) == false) allYears.push(currentYears[k])
+                            if (allYears.includes(currentYears[k]) == false && currentYears[k].length === 4) allYears.push(currentYears[k])
                         }
                     }
                 }else{
                     currentYears = Object.keys(currentDS);
                     for (i in currentYears) {
-                        if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
+                        if (allYears.includes(currentYears[i]) == false && currentYears[i].length === 4) allYears.push(currentYears[i])
                     }
                 }
             }
         }
     }
     allYears = allYears.sort();
-    console.log(allYears)
     return allYears;
 }
 
