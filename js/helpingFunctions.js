@@ -25,10 +25,9 @@ function getYears(dataSets){
         let currentDS = dataSets[i];
         if (currentDS != "Ingen tilgjengelige data."){
             const objKeys = Object.keys(currentDS);
-            
             for (j in currentDS){
                 let currentYears;
-                if (objKeys.includes("Menn") || objKeys.includes("Kvinner")) {
+                if (objKeys.includes("Menn") || objKeys.includes("Kvinner") || objKeys.length != 4) {
                     for (gender in currentDS[j]) {
                         currentYears = Object.keys(currentDS[j][gender]);
                         for (k in currentYears) {
@@ -72,7 +71,6 @@ function addData(kommune, parent, headerYears, category, tab) {
             break;
         case "utdanning":
             data = kommune.people.getEducationRates();
-            if (data === "Ingen tilgjengelige data.") return;
             const eduCodes = kommune.people.getEduCodes();
             for (i in eduCodes) {
                 const eduCode = eduCodes[i];
