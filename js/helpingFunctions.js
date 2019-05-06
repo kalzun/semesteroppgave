@@ -20,28 +20,32 @@ function addChild(parent, input, type, attrType, attrVal){
 // Tar høyde for at elementene i arrayet har årstall på nivå to eller tre i objektet. Eks. på nivåer: dataSets = [currentDS[menn][årstall], currentDS[kategori][menn][årstall]]
 
 function getYears(dataSets){
+    console.log("DATASET " + dataSets);
     let allYears = [];
     for (i in dataSets) {
         let currentDS = dataSets[i];
-        for (j in currentDS){
-            const objKeys = Object.keys(currentDS[j]);
-            let currentYears;
-            if (objKeys.includes("Menn") || objKeys.includes("Kvinner")) {
-                for (gender in currentDS[j]) {
-                    currentYears = Object.keys(currentDS[j][gender]);
+        if (currentDS != "Ingen tilgjengelige data."){
+            for (j in currentDS){
+                const objKeys = Object.keys(currentDS);
+                let currentYears;
+                if (objKeys.includes("Menn") || objKeys.includes("Kvinner")) {
+                    for (gender in currentDS[j]) {
+                        currentYears = Object.keys(currentDS[j][gender]);
+                        for (i in currentYears) {
+                            if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
+                        }
+                    }
+                }else{
+                    currentYears = Object.keys(currentDS);
                     for (i in currentYears) {
                         if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
                     }
                 }
-            }else{
-                currentYears = Object.keys(currentDS);
-                for (i in currentYears) {
-                    if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
-                }
-            };
+            }
         }
     }
     allYears = allYears.sort();
+    console.log(allYears)
     return allYears;
 }
 
@@ -68,7 +72,8 @@ function addData(kommune, parent, headerYears, category, tab) {
             }
             break;
         case "utdanning":
-            data = kommune.people.getAllEducationRates();
+            data = kommune.people.getEducationRates();
+            if (data === "Ingen tilgjengelige data.") return;
             const eduCodes = kommune.people.getEduCodes();
             for (i in eduCodes) {
                 const eduCode = eduCodes[i];
@@ -154,13 +159,11 @@ function removeTable(div, numberOfTables){
 
 function isNameInDataset(name) {
     const names = kommuneSingleton.getAllNames();
-    console.log("In dataset : "+names.includes(name))
     return names.includes(name);
 }
 
 function convertToId(name) {
     const id = kommuneSingleton.getID(name);
-    console.log("Convert to id : "+kommuneSingleton.getID(name))
     return id;
 }
 

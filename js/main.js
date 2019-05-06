@@ -21,6 +21,8 @@ const [GRUNNSKOLE,
 AlleKommunerSingleton = (function() {
 	var instance;
 	var _IDs = [];
+	const _IDs2 = [];
+	const _IDs3 = [];
 	var _names = [];
 	var _all = [];
 	var _inhabitants = [];
@@ -58,6 +60,7 @@ AlleKommunerSingleton = (function() {
 
 				for (i in dataset[1].elementer){
 					_employmentRates.push(dataset[1].elementer[i]);
+					_IDs2.push(dataset[1].elementer[i][KOMNR]);
 					if (!_IDs.includes(dataset[1].elementer[i][KOMNR])){
 						_IDs.push(dataset[1].elementer[i][KOMNR]);
 						_names.push(i);
@@ -70,11 +73,19 @@ AlleKommunerSingleton = (function() {
 
 				for (i in dataset[2].elementer){
 					_education.push(dataset[2].elementer[i]);
+					_IDs3.push(dataset[2].elementer[i][KOMNR]);
 					if (!_IDs.includes(dataset[2].elementer[i][KOMNR])){
 						_IDs.push(dataset[2].elementer[i][KOMNR]);
 						_names.push(i);
 					}
 				}
+
+				// Sjekk forskjell, finner IDer som ikke er i hvert datasett.
+				var diff1v2 = _IDs.filter(num => (!_IDs2.includes(num)));
+				var diff1v3 = _IDs.filter(num => (!_IDs3.includes(num)));
+				var diff2v3 = _IDs2.filter(num => (!_IDs3.includes(num)));
+				var diff3v1 = _IDs3.filter(num => (!_IDs.includes(num)));
+				var diff3v2 = _IDs3.filter(num => (!_IDs2.includes(num)));
 
 			}());
 
@@ -404,7 +415,7 @@ People.prototype = {
 		
 		if (this.education == "Ingen tilgjengelige data."){
 			this.edu == this.education;
-			return;
+			return [];
 		}
 
 		this.edu = this.education[educode];
