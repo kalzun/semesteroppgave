@@ -140,13 +140,19 @@ function isContentInCategory(cat) {
 }
 
 function displayLoadingMessage(domElem) {
-    const message = "Laster data..."
-    addChild(domElem, message, "p", "class", "loading-message")
+    const message = "Laster data...";
+    const loadingDiv = document.createElement("div");
+    loadingDiv.setAttribute("class", "loading-div");
+    domElem.appendChild(loadingDiv);
+    addChild(loadingDiv, null, "div", "class", "loader");
+    addChild(loadingDiv, message, "p", "class", "loading-message");
 }
 
 function removeLoadingMessage() {
-    const elem = document.querySelector(".loading-message");
-    if (elem != undefined) elem.parentNode.removeChild(elem);
+    elems = document.querySelector(".loading-div");
+    while (elems.firstChild){ 
+        elems.removeChild(elems.firstChild);
+    }
 }
 
 function removeTable(div, numberOfTables){
