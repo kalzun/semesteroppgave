@@ -24,15 +24,17 @@ function getYears(dataSets){
     let allYears = [];
     for (i in dataSets) {
         let currentDS = dataSets[i];
+        console.log(currentDS);
         if (currentDS != "Ingen tilgjengelige data."){
+            const objKeys = Object.keys(currentDS);
+            
             for (j in currentDS){
-                const objKeys = Object.keys(currentDS);
                 let currentYears;
                 if (objKeys.includes("Menn") || objKeys.includes("Kvinner")) {
                     for (gender in currentDS[j]) {
                         currentYears = Object.keys(currentDS[j][gender]);
-                        for (i in currentYears) {
-                            if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
+                        for (k in currentYears) {
+                            if (allYears.includes(currentYears[k]) == false) allYears.push(currentYears[k])
                         }
                     }
                 }else{
