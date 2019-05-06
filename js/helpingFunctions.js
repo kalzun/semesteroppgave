@@ -99,7 +99,12 @@ function addData(kommune, parent, headerYears, category, tab) {
             if (category != "utdanning"){
                 cellData = data[currentYear];
             }else{
-                cellData = ((data[subCategory][MENN][currentYear] + data[subCategory][KVINNER][currentYear]) / 2).toFixed(2);
+                try {
+                    cellData = ((data[subCategory][MENN][currentYear] + data[subCategory][KVINNER][currentYear]) / 2).toFixed(2);
+                } catch(e) {
+                    cellData = undefined;
+                }
+                
             }
             addChild(row, cellData, "td", "class", "data-cell");
         }

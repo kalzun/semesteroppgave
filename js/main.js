@@ -420,7 +420,7 @@ People.prototype = {
 		
 		if (this.education == "Ingen tilgjengelige data."){
 			this.edu == this.education;
-			return [];
+			return 0;
 		}
 
 		this.edu = this.education[educode];

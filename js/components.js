@@ -53,17 +53,14 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const sisteSysselsatteProsent = kommune.people.getEmploymentRatesLastYear();
 		const sisteSysselsatteAntall = Math.floor(sisteBefolkning * sisteSysselsatteProsent / 100);
 
-		if (!kommune.people.education == "Ingen tilgengelige data."){
-			// Høyere utdanningsprosent og antall:
-			const sisteUtdanningProsentUniKort = kommune.people.getEducationRatesLastYearSpecified(UNIKORT).toFixed(2);
-			const sisteUtdanningAntallUniKort = Math.floor((sisteUtdanningProsentUniKort * sisteBefolkning) / 100);
-			const sisteUtdanningProsentUniLang = kommune.people.getEducationRatesLastYearSpecified(UNILANG).toFixed(2);
-			const sisteUtdanningAntallUniLang = Math.floor((sisteUtdanningProsentUniLang * sisteBefolkning) / 100);
-			const sisteUtdProsentGjennomsnitt = (sisteUtdanningProsentUniKort + sisteUtdanningProsentUniLang) / 2;
-			const sisteUtdAntall = Math.floor(sisteBefolkning * sisteUtdProsentGjennomsnitt / 100);
-		}
-
-
+		// Høyere utdanningsprosent og antall:
+		const sisteUtdanningProsentUniKort = kommune.people.getEducationRatesLastYearSpecified(UNIKORT).toFixed(2);
+		const sisteUtdanningAntallUniKort = Math.floor((sisteUtdanningProsentUniKort * sisteBefolkning) / 100);
+		const sisteUtdanningProsentUniLang = kommune.people.getEducationRatesLastYearSpecified(UNILANG).toFixed(2);
+		const sisteUtdanningAntallUniLang = Math.floor((sisteUtdanningProsentUniLang * sisteBefolkning) / 100);
+		const sisteUtdProsentGjennomsnitt = (sisteUtdanningProsentUniKort + sisteUtdanningProsentUniLang) / 2;
+		const sisteUtdAntall = Math.floor(sisteBefolkning * sisteUtdProsentGjennomsnitt / 100);
+	
 		/*
 		Vise tabell med
 		kommunens navn,
@@ -101,12 +98,11 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		addChild(sysRow, sisteSysselsatteAntall, "td", "class", "data-cell");
 		addChild(sysRow, sisteSysselsatteProsent, "td", "class", "data-cell");
 
-		if (!kommune.people.education == "Ingen tilgengelige data."){
-			addChild(utdKortRow, sisteUtdanningAntallUniKort, "td", "class", "data-cell");
-			addChild(utdKortRow, sisteUtdanningProsentUniKort, "td", "class", "data-cell");
-			addChild(utdLangRow, sisteUtdanningAntallUniLang, "td", "class", "data-cell");
-			addChild(utdLangRow, sisteUtdanningProsentUniLang, "td", "class", "data-cell");
-		}
+
+		addChild(utdKortRow, sisteUtdanningAntallUniKort, "td", "class", "data-cell");
+		addChild(utdKortRow, sisteUtdanningProsentUniKort, "td", "class", "data-cell");
+		addChild(utdLangRow, sisteUtdanningAntallUniLang, "td", "class", "data-cell");
+		addChild(utdLangRow, sisteUtdanningProsentUniLang, "td", "class", "data-cell");
 
 /*
 		Vise historisk utvikling
