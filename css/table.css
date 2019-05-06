@@ -2,8 +2,6 @@ table {
   width: 100%;
   font-size: 1.5vw;
 }
-
-
 .green-highlight {
   background-color: #c6ffab;
 }
@@ -20,12 +18,10 @@ table {
     flex-direction: row;
 
     font-size: 2vw;
-    
   }
   .sammenligning thead, .sammenligning tbody, .detaljer>table:nth-child(3)>thead, .detaljer>table:nth-child(3)>tbody {
     display: flex;
     flex-direction: row;
-    
   }
   .sammenligning thead, .detaljer>table:nth-child(3) thead {
     flex: 1;
@@ -36,7 +32,6 @@ table {
   .detaljer>table:nth-child(3) tbody {
     flex: 8;
   }
-
   .sammenligning tr, .detaljer>table:nth-child(3) tr {
     display: flex;
     flex-direction: column;
@@ -47,7 +42,6 @@ table {
     background-color: var(--colorSecondary);
     color: var(--colorMain);
   }
-
   .detaljer table:nth-child(3) th:nth-child(1), .detaljer table:nth-child(3)>tbody>tr>td:nth-child(1) {
     height: 30px;
     background-color: var(--colorSecondary);
