@@ -89,7 +89,7 @@ function addData(kommune, parent, headerYears, category, tab) {
         }else if(tab == "sammenligning"){
             cellName = `${kommune.navn} ${gender}`;
         }else{
-            cellName = category;
+            cellName = capFirstLetter(category);
         }
         addChild(row, cellName, "td");
 
