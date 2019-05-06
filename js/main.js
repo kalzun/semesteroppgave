@@ -79,7 +79,7 @@ AlleKommunerSingleton = (function() {
 			}());
 
 			// Oppretter alle kommuneobjektene, som vi samler i _all.
-			// _all blir gjort offentlig tilgjengelig via funksjonen getAlleKommuner()
+			// _all blir gjort offentlig tilgjengelige via funksjonen getAlleKommuner()
 			for (id in _IDs){
 				var _ = new Kommuneobj(_names[id], _IDs[id]);
 				_all.push(_);
@@ -101,7 +101,7 @@ AlleKommunerSingleton = (function() {
 
 		function getID(name){
 			for (n in _names){
-				if (name == _names[n])
+				if (capFirstLetter(name) == _names[n])
 					return _IDs[n];
 			}
 		}
@@ -229,7 +229,8 @@ var DataSet = function(urls) {
 					if (this.onload) {
 						this.onload();
 					}
-					tabell(document.querySelector('.oversikt'), 'oversikt') // Konstruere oversiktstabell
+					// Konstruerer oversiktstabell
+					tabell(document.querySelector('.oversikt'), 'oversikt')
 				});
 			});
 		});
@@ -392,7 +393,20 @@ People.prototype = {
 		return eduRates;
 	},
 
+	getEducationRatesByYearSpecified: function (educode, year) {
+		this.edu = this.education[educode];
+		return this.edu[MENN][year] + this.edu[KVINNER][year];
+	},
+
 	getEducationRatesLastYearSpecified: function(educode) {
+		
+		// Sjekk om vi har data på utdanning på kommunen.
+		
+		if (this.education == "Ingen tilgjengelige data."){
+			this.edu == this.education;
+			return;
+		}
+
 		this.edu = this.education[educode];
 		this.eduMAllYears = Object.keys(this.edu[MENN]).sort();
 		this.eduKAllYears = Object.keys(this.edu[KVINNER]).sort();
@@ -434,7 +448,7 @@ People.prototype = {
 		}
 
 	}
-}
+};
 
 
 var Kommuneobj = function(navn, id) {
@@ -443,82 +457,12 @@ var Kommuneobj = function(navn, id) {
 	this.people = new People(id);
 }
 
-// Kjøres når brukeren trykker på en søkeknapp
-function search(){
-	let kommunenr1,
-		kommunenr2;
-    const iD = event.target.id;
-    const domElem = document.getElementsByClassName(iD)[0];
-    const aParent = event.target.parentElement.parentElement;
-    const alleInputs = aParent.querySelectorAll("div .search");
-
-    switch (iD){
-    	case "detaljer":
-    		// Hvis bruker skriver inn kommunenavn:
-			// Convert name to id
-			(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = convertToId(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
-    		break;
-    	case "sammenligning":
-    		(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = convertToId(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
-    		(isNameInDataset(alleInputs[1].value)) ? kommunenr2 = convertToId(alleInputs[1].value) : kommunenr2 = alleInputs[1].value;
-    		break;
-    };
-
-    ds.onload = function(){
-		removeLoadingMessage()
-        tabell(domElem, iD, kommunenr1, kommunenr2);
-    }
-    if (l.isLoaded() == true) {
-        ds.onload();
-    }else{
-        displayLoadingMessage(domElem)
-    }
-}
+// Konstruerer dataset og singleton objekt for alle kommuner
+var fullstendigDataSet = new DataSet(allUrls);
+fullstendigDataSet.load()
+var kommuneSingleton = AlleKommunerSingleton.getInstance()
 
 
-//Må gjøres penere
-var ds = new DataSet(allUrls);
-ds.load()
-var l = AlleKommunerSingleton.getInstance()
 
-document.addEventListener("DOMContentLoaded", function(event){
-	const searchButtons = document.querySelectorAll(".searchbutton");
-	for (let index = 0; index < 2; index++){
-		searchButtons[index].addEventListener("click", search);
-	}
-
-	// Input-listener som sjekker for hver bokstav skrevet inn
-	inputFields = document.querySelectorAll(".search");
-	for (let i = 0; i < inputFields.length; i++){
-		inputFields[i].addEventListener("keyup", regexChecker);
-	}
-});
-
-function regexChecker(event){
-	const output = document.querySelector(".output");
-	const names = l.getAllNames();
-	let regexp = new RegExp(`${event.target.value}`);
-	for (i in names) {
-		if (names[i].search(regexp) !== -1){
-			console.log("Navn: " + names[i]);
-			//outputRegexHit(names[i], output);
-		}
-	}
-
-}
-
-function clearOutput(out){
-	n = out
-	for (let i = 0, len = out.childNodes.length; i < out.childNodes.length; i++) {
-		//console.log("OUTPUT" + out.children[i]);
-		out.removeChild(out.childNodes[i]);
-	}
-}
-
-function outputRegexHit(hits, output){
-	const li = document.createElement("li");
-	li.innerHTML = hits;
-	output.appendChild(li);
-}
 
 

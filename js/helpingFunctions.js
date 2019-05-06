@@ -2,18 +2,106 @@
 
 function addChild(parent, input, type, attrType, attrVal){
     const node = document.createElement(type);
-    if (input == 'undefined' || input === undefined){
-        node.innerHTML = "N/A";
-        node.classList += "no-data";
+    if (input === "undefined" || input === undefined || input === "NaN" || input === NaN){
+        node.innerHTML = "-";
+        node.classList.add("no-data");
     }
     else
         node.innerHTML = input;
 
-    if (attrType != undefined) {
-        node.setAttribute(attrType, attrVal);
+    if (attrType == "class") {
+        node.classList.add(attrVal);
     }
     parent.appendChild(node);
     return node;
+}
+
+// Itererer gjennom gitt array med datasett, og returnerer årene fra disse i et array med alle årstall (uten duplikater).
+// Tar høyde for at elementene i arrayet har årstall på nivå to eller tre i objektet. Eks. på nivåer: dataSets = [currentDS[menn][årstall], currentDS[kategori][menn][årstall]]
+
+function getYears(dataSets){
+    let allYears = [];
+    for (i in dataSets) {
+        let currentDS = dataSets[i];
+        for (j in currentDS){
+            const objKeys = Object.keys(currentDS[j]);
+            let currentYears;
+            if (objKeys.includes("Menn") || objKeys.includes("Kvinner")) {
+                for (gender in currentDS[j]) {
+                    currentYears = Object.keys(currentDS[j][gender]);
+                    for (i in currentYears) {
+                        if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
+                    }
+                }
+            }else{
+                currentYears = Object.keys(currentDS);
+                for (i in currentYears) {
+                    if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
+                }
+            };
+        }
+    }
+    allYears = allYears.sort();
+    return allYears;
+}
+
+// Legger til data i hver celle i en rad.
+
+function addData(kommune, parent, headerYears, category, tab) {
+    let data
+    switch (category) {
+        case "befolkning":
+            data = kommune.people.getInhabitants();
+            addCells(category);
+            break;
+        case "sysselsetting":
+            if (tab == "sammenligning") {
+                const genders = [MENN, KVINNER];
+                for (let i = 0; i < 2; i++) {
+                    const gender = genders[i]
+                    data = kommune.people.getEmploymentRatesByGender(gender);
+                    addCells(category, undefined, tab, gender);
+                }
+            }else{
+                data = kommune.people.getEmploymentRates();
+                addCells(category);
+            }
+            break;
+        case "utdanning":
+            data = kommune.people.getAllEducationRates();
+            const eduCodes = kommune.people.getEduCodes();
+            for (i in eduCodes) {
+                const eduCode = eduCodes[i];
+                addCells(category, eduCode);
+            }
+            break;
+        default:
+            return;
+    }
+
+    function addCells(category, subCategory, tab, gender) {
+        const row = addChild(parent, null, "tr");
+        let cellName
+        if (kommune.people.getEduName(subCategory) != undefined) {
+            cellName = `Utdanning på ${kommune.people.getEduName(subCategory)}`;
+        }else if(tab == "sammenligning"){
+            cellName = `${kommune.navn} ${gender}`;
+        }else{
+            cellName = category;
+        }
+        addChild(row, cellName, "td");
+
+        for (j in headerYears) {
+            const currentYear = headerYears[j];
+            let cellData
+            if (category != "utdanning"){
+                cellData = data[currentYear];
+            }else{
+                cellData = ((data[subCategory][MENN][currentYear] + data[subCategory][KVINNER][currentYear]) / 2).toFixed(2);
+            }
+            addChild(row, cellData, "td", "class", "data-cell");
+        }
+    }
 }
 
 // Legger til tekst som forteller brukeren at en eller begge kommunenr han søkte på ikke finnes, samt hvilke(t)
@@ -36,8 +124,6 @@ function removeErrorMessages(div) {
     errorMessages = div.querySelectorAll(".content .error-message");
     for (let i = 0; i < errorMessages.length; i++) {
         let elem = errorMessages[i]
-        console.log(1, i)
-        console.log(elem)
         if (elem != undefined) elem.parentNode.removeChild(elem)
     }
 }
@@ -60,21 +146,25 @@ function removeTable(div, numberOfTables){
     for (let i = 0; i < numberOfTables; i++) {
         const table = div.querySelector("table");
         if (table != undefined) {
-            console.log('Removing old table...')
+            console.log("Removing old table...")
             table.parentNode.removeChild(table);
         }
     }
 }
 
 function isNameInDataset(name) {
-    const names = l.getAllNames();
+    const names = kommuneSingleton.getAllNames();
     console.log("In dataset : "+names.includes(name))
     return names.includes(name);
 }
 
 function convertToId(name) {
-    const id = l.getID(name);
-    console.log("Convert to id : "+l.getID(name))
+    const id = kommuneSingleton.getID(name);
+    console.log("Convert to id : "+kommuneSingleton.getID(name))
     return id;
 }
 
+function capFirstLetter(word) {
+    // Gjør første bokstav i word Stor.
+    return word[0].toUpperCase() + word.slice(1);
+}
