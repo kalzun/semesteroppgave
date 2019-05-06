@@ -21,6 +21,29 @@
     color: var(--colorMain);
     padding: 5vw;
 }
+.oversikt .content {
+    flex-direction: column;
+    text-align: center;
+}
+.content a {
+    display: block;
+    color: var(--colorMain);
+    text-decoration-line: none;
+    text-align: center;
+}
+.info {
+    flex: 2;
+    padding-left: 2.5vw;
+    padding-right: 2.5vw;
+}
+.kilder {
+    flex: 1;
+    padding-left: 2.5vw;
+    padding-right: 2.5vw;
+}
+.content h1 {
+    text-align: center;
+}
 
 .content button {
     width: 100%;
@@ -64,5 +87,11 @@
 
         margin-top: 2vw;
         margin-bottom: 2vw;
+    }
+    .info {
+        padding-right: 10vw;
+    }
+    .kilder {
+        border-left: 2px solid var(--colorMain);
     }
 }

@@ -2,6 +2,9 @@ table {
   width: 100%;
   font-size: 0.8vw;
 }
+.detaljer table:nth-child(3) {
+  overflow-y: scroll;
+}
 .green-highlight {
   background-color: #c6ffab;
 }

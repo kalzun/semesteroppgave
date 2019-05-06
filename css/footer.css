@@ -1,0 +1,10 @@
+footer {
+  min-height: 220px;
+  background-color: var(--colorSecondary);
+  border-top: 10px solid var(--colorSecondaryHover);
+}
+footer p {
+  text-align: center;
+  color: var(--colorMain);
+  padding: 50px;
+}
