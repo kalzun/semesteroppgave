@@ -81,11 +81,11 @@ AlleKommunerSingleton = (function() {
 				}
 
 				// Sjekk forskjell, finner IDer som ikke er i hvert datasett.
-				var diff1v2 = _IDs.filter(num => (!_IDs2.includes(num)));
-				var diff1v3 = _IDs.filter(num => (!_IDs3.includes(num)));
-				var diff2v3 = _IDs2.filter(num => (!_IDs3.includes(num)));
-				var diff3v1 = _IDs3.filter(num => (!_IDs.includes(num)));
-				var diff3v2 = _IDs3.filter(num => (!_IDs2.includes(num)));
+				const diff1v2 = _IDs.filter(num => (!_IDs2.includes(num)));
+				const diff1v3 = _IDs.filter(num => (!_IDs3.includes(num)));
+				const diff2v3 = _IDs2.filter(num => (!_IDs3.includes(num)));
+				const diff3v1 = _IDs3.filter(num => (!_IDs.includes(num)));
+				const diff3v2 = _IDs3.filter(num => (!_IDs2.includes(num)));
 
 			}());
 

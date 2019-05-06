@@ -158,7 +158,7 @@ function removeTable(div, numberOfTables){
 
 function isNameInDataset(name) {
     const names = kommuneSingleton.getAllNames();
-    return names.includes(name);
+    return names.includes(capFirstLetter(name));
 }
 
 function convertToId(name) {
