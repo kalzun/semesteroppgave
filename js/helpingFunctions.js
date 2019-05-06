@@ -36,7 +36,6 @@ function getYears(dataSets){
                     }
                 }else{
                     currentYears = Object.keys(currentDS);
-                    console.log("Obj ", objKeys)
                     for (i in currentYears) {
                         if (allYears.includes(currentYears[i]) == false && currentYears[i].length === 4) allYears.push(currentYears[i])
                     }
@@ -44,7 +43,6 @@ function getYears(dataSets){
             }
         }
     }
-    console.log(allYears)
     allYears = allYears.sort();
     return allYears;
 }
