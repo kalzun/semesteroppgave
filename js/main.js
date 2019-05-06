@@ -8,11 +8,11 @@ const MENN = "Menn";
 const KVINNER = "Kvinner";
 const BEGGE = "Begge kjønn";
 
-const [GRUNNSKOLE, 
-	   VGS, 
-	   FAGSKOLE, 
-	   UNIKORT, 
-	   UNILANG, 
+const [GRUNNSKOLE,
+	   VGS,
+	   FAGSKOLE,
+	   UNIKORT,
+	   UNILANG,
 	   UTENUTD] = ["01", "02a", "11", "03a", "04a", "09a"];
 
 // Benytter Singleton-pattern, for å ha ett samlet objekt å forholde seg til ved spørringer.
@@ -303,8 +303,6 @@ People.prototype = {
 				this.befolkningTotal[year] = this.inhabitants[MENN][year] + this.inhabitants[KVINNER][year];
 			}
 		}
-
-		console.log("BefolkningTotal: " + this.befolkningTotal);
 		return this.befolkningTotal;
 	},
 
@@ -415,9 +413,9 @@ People.prototype = {
 	},
 
 	getEducationRatesLastYearSpecified: function(educode) {
-		
+
 		// Sjekk om vi har data på utdanning på kommunen.
-		
+
 		if (this.education == "Ingen tilgjengelige data."){
 			this.edu == this.education;
 			return 0;

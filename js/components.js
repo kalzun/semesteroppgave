@@ -21,7 +21,6 @@ function tabell(div, category, kommunenr1, kommunenr2){
 	function oversikt() {
 	    const alleKommuner = kommuneSingleton.getAlleKommuner();
 
-	    console.log("Creating table...");
 	    let table = addChild(div, null, "table");
 	    const tHead = addChild(table, null, "tHead");
 	    const tBody = addChild(table, null, "tbody");
@@ -72,7 +71,6 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 		//Presentasjon
 		// Konstruerer tabellen
-		console.log("Creating table...")
 		let target = div.querySelector(".lastT")
 		let table = addChild(target, null, "table")
 		const tHead = addChild(table, null, "tHead");
@@ -80,7 +78,6 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const headerRow = addChild(tHead, null, "tr");
 		//const infoRow = addChild(tBody, null, "tr");
 
-		console.log("Adding data to table...");
 		const befRow = addChild(tBody, null, "tr");
 		const sysRow = addChild(tBody, null, "tr");
 		const utdKortRow = addChild(tBody, null, "tr");
@@ -167,8 +164,6 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			kommune2.people.getEmploymentRates()
 		]
 		const yearList = getYears(dataSets);
-
-		console.log("Dataset", dataSets)
 		for (let i = 0, len = yearList.length; i < len; i++) {
 			addChild(headerRow, `${yearList[i]}`, "th");
 		}
