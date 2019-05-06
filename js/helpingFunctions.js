@@ -104,7 +104,7 @@ function addData(kommune, parent, headerYears, category, tab) {
                 } catch(e) {
                     cellData = undefined;
                 }
-                
+
             }
             addChild(row, cellData, "td", "class", "data-cell");
         }
@@ -128,7 +128,8 @@ function outputNotFound(div, kommune1, kommune2, kommunenr1, kommunenr2){
 }
 
 function removeErrorMessages(div) {
-    errorMessages = div.querySelectorAll(".content .error-message");
+    console.log(div)
+    errorMessages = document.querySelectorAll(".content .error-message");
     for (let i = 0; i < errorMessages.length; i++) {
         let elem = errorMessages[i]
         if (elem != undefined) elem.parentNode.removeChild(elem)

@@ -21,12 +21,13 @@ function search(suggestion){
 	let kommunenr1,
 		kommunenr2;
 
-    const iD = event.target.id;
-    const domElem = document.getElementsByClassName(iD)[0];
+    const targetClass = event.target.id;
+    console.log(1, document.getElementsByClassName(targetClass))
+    const domElem = document.getElementsByClassName(targetClass);
     const aParent = event.target.parentElement.parentElement;
     const alleInputs = aParent.querySelectorAll("div .search");
 
-    switch (iD){
+    switch (targetClass){
     	case "detaljer":
     		// Hvis bruker skriver inn kommunenavn:
 			// Convert name to id
@@ -40,7 +41,7 @@ function search(suggestion){
 
     fullstendigDataSet.onload = function(){
 		removeLoadingMessage()
-        tabell(domElem, iD, kommunenr1, kommunenr2);
+        tabell(domElem, targetClass, kommunenr1, kommunenr2);
     }
     if (kommuneSingleton.isLoaded() == true) {
         fullstendigDataSet.onload();
@@ -70,7 +71,7 @@ function regexChecker(event){
 	let output;
 
 	// Sjekk hvilken input som skrives inn i, for å bestemme hvor forslagene skal skrives ut:
-	if (this.id === "input-sam2") 
+	if (this.id === "input-sam2")
 		output = this.parentElement.querySelector(".search-output-right");
 	else
 		output = this.parentElement.querySelector(".search-output");
@@ -90,7 +91,7 @@ function clearOutput(output){
 
 		// Sjekk hvilken id this har, for å kunne fjerne korrekt output
 		// Må gjøres her siden vi har flere forskjellige outputs, og flere steder hvor output fjernes
-		
+
 		switch (this.id){
 			case "input-det":
 				output = document.querySelector(".search-output");
@@ -98,7 +99,7 @@ function clearOutput(output){
 			case "input-sam1":
 				output = document.querySelectorAll(".search-output")[1];
 				break;
-			case "input-sam2":		
+			case "input-sam2":
 				output = document.querySelector(".search-output-right");
 				break;
 			default:
@@ -115,7 +116,7 @@ function outputRegexHits(hits, output){
 	hits.slice(0, maxHitsShown).forEach((hit) => {
 		const li = document.createElement("li");
 		let kommunenr, kommunenavn;
-		(Number(hit)) ? kommunenavn = kommuneSingleton.getName(hit): kommunenr = kommuneSingleton.getID(hit);  
+		(Number(hit)) ? kommunenavn = kommuneSingleton.getName(hit): kommunenr = kommuneSingleton.getID(hit);
 		li.className = "search-suggestion";
 
 		li.innerHTML = `<span>${hit}</span>
@@ -123,11 +124,11 @@ function outputRegexHits(hits, output){
 						${(kommunenavn) ? kommunenavn : kommunenr}
 						</span>
 						<span class="search-span">Innbyggertall: 32421</span>`;
-		
+
 
 		// Bruker Mousedown - event i stedenfor click, for å kunne skje FØR blur-eventet (i input)
-		li.addEventListener("mousedown", (event) => { 
-			let clickedName; 
+		li.addEventListener("mousedown", (event) => {
+			let clickedName;
 			if (event.target.nodeName == "LI"){
 				clickedName = event.target.firstChild.textContent;
 			} else if (event.target.nodeName == "SPAN") {
@@ -145,7 +146,7 @@ function getCorrectOutput(id, elem) {
 	let output;
 	// Send in this.id som parameter!
 	// Sjekk hvilken input som skrives inn i, for å bestemme hvor forslagene skal skrives ut:
-	if (id === "input-sam2") 
+	if (id === "input-sam2")
 		output = elem.parentElement.querySelector(".search-output-right");
 	else
 		output = elem.parentElement.querySelector(".search-output");
