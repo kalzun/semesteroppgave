@@ -229,7 +229,8 @@ var DataSet = function(urls) {
 					if (this.onload) {
 						this.onload();
 					}
-					tabell(document.querySelector('.oversikt'), 'oversikt') // Konstruere oversiktstabell
+					// Konstruerer oversiktstabell
+					tabell(document.querySelector('.oversikt'), 'oversikt')
 				});
 			});
 		});
@@ -392,6 +393,11 @@ People.prototype = {
 		return eduRates;
 	},
 
+	getEducationRatesByYearSpecified: function (educode, year) {
+		this.edu = this.education[educode];
+		return this.edu[MENN][year] + this.edu[KVINNER][year];
+	},
+
 	getEducationRatesLastYearSpecified: function(educode) {
 		
 		// Sjekk om vi har data på utdanning på kommunen.
@@ -442,7 +448,7 @@ People.prototype = {
 		}
 
 	}
-}
+};
 
 
 var Kommuneobj = function(navn, id) {
@@ -451,10 +457,10 @@ var Kommuneobj = function(navn, id) {
 	this.people = new People(id);
 }
 
-//Må gjøres penere
-var ds = new DataSet(allUrls);
-ds.load()
-var l = AlleKommunerSingleton.getInstance()
+// Konstruerer dataset og singleton objekt for alle kommuner
+var fullstendigDataSet = new DataSet(allUrls);
+fullstendigDataSet.load()
+var kommuneSingleton = AlleKommunerSingleton.getInstance()
 
 
 
