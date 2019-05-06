@@ -23,22 +23,25 @@ function getYears(dataSets){
     let allYears = [];
     for (i in dataSets) {
         let currentDS = dataSets[i];
-        for (j in currentDS){
-            const objKeys = Object.keys(currentDS[j]);
-            let currentYears;
-            if (objKeys.includes("Menn") || objKeys.includes("Kvinner")) {
-                for (gender in currentDS[j]) {
-                    currentYears = Object.keys(currentDS[j][gender]);
+        if (currentDS != "Ingen tilgjengelige data."){
+            const objKeys = Object.keys(currentDS);
+            
+            for (j in currentDS){
+                let currentYears;
+                if (objKeys.includes("Menn") || objKeys.includes("Kvinner")) {
+                    for (gender in currentDS[j]) {
+                        currentYears = Object.keys(currentDS[j][gender]);
+                        for (k in currentYears) {
+                            if (allYears.includes(currentYears[k]) == false && currentYears[k].length === 4) allYears.push(currentYears[k])
+                        }
+                    }
+                }else{
+                    currentYears = Object.keys(currentDS);
                     for (i in currentYears) {
-                        if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
+                        if (allYears.includes(currentYears[i]) == false && currentYears[i].length === 4) allYears.push(currentYears[i])
                     }
                 }
-            }else{
-                currentYears = Object.keys(currentDS);
-                for (i in currentYears) {
-                    if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
-                }
-            };
+            }
         }
     }
     allYears = allYears.sort();
@@ -68,7 +71,8 @@ function addData(kommune, parent, headerYears, category, tab) {
             }
             break;
         case "utdanning":
-            data = kommune.people.getAllEducationRates();
+            data = kommune.people.getEducationRates();
+            if (data === "Ingen tilgjengelige data.") return;
             const eduCodes = kommune.people.getEduCodes();
             for (i in eduCodes) {
                 const eduCode = eduCodes[i];
@@ -154,13 +158,11 @@ function removeTable(div, numberOfTables){
 
 function isNameInDataset(name) {
     const names = kommuneSingleton.getAllNames();
-    console.log("In dataset : "+names.includes(name))
-    return names.includes(name);
+    return names.includes(capFirstLetter(name));
 }
 
 function convertToId(name) {
     const id = kommuneSingleton.getID(name);
-    console.log("Convert to id : "+kommuneSingleton.getID(name))
     return id;
 }
 
