@@ -22,8 +22,7 @@ function search(suggestion){
 		kommunenr2;
 
     const targetClass = event.target.id;
-    console.log(1, document.getElementsByClassName(targetClass))
-    const domElem = document.getElementsByClassName(targetClass);
+    let domElem = document.getElementsByClassName(targetClass)[0];
     const aParent = event.target.parentElement.parentElement;
     const alleInputs = aParent.querySelectorAll("div .search");
 

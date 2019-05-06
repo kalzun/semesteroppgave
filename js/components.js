@@ -60,7 +60,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const sisteUtdanningAntallUniLang = Math.floor((sisteUtdanningProsentUniLang * sisteBefolkning) / 100);
 		const sisteUtdProsentGjennomsnitt = (sisteUtdanningProsentUniKort + sisteUtdanningProsentUniLang) / 2;
 		const sisteUtdAntall = Math.floor(sisteBefolkning * sisteUtdProsentGjennomsnitt / 100);
-	
+
 		/*
 		Vise tabell med
 		kommunens navn,
@@ -73,7 +73,8 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		//Presentasjon
 		// Konstruerer tabellen
 		console.log("Creating table...")
-		let table = addChild(div, null, "table")
+		let target = div.querySelector(".lastT")
+		let table = addChild(target, null, "table")
 		const tHead = addChild(table, null, "tHead");
 		const tBody = addChild(table, null, "tbody");
 		const headerRow = addChild(tHead, null, "tr");
@@ -117,7 +118,8 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			const dataSets = [befolkningHistorisk, sysselsatteHistorisk, utdanningHistorisk];
 
 			//Presentasjon
-			let table = addChild(div, null, "table", "class", "historic-table");
+			let target = div.querySelector(".historicT");
+			let table = addChild(target, null, "table", "class", "historic-table");
 			const tHead = addChild(table, null, "tHead");
 			const tBody = addChild(table, null, "tbody");
 			const headerRow = addChild(tHead, null, "tr");
