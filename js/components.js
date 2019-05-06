@@ -170,6 +170,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		]
 		const yearList = getYears(dataSets);
 
+		console.log("Dataset", dataSets)
 		for (let i = 0, len = yearList.length; i < len; i++) {
 			addChild(headerRow, `${yearList[i]}`, "th");
 		}

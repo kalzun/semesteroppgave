@@ -27,7 +27,7 @@ function getYears(dataSets){
             const objKeys = Object.keys(currentDS);
             for (j in currentDS){
                 let currentYears;
-                if (objKeys.includes("Menn") || objKeys.includes("Kvinner") || objKeys.length != 4) {
+                if (kommuneSingleton.getEduCodes().some((code) => objKeys.includes(code)))    {
                     for (gender in currentDS[j]) {
                         currentYears = Object.keys(currentDS[j][gender]);
                         for (k in currentYears) {
@@ -36,6 +36,7 @@ function getYears(dataSets){
                     }
                 }else{
                     currentYears = Object.keys(currentDS);
+                    console.log("Obj ", objKeys)
                     for (i in currentYears) {
                         if (allYears.includes(currentYears[i]) == false && currentYears[i].length === 4) allYears.push(currentYears[i])
                     }
@@ -43,6 +44,7 @@ function getYears(dataSets){
             }
         }
     }
+    console.log(allYears)
     allYears = allYears.sort();
     return allYears;
 }
@@ -71,7 +73,7 @@ function addData(kommune, parent, headerYears, category, tab) {
             break;
         case "utdanning":
             data = kommune.people.getEducationRates();
-            const eduCodes = kommune.people.getEduCodes();
+            const eduCodes = kommuneSingleton.getEduCodes();
             for (i in eduCodes) {
                 const eduCode = eduCodes[i];
                 addCells(category, eduCode);

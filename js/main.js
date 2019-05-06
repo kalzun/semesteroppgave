@@ -29,7 +29,7 @@ AlleKommunerSingleton = (function() {
 	var _employmentRates = [];
 	var _education = [];
 	var _loaded = false
-
+	const _eduCodes = ["01", "02a", "11", "03a", "04a", "09a"];
 
 	function init(){
 
@@ -98,6 +98,10 @@ AlleKommunerSingleton = (function() {
 
 		}
 
+		function getEduCodes() {
+			return _eduCodes;
+		}
+
 		function getAlleKommuner() {
 			return _all;
 		}
@@ -160,6 +164,7 @@ AlleKommunerSingleton = (function() {
 		return {
 			// Følgende metoder blir tilgjengelige utenfor singleton:
 			setup: setup,
+			getEduCodes: getEduCodes,
 			getAlleKommuner: getAlleKommuner,
 			getAllIDs: getAllIDs,
 			getAllNames: getAllNames,
