@@ -4,7 +4,6 @@ table {
 }
 .detaljer table:nth-child(3) {
   overflow-y: scroll;
-  background-color: green;
 }
 .green-highlight {
   background-color: #c6ffab;
@@ -18,28 +17,29 @@ table {
   table {
     margin-top: 5vw;
   }
-  .sammenligning table, .detaljer table:nth-child(3) {
+  .sammenligning table, .detaljer table:nth-child(1) {
     display: flex;
     flex-direction: row;
 
     font-size: 2vw;
 
   }
-  .sammenligning thead, .sammenligning tbody, .detaljer>table:nth-child(3)>thead, .detaljer>table:nth-child(3)>tbody {
+  .sammenligning thead, .sammenligning tbody, .detaljer table:nth-child(1) thead, .detaljer table:nth-child(1) tbody {
     display: flex;
     flex-direction: row;
 
   }
-  .sammenligning thead, .detaljer>table:nth-child(3) thead {
+
+  .sammenligning thead, .detaljer table:nth-child(1) thead {
     flex: 1;
   }
   .sammenligning tbody {
     flex: 4;
   }
-  .detaljer>table:nth-child(3) tbody {
+  .detaljer table:nth-child(1) tbody {
     flex: 8;
   }
-  .sammenligning tr, .detaljer>table:nth-child(3) tr {
+  .sammenligning tr, .detaljer table:nth-child(1) tr {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -49,7 +49,7 @@ table {
     background-color: var(--colorSecondary);
     color: var(--colorMain);
   }
-  .detaljer table:nth-child(3) th:nth-child(1), .detaljer table:nth-child(3)>tbody>tr>td:nth-child(1) {
+  .detaljer table:nth-child(1) th:nth-child(1), .detaljer table:nth-child(1) tbody tr td:nth-child(1) {
     height: 30px;
     background-color: var(--colorSecondary);
     color: var(--colorMain);

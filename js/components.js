@@ -152,7 +152,8 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 		//Presentasjon
 		// Konstruerer tabellen
-		let table = addChild(div, null, "table");
+		const target = div.querySelector(".compareT")
+		let table = addChild(target, null, "table");
 		const tHead = addChild(table, null, "tHead");
 		const tBody = addChild(table, null, "tBody");
 		const headerRow = addChild(tHead, null, "tr");
