@@ -1,6 +1,6 @@
 table {
   width: 100%;
-  font-size: 0.8vw;
+  font-size: 1.6vw;
 }
 
 .detaljer table:nth-child(1) {
@@ -17,6 +17,12 @@ table {
 }
 
 td {
+  white-space: nowrap;
+}
+
+td, th {
+  text-overflow: ellipsis;
+  overflow: hidden;
   padding-left: 1vh;;
   padding-right: 1vh;
   border: 1px;
@@ -76,10 +82,15 @@ td {
     height: 2.5vh;
     background-color: var(--colorSecondary);
     color: var(--colorMain);
-    font-size: 1.2vw;
+    font-size: 1.6vw;
   }
 }
 @media (min-width: 801px) {
+
+  td, th {
+    font-size: 1.2vh;
+  }
+
   .historicT {
     overflow-x:auto;
   }

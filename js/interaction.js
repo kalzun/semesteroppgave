@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", function(event){
 	}
 
 	window.addEventListener("resize", () => {
-		const limit = 800;
-		const tableElems = document.querySelectorAll(".eduCat");
+		const limit = 900;
+		const tableElems = document.querySelectorAll(".detaljer .eduCat");
 		const eduCodes = kommuneSingleton.getEduCodes();
 		if (window.innerWidth < limit) {
 			for (let i = 2; i < tableElems.length; i++) {
@@ -143,15 +143,15 @@ function outputRegexHits(hits, output){
 	hits.slice(0, maxHitsShown).forEach((hit) => {
 		const li = document.createElement("li");
 		let kommunenr, kommunenavn, kommuneinfo;
-		if (Number(hit)){ 
+		if (Number(hit)){
 			kommunenavn = kommuneSingleton.getName(hit);
 			kommuneinfo = kommuneSingleton.getInfo(hit);
 		} else {
 			kommunenr = kommuneSingleton.getID(hit);
 			kommuneinfo = kommuneSingleton.getInfo(kommunenr);
 		}
-		
-		
+
+
 		li.className = "search-suggestion";
 
 		li.innerHTML = `<span>${hit}</span>
