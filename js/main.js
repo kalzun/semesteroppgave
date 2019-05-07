@@ -223,9 +223,9 @@ function httpRequest(url, callback) {
 
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
-			//callback(xhr.responseText);
+			callback(xhr.responseText);
 			// Uncomment to test for latency:
-			setTimeout(() => {callback(xhr.responseText);}, 400);
+			//setTimeout(() => {callback(xhr.responseText);}, 3000);
 		}
 	};
 
