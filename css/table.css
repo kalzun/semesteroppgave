@@ -15,17 +15,22 @@ table {
   table {
     margin-top: 5vw;
   }
-  .sammenligning table, .detaljer .historic-table {
+  .sammenligning table,
+  .detaljer .historic-table {
     display: flex;
     flex-direction: row;
     font-size: 2vw;
   }
-  .sammenligning thead, .sammenligning tbody, .detaljer .historic-table>thead, .detaljer .historic-table>tbody {
+  .sammenligning thead,
+  .sammenligning tbody,
+  .detaljer .historic-table>thead,
+  .detaljer .historic-table>tbody {
     display: flex;
     flex-direction: row;
 
   }
-  .sammenligning thead, .detaljer .historic-table>thead {
+  .sammenligning thead,
+  .detaljer .historic-table>thead {
     flex: 1;
   }
   .sammenligning tbody {
@@ -34,17 +39,20 @@ table {
   .detaljer .historic-table tbody {
     flex: 8;
   }
-  .sammenligning tr, .detaljer .historic-table tr {
+  .sammenligning tr,
+  .detaljer .historic-table tr {
     display: flex;
     flex-direction: column;
     flex: 1;
   }
-  .sammenligning th:nth-child(1), .sammenligning td:nth-child(1) {
+  .sammenligning th:nth-child(1),
+  .sammenligning td:nth-child(1) {
     height: 30px;
     background-color: var(--colorSecondary);
     color: var(--colorMain);
   }
-  .detaljer .historic-table th:nth-child(1), .detaljer .historic-table td:nth-child(1) {
+  .detaljer .historic-table th:nth-child(1),
+  .detaljer .historic-table td:nth-child(1) {
     height: 50px;
     background-color: var(--colorSecondary);
     color: var(--colorMain);
