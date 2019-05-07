@@ -26,22 +26,22 @@ function search(suggestion){
     const aParent = event.target.parentElement.parentElement;
     const alleInputs = aParent.querySelectorAll("div .search");
 
-    switch (iD){
-    	case "detaljer":
-    		// Hvis bruker skriver inn kommunenavn:
-			// Convert name to id
-			(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = kommuneSingleton.getID(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
-    		break;
-    	case "sammenligning":
-    		(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = kommuneSingleton.getID(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
-    		(isNameInDataset(alleInputs[1].value)) ? kommunenr2 = kommuneSingleton.getID(alleInputs[1].value) : kommunenr2 = alleInputs[1].value;
-    		break;
-    };
-
     fullstendigDataSet.onload = function(){
+        switch (iD){
+	    	case "detaljer":
+	    		// Hvis bruker skriver inn kommunenavn:
+				// Convert name to id
+				(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = kommuneSingleton.getID(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
+	    		break;
+	    	case "sammenligning":
+	    		(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = kommuneSingleton.getID(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
+	    		(isNameInDataset(alleInputs[1].value)) ? kommunenr2 = kommuneSingleton.getID(alleInputs[1].value) : kommunenr2 = alleInputs[1].value;
+	    		break;
+    	};
 		removeLoadingMessage()
         tabell(domElem, iD, kommunenr1, kommunenr2);
     }
+    
     if (kommuneSingleton.isLoaded() == true) {
         fullstendigDataSet.onload();
     }else{

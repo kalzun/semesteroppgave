@@ -150,8 +150,10 @@ function displayLoadingMessage(domElem) {
 
 function removeLoadingMessage() {
     elems = document.querySelector(".loading-div");
-    while (elems.firstChild){ 
-        elems.removeChild(elems.firstChild);
+    if (elems){
+        while (elems.firstChild){ 
+            elems.removeChild(elems.firstChild);
+        }
     }
 }
 
