@@ -1,0 +1,23 @@
+.infobox {
+	display: none;
+	margin-top: 20px;
+}
+
+.infobox label {
+	
+}
+
+.box {
+	margin: 20px;
+	padding: 10px 20px;
+}
+
+.yellow-box {
+	background-color: var(--colorNoData);
+}
+
+.green-box {
+	background-color: var(--colorGreenHighlight);
+	color: var(--colorGreenHighlight);	
+}
+
