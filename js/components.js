@@ -4,6 +4,7 @@
 // Konstruerer tabell som barn av gitt dom-element (div) utifra kategori og kommunenr.
 function tabell(div, category, kommunenr1, kommunenr2){
 	removeErrorMessages(div);
+	removeLoadingMessage();
 
 	switch (category){
 		case "oversikt":

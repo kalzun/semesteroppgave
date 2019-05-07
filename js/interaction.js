@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 				}
 			}
 		}
-	})
+	});
 
 	// Input-listener som sjekker for hver bokstav skrevet inn
 	inputFields = document.querySelectorAll(".search");
@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 			clearThisOutput();
 			});
 	}
+	displayLoadingMessage(document.querySelector(".oversikt"));
 });
 
 
@@ -61,14 +62,18 @@ function search(suggestion){
 	    		(isNameInDataset(alleInputs[1].value)) ? kommunenr2 = kommuneSingleton.getID(alleInputs[1].value) : kommunenr2 = alleInputs[1].value;
 	    		break;
     	};
-		removeLoadingMessage()
+		removeLoadingMessage();
         tabell(domElem, targetClass, kommunenr1, kommunenr2);
+
+        // VIS informasjonsboks på bunnen av siden
+        const infobox = document.querySelectorAll(".infobox");
+        (kommunenr2) ? infobox[1].style.display = "flex" : infobox[0].style.display = "flex";
     }
 
     if (kommuneSingleton.isLoaded() == true) {
         fullstendigDataSet.onload();
     }else{
-        displayLoadingMessage(domElem)
+        displayLoadingMessage(domElem);
     }
 }
 

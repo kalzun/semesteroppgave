@@ -6,11 +6,11 @@ table {
   overflow-y: scroll;
 }
 .green-highlight {
-  background-color: #c6ffab;
+  background-color: var(--colorGreenHighlight);
 }
 
 .no-data {
-  background-color: #f0ee8f;
+  background-color: var(--colorNoData);
 }
 
 @media (max-width: 800px) {

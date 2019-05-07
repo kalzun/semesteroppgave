@@ -140,7 +140,7 @@ function isContentInCategory(cat) {
     return cat == "Ingen tilgjengelige data.";
 }
 
-function displayLoadingMessage(domElem) {
+function displayLoadingMessage(domElem, error) {
     const message = "Laster data...";
     const loadingDiv = document.createElement("div");
     loadingDiv.setAttribute("class", "loading-div");
@@ -150,10 +150,12 @@ function displayLoadingMessage(domElem) {
 }
 
 function removeLoadingMessage() {
-    elems = document.querySelector(".loading-div");
+    elems = document.querySelectorAll(".loading-div");
     if (elems){
-        while (elems.firstChild){
-            elems.removeChild(elems.firstChild);
+        for (i in elems){
+            while (elems[i].firstChild){
+                elems[i].removeChild(elems[i].firstChild);
+            }
         }
     }
 }

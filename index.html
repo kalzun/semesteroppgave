@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width" initial-scale="1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>Document</title>
+    <title>Info134 - semesteroppgave</title>
     <!--
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet"/>
   -->
@@ -17,6 +17,7 @@
     <link rel="stylesheet" type="text/css" href="css/table.css"/>
     <link rel="stylesheet" type="text/css" href="css/popup.css"/>
     <link rel="stylesheet" type="text/css" href="css/extra.css"/>
+    <link rel="stylesheet" type="text/css" href="css/info.css"/>
     <script src="js/interaction.js"></script>
 	  <script src="js/helpingFunctions.js"></script>
     <script src="js/main.js"></script>
@@ -57,7 +58,7 @@
           </div>
         </div>
         <div class="detaljer">
-          <p>Detaljert informasjon om befolkning, syselsetting og utdanning i en kommune.</p>
+          <p>Detaljert informasjon om befolkning, sysselsetting og utdanning i en kommune.</p>
           <div class="content">
             <input id="input-det" type="text" placeholder="kommunenummer" class="search search3"/>
             <button type="submit" id="detaljer" class="searchbutton">SØK</button>
@@ -67,7 +68,15 @@
           <div class="lastT"></div>
           <div class="historicT"></div>
 
+          <div class="infobox">
+            <label>Forklaring:</label>
+            <div class="infobox-elements">
+              <span class="box yellow-box">-</span><span class="box-text"> = finnes ingen data i tallene fra SSB.</span>
+            </div>
+          </div>
+
         </div>
+        
         <div class="sammenligning">
           <p>Sammenlign sysselsettingsprosent i to kommuner</p>
           <p>*Tabellen viser dataene for hver kommune i prosent (%), regnet utifra total befolkning i kommunen.</p>
@@ -82,6 +91,18 @@
           </div>
           <div class="msg-box"></div>
           <div class="compareT"></div>
+          
+          <div class="infobox">
+            <label>Forklaring:
+            </label>
+            <div class="infobox-elements">
+              <span class="box yellow-box">-</span><span class="box-text"> = finnes ingen data i tallene fra SSB.</span>
+            </div>
+            <div class="">
+              <span class="box green-box">-</span><span class="box-text"> = kommunene som har høyest vekst i prosentpoeng..</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </main>
