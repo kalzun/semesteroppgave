@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 	}
 
 	window.addEventListener("resize", () => {
-		const limit = 600;
+		const limit = 800;
 		const tableElems = document.querySelectorAll(".eduCat");
 		const eduCodes = kommuneSingleton.getEduCodes();
 		if (window.innerWidth < limit) {

@@ -140,6 +140,14 @@ function isContentInCategory(cat) {
     return cat == "Ingen tilgjengelige data.";
 }
 
+function displayTimeoutMessage() {
+    const targets = document.querySelectorAll(".msg-box")
+    const message = "Ingen data tilgjengelig, prøv igjen senere."
+    for (let i = 0; i < targets.length; i++) {
+        addChild(targets[i], message, "p")
+    }
+}
+
 function displayLoadingMessage(domElem) {
     const message = "Laster data...";
     const loadingDiv = document.createElement("div");
