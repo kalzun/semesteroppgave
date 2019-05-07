@@ -13,7 +13,15 @@ table {
   background-color: var(--colorNoData);
 }
 
-@media (max-width: 800px) {
+td {
+  padding-left: 1vh;;
+  padding-right: 1vh;
+  border: 1px;
+  border-style: solid;
+  border-color: lightgrey;
+}
+
+@media (max-width: 900px) {
   table {
     margin-top: 5vw;
   }
