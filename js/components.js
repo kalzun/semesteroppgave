@@ -21,7 +21,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 	function oversikt() {
 	    const alleKommuner = kommuneSingleton.getAlleKommuner();
 
-	    let table = addChild(div, null, "table");
+	    let table = addChild(div, null, "table", "class", "oversikt");
 	    const tHead = addChild(table, null, "tHead");
 	    const tBody = addChild(table, null, "tbody");
 	    const headerRow = addChild(tHead, "Kommunenummer", "th");
