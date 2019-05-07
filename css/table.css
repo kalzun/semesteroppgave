@@ -1,6 +1,6 @@
 table {
   width: 100%;
-  font-size: 0.8vw;
+  font-size: 1.6vw;
 }
 
 .green-highlight {
@@ -54,5 +54,15 @@ table {
 @media (min-width: 801px) {
   .historicT {
     overflow-x:auto;
+    margin-top: 5vw;
+  }
+  .historic-table td {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .historic-table tr>td:nth-child(1) {
+    background-color: var(--colorSecondary);
+    color: var(--colorMain);
+    
   }
 }
