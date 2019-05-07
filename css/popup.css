@@ -5,6 +5,12 @@
 	min-width: 500px;
 }
 
+@media (max-width: 800px){
+	.search-output {
+		display: none;
+	}
+}
+
 .search-output:nth-child(2n+1) {
 	background-color: black; /*var(--colorSubSecondary);*/
 }

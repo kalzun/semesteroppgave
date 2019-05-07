@@ -8,11 +8,11 @@ const MENN = "Menn";
 const KVINNER = "Kvinner";
 const BEGGE = "Begge kjønn";
 
-const [GRUNNSKOLE, 
-	   VGS, 
-	   FAGSKOLE, 
-	   UNIKORT, 
-	   UNILANG, 
+const [GRUNNSKOLE,
+	   VGS,
+	   FAGSKOLE,
+	   UNIKORT,
+	   UNILANG,
 	   UTENUTD] = ["01", "02a", "11", "03a", "04a", "09a"];
 
 // Benytter Singleton-pattern, for å ha ett samlet objekt å forholde seg til ved spørringer.
@@ -21,13 +21,15 @@ const [GRUNNSKOLE,
 AlleKommunerSingleton = (function() {
 	var instance;
 	var _IDs = [];
+	const _IDs2 = [];
+	const _IDs3 = [];
 	var _names = [];
 	var _all = [];
 	var _inhabitants = [];
 	var _employmentRates = [];
 	var _education = [];
 	var _loaded = false
-
+	const _eduCodes = ["01", "02a", "11", "03a", "04a", "09a"];
 
 	function init(){
 
@@ -58,6 +60,7 @@ AlleKommunerSingleton = (function() {
 
 				for (i in dataset[1].elementer){
 					_employmentRates.push(dataset[1].elementer[i]);
+					_IDs2.push(dataset[1].elementer[i][KOMNR]);
 					if (!_IDs.includes(dataset[1].elementer[i][KOMNR])){
 						_IDs.push(dataset[1].elementer[i][KOMNR]);
 						_names.push(i);
@@ -70,11 +73,19 @@ AlleKommunerSingleton = (function() {
 
 				for (i in dataset[2].elementer){
 					_education.push(dataset[2].elementer[i]);
+					_IDs3.push(dataset[2].elementer[i][KOMNR]);
 					if (!_IDs.includes(dataset[2].elementer[i][KOMNR])){
 						_IDs.push(dataset[2].elementer[i][KOMNR]);
 						_names.push(i);
 					}
 				}
+
+				// Sjekk forskjell, finner IDer som ikke er i hvert datasett.
+				const diff1v2 = _IDs.filter(num => (!_IDs2.includes(num)));
+				const diff1v3 = _IDs.filter(num => (!_IDs3.includes(num)));
+				const diff2v3 = _IDs2.filter(num => (!_IDs3.includes(num)));
+				const diff3v1 = _IDs3.filter(num => (!_IDs.includes(num)));
+				const diff3v2 = _IDs3.filter(num => (!_IDs2.includes(num)));
 
 			}());
 
@@ -85,6 +96,10 @@ AlleKommunerSingleton = (function() {
 				_all.push(_);
 			}
 
+		}
+
+		function getEduCodes() {
+			return _eduCodes;
 		}
 
 		function getAlleKommuner() {
@@ -149,6 +164,7 @@ AlleKommunerSingleton = (function() {
 		return {
 			// Følgende metoder blir tilgjengelige utenfor singleton:
 			setup: setup,
+			getEduCodes: getEduCodes,
 			getAlleKommuner: getAlleKommuner,
 			getAllIDs: getAllIDs,
 			getAllNames: getAllNames,
@@ -173,19 +189,22 @@ AlleKommunerSingleton = (function() {
 			return instance;
 		}
 	}
-}());
+}())
 
 function httpRequest(url, callback) {
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", url);
+	xhr.timout = 1;
 
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			callback(xhr.responseText);
 			// Uncomment to test for latency:
-			//setTimeout(() => {callback(xhr.responseText);}, 2000);
+			//setTimeout(() => {callback(xhr.responseText);}, 5000);
 		}
 	};
+
+	xhr.timeout = () => { alert("Timeout!!"); }
 	xhr.send();
 }
 
@@ -287,8 +306,6 @@ People.prototype = {
 				this.befolkningTotal[year] = this.inhabitants[MENN][year] + this.inhabitants[KVINNER][year];
 			}
 		}
-
-		console.log("BefolkningTotal: " + this.befolkningTotal);
 		return this.befolkningTotal;
 	},
 
@@ -399,12 +416,12 @@ People.prototype = {
 	},
 
 	getEducationRatesLastYearSpecified: function(educode) {
-		
+
 		// Sjekk om vi har data på utdanning på kommunen.
-		
+
 		if (this.education == "Ingen tilgjengelige data."){
 			this.edu == this.education;
-			return;
+			return 0;
 		}
 
 		this.edu = this.education[educode];

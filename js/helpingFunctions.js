@@ -23,22 +23,24 @@ function getYears(dataSets){
     let allYears = [];
     for (i in dataSets) {
         let currentDS = dataSets[i];
-        for (j in currentDS){
-            const objKeys = Object.keys(currentDS[j]);
-            let currentYears;
-            if (objKeys.includes("Menn") || objKeys.includes("Kvinner")) {
-                for (gender in currentDS[j]) {
-                    currentYears = Object.keys(currentDS[j][gender]);
+        if (currentDS != "Ingen tilgjengelige data."){
+            const objKeys = Object.keys(currentDS);
+            for (j in currentDS){
+                let currentYears;
+                if (kommuneSingleton.getEduCodes().some((code) => objKeys.includes(code)))    {
+                    for (gender in currentDS[j]) {
+                        currentYears = Object.keys(currentDS[j][gender]);
+                        for (k in currentYears) {
+                            if (allYears.includes(currentYears[k]) == false && currentYears[k].length === 4) allYears.push(currentYears[k])
+                        }
+                    }
+                }else{
+                    currentYears = Object.keys(currentDS);
                     for (i in currentYears) {
-                        if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
+                        if (allYears.includes(currentYears[i]) == false && currentYears[i].length === 4) allYears.push(currentYears[i])
                     }
                 }
-            }else{
-                currentYears = Object.keys(currentDS);
-                for (i in currentYears) {
-                    if (allYears.includes(currentYears[i]) == false) allYears.push(currentYears[i])
-                }
-            };
+            }
         }
     }
     allYears = allYears.sort();
@@ -68,8 +70,8 @@ function addData(kommune, parent, headerYears, category, tab) {
             }
             break;
         case "utdanning":
-            data = kommune.people.getAllEducationRates();
-            const eduCodes = kommune.people.getEduCodes();
+            data = kommune.people.getEducationRates();
+            const eduCodes = kommuneSingleton.getEduCodes();
             for (i in eduCodes) {
                 const eduCode = eduCodes[i];
                 addCells(category, eduCode);
@@ -87,7 +89,7 @@ function addData(kommune, parent, headerYears, category, tab) {
         }else if(tab == "sammenligning"){
             cellName = `${kommune.navn} ${gender}`;
         }else{
-            cellName = category;
+            cellName = capFirstLetter(category);
         }
         addChild(row, cellName, "td");
 
@@ -97,7 +99,12 @@ function addData(kommune, parent, headerYears, category, tab) {
             if (category != "utdanning"){
                 cellData = data[currentYear];
             }else{
-                cellData = ((data[subCategory][MENN][currentYear] + data[subCategory][KVINNER][currentYear]) / 2).toFixed(2);
+                try {
+                    cellData = ((data[subCategory][MENN][currentYear] + data[subCategory][KVINNER][currentYear]) / 2).toFixed(2);
+                } catch(e) {
+                    cellData = undefined;
+                }
+
             }
             addChild(row, cellData, "td", "class", "data-cell");
         }
@@ -106,7 +113,7 @@ function addData(kommune, parent, headerYears, category, tab) {
 
 // Legger til tekst som forteller brukeren at en eller begge kommunenr han søkte på ikke finnes, samt hvilke(t)
 function outputNotFound(div, kommune1, kommune2, kommunenr1, kommunenr2){
-    const target = div.querySelector(`.content`)
+    const target = div.querySelector(`.msg-box`)
     if ([kommune1, kommune2].every((kom) => kom === "None found")){
         let message = `Ingen treff på kommunenr ${kommunenr1} eller ${kommunenr2}`;
         addChild(target, message, "p", "class", "error-message");
@@ -121,7 +128,7 @@ function outputNotFound(div, kommune1, kommune2, kommunenr1, kommunenr2){
 }
 
 function removeErrorMessages(div) {
-    errorMessages = div.querySelectorAll(".content .error-message");
+    let errorMessages = div.querySelectorAll(`.msg-box .error-message`);
     for (let i = 0; i < errorMessages.length; i++) {
         let elem = errorMessages[i]
         if (elem != undefined) elem.parentNode.removeChild(elem)
@@ -133,13 +140,21 @@ function isContentInCategory(cat) {
 }
 
 function displayLoadingMessage(domElem) {
-    const message = "Laster data..."
-    addChild(domElem, message, "p", "class", "loading-message")
+    const message = "Laster data...";
+    const loadingDiv = document.createElement("div");
+    loadingDiv.setAttribute("class", "loading-div");
+    domElem.appendChild(loadingDiv);
+    addChild(loadingDiv, null, "div", "class", "loader");
+    addChild(loadingDiv, message, "p", "class", "loading-message");
 }
 
 function removeLoadingMessage() {
-    const elem = document.querySelector(".loading-message");
-    if (elem != undefined) elem.parentNode.removeChild(elem);
+    elems = document.querySelector(".loading-div");
+    if (elems){
+        while (elems.firstChild){ 
+            elems.removeChild(elems.firstChild);
+        }
+    }
 }
 
 function removeTable(div, numberOfTables){
@@ -154,13 +169,11 @@ function removeTable(div, numberOfTables){
 
 function isNameInDataset(name) {
     const names = kommuneSingleton.getAllNames();
-    console.log("In dataset : "+names.includes(name))
-    return names.includes(name);
+    return names.includes(capFirstLetter(name));
 }
 
 function convertToId(name) {
     const id = kommuneSingleton.getID(name);
-    console.log("Convert to id : "+kommuneSingleton.getID(name))
     return id;
 }
 
