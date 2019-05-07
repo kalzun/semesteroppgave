@@ -15,28 +15,26 @@ table {
   table {
     margin-top: 5vw;
   }
-  .sammenligning table, .detaljer table:nth-child(4) {
+  .sammenligning table, .detaljer .historic-table {
     display: flex;
     flex-direction: row;
-
     font-size: 2vw;
-
   }
-  .sammenligning thead, .sammenligning tbody, .detaljer>table:nth-child(4)>thead, .detaljer>table:nth-child(4)>tbody {
+  .sammenligning thead, .sammenligning tbody, .detaljer .historic-table>thead, .detaljer .historic-table>tbody {
     display: flex;
     flex-direction: row;
 
   }
-  .sammenligning thead, .detaljer>table:nth-child(4) thead {
+  .sammenligning thead, .detaljer .historic-table>thead {
     flex: 1;
   }
   .sammenligning tbody {
     flex: 4;
   }
-  .detaljer>table:nth-child(3) tbody {
+  .detaljer .historic-table tbody {
     flex: 8;
   }
-  .sammenligning tr, .detaljer>table:nth-child(4) tr {
+  .sammenligning tr, .detaljer .historic-table tr {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -46,10 +44,15 @@ table {
     background-color: var(--colorSecondary);
     color: var(--colorMain);
   }
-  .detaljer table:nth-child(4) th:nth-child(1), .detaljer table:nth-child(4)>tbody>tr>td:nth-child(1) {
-    height: 30px;
+  .detaljer .historic-table th:nth-child(1), .detaljer .historic-table td:nth-child(1) {
+    height: 50px;
     background-color: var(--colorSecondary);
     color: var(--colorMain);
     font-size: 1.2vw;
+  }
+}
+@media (min-width: 801px) {
+  .historicT {
+    overflow-x:auto;
   }
 }
