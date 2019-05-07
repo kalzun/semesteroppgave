@@ -114,16 +114,23 @@ function outputRegexHits(hits, output){
 	const maxHitsShown = 5;
 	hits.slice(0, maxHitsShown).forEach((hit) => {
 		const li = document.createElement("li");
-		let kommunenr, kommunenavn;
-		(Number(hit)) ? kommunenavn = kommuneSingleton.getName(hit): kommunenr = kommuneSingleton.getID(hit);
+		let kommunenr, kommunenavn, kommuneinfo;
+		if (Number(hit)){ 
+			kommunenavn = kommuneSingleton.getName(hit);
+			kommuneinfo = kommuneSingleton.getInfo(hit);
+		} else {
+			kommunenr = kommuneSingleton.getID(hit);
+			kommuneinfo = kommuneSingleton.getInfo(kommunenr);
+		}
+		
+		
 		li.className = "search-suggestion";
 
 		li.innerHTML = `<span>${hit}</span>
 						<span class="search-span">
 						${(kommunenavn) ? kommunenavn : kommunenr}
 						</span>
-						<span class="search-span">Innbyggertall: 32421</span>`;
-
+						<span class="search-span">Innbyggertall: ${kommuneinfo.people.getInhabitantsLastYearTotal()} (sist målte)</span>`;
 
 		// Bruker Mousedown - event i stedenfor click, for å kunne skje FØR blur-eventet (i input)
 		li.addEventListener("mousedown", (event) => {
