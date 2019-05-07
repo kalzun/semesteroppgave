@@ -8,11 +8,11 @@ const MENN = "Menn";
 const KVINNER = "Kvinner";
 const BEGGE = "Begge kjønn";
 
-const [GRUNNSKOLE, 
-	   VGS, 
-	   FAGSKOLE, 
-	   UNIKORT, 
-	   UNILANG, 
+const [GRUNNSKOLE,
+	   VGS,
+	   FAGSKOLE,
+	   UNIKORT,
+	   UNILANG,
 	   UTENUTD] = ["01", "02a", "11", "03a", "04a", "09a"];
 
 // Benytter Singleton-pattern, for å ha ett samlet objekt å forholde seg til ved spørringer.
@@ -189,19 +189,22 @@ AlleKommunerSingleton = (function() {
 			return instance;
 		}
 	}
-}());
+}())
 
 function httpRequest(url, callback) {
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", url);
+	xhr.timout = 1;
 
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			callback(xhr.responseText);
 			// Uncomment to test for latency:
-			//setTimeout(() => {callback(xhr.responseText);}, 2000);
+			//setTimeout(() => {callback(xhr.responseText);}, 5000);
 		}
 	};
+
+	xhr.timeout = () => { alert("Timeout!!"); }
 	xhr.send();
 }
 
@@ -303,8 +306,6 @@ People.prototype = {
 				this.befolkningTotal[year] = this.inhabitants[MENN][year] + this.inhabitants[KVINNER][year];
 			}
 		}
-
-		console.log("BefolkningTotal: " + this.befolkningTotal);
 		return this.befolkningTotal;
 	},
 
@@ -415,9 +416,9 @@ People.prototype = {
 	},
 
 	getEducationRatesLastYearSpecified: function(educode) {
-		
+
 		// Sjekk om vi har data på utdanning på kommunen.
-		
+
 		if (this.education == "Ingen tilgjengelige data."){
 			this.edu == this.education;
 			return 0;

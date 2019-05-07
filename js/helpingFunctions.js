@@ -104,7 +104,7 @@ function addData(kommune, parent, headerYears, category, tab) {
                 } catch(e) {
                     cellData = undefined;
                 }
-                
+
             }
             addChild(row, cellData, "td", "class", "data-cell");
         }
@@ -113,7 +113,7 @@ function addData(kommune, parent, headerYears, category, tab) {
 
 // Legger til tekst som forteller brukeren at en eller begge kommunenr han søkte på ikke finnes, samt hvilke(t)
 function outputNotFound(div, kommune1, kommune2, kommunenr1, kommunenr2){
-    const target = div.querySelector(`.content`)
+    const target = div.querySelector(`.msg-box`)
     if ([kommune1, kommune2].every((kom) => kom === "None found")){
         let message = `Ingen treff på kommunenr ${kommunenr1} eller ${kommunenr2}`;
         addChild(target, message, "p", "class", "error-message");
@@ -128,7 +128,7 @@ function outputNotFound(div, kommune1, kommune2, kommunenr1, kommunenr2){
 }
 
 function removeErrorMessages(div) {
-    errorMessages = div.querySelectorAll(".content .error-message");
+    let errorMessages = div.querySelectorAll(`.msg-box .error-message`);
     for (let i = 0; i < errorMessages.length; i++) {
         let elem = errorMessages[i]
         if (elem != undefined) elem.parentNode.removeChild(elem)
