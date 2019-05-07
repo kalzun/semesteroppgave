@@ -1,6 +1,7 @@
 .infobox {
 	display: none;
 	margin-top: 20px;
+	flex-wrap: wrap;
 }
 
 .info-container {
@@ -9,12 +10,13 @@
 }
 
 .infobox-elements {
-	margin: 20px;
+	margin-top: 20px;
+	width: 100%;
 }
 
 .box {
 	box-sizing: border-box;
-	margin: 20px;
+	
 	padding: 10px 20px;
 }
 

@@ -27,6 +27,18 @@ document.addEventListener("DOMContentLoaded", function(event){
 		}
 	});
 
+	const eduNames = kommuneSingleton.getEduName();
+	console.log(eduNames)
+	const infoBox = document.querySelector(".infobox");
+	for (key in eduNames){
+		const infoDiv = document.createElement("div");
+		infoDiv.className = "infobox-elements";
+		infoDiv.innerHTML += `Utdanningskode: ${key} = ${eduNames[key]}`;
+		infoBox.appendChild(infoDiv);
+	}
+	
+
+
 	// Input-listener som sjekker for hver bokstav skrevet inn
 	inputFields = document.querySelectorAll(".search");
 	for (let i = 0; i < inputFields.length; i++){
