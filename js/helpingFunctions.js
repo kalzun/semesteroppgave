@@ -83,15 +83,16 @@ function addData(kommune, parent, headerYears, category, tab) {
 
     function addCells(category, subCategory, tab, gender) {
         const row = addChild(parent, null, "tr");
-        let cellName
-        if (kommune.people.getEduName(subCategory) != undefined) {
-            cellName = `Utdanning på ${kommune.people.getEduName(subCategory)}`;
+        let cellName;
+        const currentCat = kommuneSingleton.getEduName(subCategory);
+        if (typeof currentCat !== "object") {
+            cellName = currentCat;
         }else if(tab == "sammenligning"){
             cellName = `${kommune.navn} ${gender}`;
         }else{
             cellName = capFirstLetter(category);
         }
-        addChild(row, cellName, "td");
+        addChild(row, cellName, "td", "class", "eduCat");
 
         for (j in headerYears) {
             const currentYear = headerYears[j];
@@ -151,7 +152,7 @@ function displayLoadingMessage(domElem) {
 function removeLoadingMessage() {
     elems = document.querySelector(".loading-div");
     if (elems){
-        while (elems.firstChild){ 
+        while (elems.firstChild){
             elems.removeChild(elems.firstChild);
         }
     }

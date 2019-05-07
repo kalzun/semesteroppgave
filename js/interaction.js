@@ -4,6 +4,29 @@ document.addEventListener("DOMContentLoaded", function(event){
 		searchButtons[index].addEventListener("click", search);
 	}
 
+	window.addEventListener("resize", () => {
+		const limit = 600;
+		const tableElems = document.querySelectorAll(".eduCat");
+		const eduCodes = kommuneSingleton.getEduCodes();
+		if (window.innerWidth < limit) {
+			for (let i = 2; i < tableElems.length; i++) {
+				const val = tableElems[i].innerHTML;
+				if (!eduCodes.includes(val)) {
+					const newVal = kommuneSingleton.getEduCodes(val);
+					tableElems[i].innerHTML = newVal;
+				}
+			}
+		}else{
+			for (let i = 2; i < tableElems.length; i++) {
+				const val = tableElems[i].innerHTML;
+				if (eduCodes.includes(val)) {
+					const newVal = kommuneSingleton.getEduName(val);
+					tableElems[i].innerHTML = newVal;
+				}
+			}
+		}
+	})
+
 	// Input-listener som sjekker for hver bokstav skrevet inn
 	inputFields = document.querySelectorAll(".search");
 	for (let i = 0; i < inputFields.length; i++){
@@ -41,7 +64,7 @@ function search(suggestion){
 		removeLoadingMessage()
         tabell(domElem, targetClass, kommunenr1, kommunenr2);
     }
-    
+
     if (kommuneSingleton.isLoaded() == true) {
         fullstendigDataSet.onload();
     }else{
