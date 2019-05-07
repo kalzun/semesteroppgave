@@ -189,19 +189,22 @@ AlleKommunerSingleton = (function() {
 			return instance;
 		}
 	}
-}());
+}())
 
 function httpRequest(url, callback) {
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", url);
+	xhr.timout = 1;
 
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			callback(xhr.responseText);
 			// Uncomment to test for latency:
-			//setTimeout(() => {callback(xhr.responseText);}, 2000);
+			//setTimeout(() => {callback(xhr.responseText);}, 5000);
 		}
 	};
+
+	xhr.timeout = () => { alert("Timeout!!"); }
 	xhr.send();
 }
 
