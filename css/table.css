@@ -22,9 +22,6 @@ td {
 td, th {
   text-overflow: ellipsis;
   overflow: hidden;
-  padding-left: 1vh;;
-  padding-right: 1vh;
-  border: 1px solid white;
 }
 
 @media (max-width: 900px) {
@@ -45,7 +42,6 @@ td, th {
   .detaljer table tbody {
     display: flex;
     flex-direction: row;
-
   }
 
   .sammenligning thead,
@@ -73,16 +69,11 @@ td, th {
     background-color: var(--colorSecondary);
     color: var(--colorMain);
   }
-<<<<<<< HEAD
-  .detaljer .historic-table th:nth-child(1),
-  .detaljer .historic-table td:nth-child(1) {
-    height: 30px;
-=======
 
   .detaljer table th:nth-child(1),
   .detaljer table td:nth-child(1) {
     height: 2.5vh;
->>>>>>> stash
+
     background-color: var(--colorSecondary);
     color: var(--colorMain);
     font-size: 1.6vw;
