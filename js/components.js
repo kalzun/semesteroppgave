@@ -72,7 +72,11 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 		//Presentasjon
 		// Konstruerer tabellen
-		let target = div.querySelector(".lastT")
+
+		let target = div.querySelector(".lastT");
+
+		addChild(target, `Detaljert oversikt over siste målinger for befolkning, sysselsetting og utdanning på høyerenivå for ${kommune.navn}`, "div", "class", "table-header")
+
 		let table = addChild(target, null, "table")
 		const tHead = addChild(table, null, "tHead");
 		const tBody = addChild(table, null, "tbody");
@@ -84,7 +88,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const utdKortRow = addChild(tBody, null, "tr");
 		const utdLangRow = addChild(tBody, null, "tr");
 
-		addChild(headerRow, `${kommune["navn"]}`, "th");
+		addChild(headerRow, null, "th");
 		addChild(befRow, "Befolkning", "td");
 		addChild(sysRow, "Sysselsatte", "td");
 		addChild(utdKortRow, "Utdanning (Universitets- og høgskolenivå kort)", "td");
@@ -117,11 +121,13 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 			//Presentasjon
 			let target = div.querySelector(".historicT");
+			addChild(target, `Detaljert oversikt over historiske målinger for befolkning, sysselsetting og utdanning på høyerenivå for ${kommune.navn}`, "div", "class", "table-header")
+
 			let table = addChild(target, null, "table", "class", "historic-table");
 			const tHead = addChild(table, null, "tHead");
 			const tBody = addChild(table, null, "tbody");
 			const headerRow = addChild(tHead, null, "tr");
-			addChild(headerRow, "Kategori / år", "th");
+			addChild(headerRow, null, "th");
 
 			const yearList = getYears(dataSets);
 			if (yearList) {
