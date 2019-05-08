@@ -169,7 +169,11 @@ function outputRegexHits(hits, output){
 						<span class="search-span">
 						${(kommunenavn) ? kommunenavn : kommunenr}
 						</span>
-						<span class="search-span">Innbyggertall: ${kommuneinfo.people.getInhabitantsLastYearTotal()} (sist målte)</span>`;
+						
+						${kommuneinfo.people.getInhabitantsLastYearTotal() ? 
+						`<span class="search-span">Innbyggere: ${kommuneinfo.people.getInhabitantsLastYearTotal()} (sist målte)</span>` :
+						 ""
+						}`;
 
 		// Bruker Mousedown - event i stedenfor click, for å kunne skje FØR blur-eventet (i input)
 		li.addEventListener("mousedown", (event) => {
