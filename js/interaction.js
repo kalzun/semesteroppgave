@@ -6,28 +6,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 	}
 
 	// Dersom vinduets størrelse endres til mindre enn 900px, konverteres utdanningsnavn til utdanningskoder, og dersom størrelsen endres til større enn eller lik 900px.
-	window.addEventListener("resize", () => {
-		const limit = 900;
-		const tableElems = document.querySelectorAll(".detaljer .eduCat");
-		const eduCodes = kommuneSingleton.getEduCodes();
-		if (window.innerWidth < limit) {
-			for (let i = 2; i < tableElems.length; i++) {
-				const val = tableElems[i].innerHTML;
-				if (!eduCodes.includes(val)) {
-					const newVal = kommuneSingleton.getEduCodes(val);
-					tableElems[i].innerHTML = newVal;
-				}
-			}
-		}else{
-			for (let i = 2; i < tableElems.length; i++) {
-				const val = tableElems[i].innerHTML;
-				if (eduCodes.includes(val)) {
-					const newVal = kommuneSingleton.getEduName(val);
-					tableElems[i].innerHTML = newVal;
-				}
-			}
-		}
-	});
+	window.addEventListener("resize", changeVisibleEducation);
 
 	// Legger til informasjon i forklaringsfelt i detaljer- og sammenlignings-dane
 	const eduNames = kommuneSingleton.getEduName();
@@ -35,8 +14,6 @@ document.addEventListener("DOMContentLoaded", function(event){
 	for (key in eduNames){
 		addChild(infoBox, `Utdanningskode: ${key} = ${eduNames[key]}`, "div", "class", "infobox-elements");
 	}
-
-
 
 	// Input-listener som sjekker for hver bokstav skrevet inn
 	inputFields = document.querySelectorAll(".search");
@@ -75,6 +52,8 @@ function search(suggestion){
     	};
 		removeLoadingMessage();
         tabell(domElem, targetClass, kommunenr1, kommunenr2);
+        
+        changeVisibleEducation();
 
         // VIS informasjonsboks på bunnen av siden
         const infobox = document.querySelectorAll(".infobox");
@@ -200,4 +179,27 @@ function getCorrectOutput(id, elem) {
 	else
 		output = elem.parentElement.querySelector(".search-output");
 	return output
+}
+
+function changeVisibleEducation() {
+	const limit = 900;
+	const tableElems = document.querySelectorAll(".detaljer .eduCat");
+	const eduCodes = kommuneSingleton.getEduCodes();
+	if (window.innerWidth < limit) {
+		for (let i = 2; i < tableElems.length; i++) {
+			const val = tableElems[i].innerHTML;
+			if (!eduCodes.includes(val)) {
+				const newVal = kommuneSingleton.getEduCodes(val);
+				tableElems[i].innerHTML = newVal;
+			}
+		}
+	}else{
+		for (let i = 2; i < tableElems.length; i++) {
+			const val = tableElems[i].innerHTML;
+			if (eduCodes.includes(val)) {
+				const newVal = kommuneSingleton.getEduName(val);
+				tableElems[i].innerHTML = newVal;
+			}
+		}
+	}
 }
