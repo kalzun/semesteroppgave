@@ -9,7 +9,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 tabs[i].classList.remove("active");
                 buttons[i].classList.remove("active");
             }
-            
+
             tabs[i].classList.add("active");
             buttons[i].classList.add("active");
         });

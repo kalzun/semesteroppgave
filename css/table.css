@@ -4,7 +4,6 @@ table {
 }
 
 .detaljer table:nth-child(1) {
-  overflow-y: scroll;
   font-size: 1.6vw;
 }
 
@@ -23,11 +22,6 @@ td {
 td, th {
   text-overflow: ellipsis;
   overflow: hidden;
-  padding-left: 1vh;;
-  padding-right: 1vh;
-  border: 1px;
-  border-style: solid;
-  border-color: lightgrey;
 }
 
 @media (max-width: 900px) {
@@ -48,7 +42,6 @@ td, th {
   .detaljer table tbody {
     display: flex;
     flex-direction: row;
-
   }
 
   .sammenligning thead,
@@ -80,15 +73,16 @@ td, th {
   .detaljer table th:nth-child(1),
   .detaljer table td:nth-child(1) {
     height: 2.5vh;
+
     background-color: var(--colorSecondary);
     color: var(--colorMain);
     font-size: 1.6vw;
   }
 }
-@media (min-width: 801px) {
+@media (min-width: 901px) {
 
   td, th {
-    font-size: 1.2vh;
+    font-size: 1.05vw;
   }
 
   .historicT {

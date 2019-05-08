@@ -100,14 +100,10 @@
     .kilder {
         border-left: 2px dotted var(--colorMain);
     }
-<<<<<<< HEAD
-}
-=======
     .sammenligning h3 {
         font-size: 2vw;
     }
     .detaljer p:nth-child(1), .sammenligning p:nth-child(1) {
-        margin: 0% 30% 5% 30%;
+        margin: 0% 20% 5% 20%;
     }
 }
->>>>>>> pug
