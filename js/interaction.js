@@ -31,12 +31,9 @@ document.addEventListener("DOMContentLoaded", function(event){
 	console.log(eduNames)
 	const infoBox = document.querySelector(".infobox");
 	for (key in eduNames){
-		const infoDiv = document.createElement("div");
-		infoDiv.className = "infobox-elements";
-		infoDiv.innerHTML += `Utdanningskode: ${key} = ${eduNames[key]}`;
-		infoBox.appendChild(infoDiv);
+		addChild(infoBox, `Utdanningskode: ${key} = ${eduNames[key]}`, "div", "class", "infobox-elements");
 	}
-	
+
 
 
 	// Input-listener som sjekker for hver bokstav skrevet inn
