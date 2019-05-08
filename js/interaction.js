@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 		}
 	});
 
+	// Legger til informasjon i forklaringsfelt i detaljer- og sammenlignings-dane
 	const eduNames = kommuneSingleton.getEduName();
 	const infoBox = document.querySelector(".infobox");
 	for (key in eduNames){

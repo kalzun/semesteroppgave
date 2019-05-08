@@ -29,7 +29,7 @@ td, th {
     margin-top: 5vw;
   }
 
-  .sammenligning table, .detaljer table {
+  .sammenligning table, .historic-table {
     display: flex;
     flex-direction: row;
     font-size: 2vw;
@@ -38,26 +38,26 @@ td, th {
 
   .sammenligning thead,
   .sammenligning tbody,
-  .detaljer table thead,
-  .detaljer table tbody {
+  .historic-table thead,
+  .historic-table tbody {
     display: flex;
     flex-direction: row;
   }
 
   .sammenligning thead,
-  .detaljer .historic-table>thead {
+  .historic-table thead {
     flex: 1;
   }
   .sammenligning tbody {
     flex: 4;
   }
 
-  .detaljer .historic-table tbody {
+  .historic-table tbody {
     flex: 8;
   }
 
   .sammenligning tr,
-  .detaljer table tr {
+  .historic-table tr {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -70,12 +70,12 @@ td, th {
     color: var(--colorMain);
   }
 
-  .detaljer table th:nth-child(1),
-  .detaljer table td:nth-child(1) {
+  .historic-table th:nth-child(1),
+  .historic-table td:nth-child(1) {
     height: 2.5vh;
-
-    background-color: var(--colorSecondary);
     color: var(--colorMain);
+    background-color: var(--colorSecondary);
+
     font-size: 1.6vw;
   }
 }
@@ -86,7 +86,7 @@ td, th {
   }
 
   .historicT {
-    overflow-x:auto;
+    overflow-x: auto;
   }
   .historic-table td {
     padding-left: 10px;
