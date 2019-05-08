@@ -4,6 +4,41 @@ document.addEventListener("DOMContentLoaded", function(event){
 		searchButtons[index].addEventListener("click", search);
 	}
 
+	window.addEventListener("resize", () => {
+		const limit = 900;
+		const tableElems = document.querySelectorAll(".detaljer .eduCat");
+		const eduCodes = kommuneSingleton.getEduCodes();
+		if (window.innerWidth < limit) {
+			for (let i = 2; i < tableElems.length; i++) {
+				const val = tableElems[i].innerHTML;
+				if (!eduCodes.includes(val)) {
+					const newVal = kommuneSingleton.getEduCodes(val);
+					tableElems[i].innerHTML = newVal;
+				}
+			}
+		}else{
+			for (let i = 2; i < tableElems.length; i++) {
+				const val = tableElems[i].innerHTML;
+				if (eduCodes.includes(val)) {
+					const newVal = kommuneSingleton.getEduName(val);
+					tableElems[i].innerHTML = newVal;
+				}
+			}
+		}
+	});
+
+	const eduNames = kommuneSingleton.getEduName();
+	console.log(eduNames)
+	const infoBox = document.querySelector(".infobox");
+	for (key in eduNames){
+		const infoDiv = document.createElement("div");
+		infoDiv.className = "infobox-elements";
+		infoDiv.innerHTML += `Utdanningskode: ${key} = ${eduNames[key]}`;
+		infoBox.appendChild(infoDiv);
+	}
+	
+
+
 	// Input-listener som sjekker for hver bokstav skrevet inn
 	inputFields = document.querySelectorAll(".search");
 	for (let i = 0; i < inputFields.length; i++){
@@ -13,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 			clearThisOutput();
 			});
 	}
+	displayLoadingMessage(document.querySelector(".oversikt"));
 });
 
 
@@ -38,14 +74,18 @@ function search(suggestion){
 	    		(isNameInDataset(alleInputs[1].value)) ? kommunenr2 = kommuneSingleton.getID(alleInputs[1].value) : kommunenr2 = alleInputs[1].value;
 	    		break;
     	};
-		removeLoadingMessage()
+		removeLoadingMessage();
         tabell(domElem, targetClass, kommunenr1, kommunenr2);
+
+        // VIS informasjonsboks på bunnen av siden
+        const infobox = document.querySelectorAll(".infobox");
+        (kommunenr2) ? infobox[1].style.display = "flex" : infobox[0].style.display = "flex";
     }
-    
+
     if (kommuneSingleton.isLoaded() == true) {
         fullstendigDataSet.onload();
     }else{
-        displayLoadingMessage(domElem)
+        displayLoadingMessage(domElem);
     }
 }
 
@@ -114,16 +154,23 @@ function outputRegexHits(hits, output){
 	const maxHitsShown = 5;
 	hits.slice(0, maxHitsShown).forEach((hit) => {
 		const li = document.createElement("li");
-		let kommunenr, kommunenavn;
-		(Number(hit)) ? kommunenavn = kommuneSingleton.getName(hit): kommunenr = kommuneSingleton.getID(hit);
+		let kommunenr, kommunenavn, kommuneinfo;
+		if (Number(hit)){
+			kommunenavn = kommuneSingleton.getName(hit);
+			kommuneinfo = kommuneSingleton.getInfo(hit);
+		} else {
+			kommunenr = kommuneSingleton.getID(hit);
+			kommuneinfo = kommuneSingleton.getInfo(kommunenr);
+		}
+
+
 		li.className = "search-suggestion";
 
 		li.innerHTML = `<span>${hit}</span>
 						<span class="search-span">
 						${(kommunenavn) ? kommunenavn : kommunenr}
 						</span>
-						<span class="search-span">Innbyggertall: 32421</span>`;
-
+						<span class="search-span">Innbyggertall: ${kommuneinfo.people.getInhabitantsLastYearTotal()} (sist målte)</span>`;
 
 		// Bruker Mousedown - event i stedenfor click, for å kunne skje FØR blur-eventet (i input)
 		li.addEventListener("mousedown", (event) => {

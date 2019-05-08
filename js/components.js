@@ -4,6 +4,7 @@
 // Konstruerer tabell som barn av gitt dom-element (div) utifra kategori og kommunenr.
 function tabell(div, category, kommunenr1, kommunenr2){
 	removeErrorMessages(div);
+	removeLoadingMessage();
 
 	switch (category){
 		case "oversikt":
@@ -21,7 +22,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 	function oversikt() {
 	    const alleKommuner = kommuneSingleton.getAlleKommuner();
 
-	    let table = addChild(div, null, "table");
+	    let table = addChild(div, null, "table", "class", "oversikt");
 	    const tHead = addChild(table, null, "tHead");
 	    const tBody = addChild(table, null, "tbody");
 	    const headerRow = addChild(tHead, "Kommunenummer", "th");
@@ -152,7 +153,8 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 		//Presentasjon
 		// Konstruerer tabellen
-		let table = addChild(div, null, "table");
+		const target = div.querySelector(".compareT")
+		let table = addChild(target, null, "table");
 		const tHead = addChild(table, null, "tHead");
 		const tBody = addChild(table, null, "tBody");
 		const headerRow = addChild(tHead, null, "tr");

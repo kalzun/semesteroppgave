@@ -3,32 +3,51 @@ table {
   font-size: 1.6vw;
 }
 
+.detaljer table:nth-child(1) {
+  font-size: 1.6vw;
+}
+
 .green-highlight {
-  background-color: #c6ffab;
+  background-color: var(--colorGreenHighlight);
 }
 
 .no-data {
-  background-color: #f0ee8f;
+  background-color: var(--colorNoData);
 }
 
-@media (max-width: 800px) {
+td {
+  white-space: nowrap;
+}
+
+td, th {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  padding-left: 1vh;;
+  padding-right: 1vh;
+  border: 1px solid white;
+}
+
+@media (max-width: 900px) {
   table {
     margin-top: 5vw;
   }
-  .sammenligning table,
-  .detaljer .historic-table {
+
+  .sammenligning table, .detaljer table {
     display: flex;
     flex-direction: row;
     font-size: 2vw;
   }
+
+
   .sammenligning thead,
   .sammenligning tbody,
-  .detaljer .historic-table>thead,
-  .detaljer .historic-table>tbody {
+  .detaljer table thead,
+  .detaljer table tbody {
     display: flex;
     flex-direction: row;
 
   }
+
   .sammenligning thead,
   .detaljer .historic-table>thead {
     flex: 1;
@@ -36,33 +55,47 @@ table {
   .sammenligning tbody {
     flex: 4;
   }
+
   .detaljer .historic-table tbody {
     flex: 8;
   }
+
   .sammenligning tr,
-  .detaljer .historic-table tr {
+  .detaljer table tr {
     display: flex;
     flex-direction: column;
     flex: 1;
   }
+
   .sammenligning th:nth-child(1),
   .sammenligning td:nth-child(1) {
     height: 30px;
     background-color: var(--colorSecondary);
     color: var(--colorMain);
   }
+<<<<<<< HEAD
   .detaljer .historic-table th:nth-child(1),
   .detaljer .historic-table td:nth-child(1) {
     height: 30px;
+=======
+
+  .detaljer table th:nth-child(1),
+  .detaljer table td:nth-child(1) {
+    height: 2.5vh;
+>>>>>>> stash
     background-color: var(--colorSecondary);
     color: var(--colorMain);
-    font-size: 1.2vw;
+    font-size: 1.6vw;
   }
 }
-@media (min-width: 801px) {
+@media (min-width: 901px) {
+
+  td, th {
+    font-size: 1.05vw;
+  }
+
   .historicT {
     overflow-x:auto;
-    margin-top: 5vw;
   }
   .historic-table td {
     padding-left: 10px;
@@ -71,6 +104,6 @@ table {
   .historic-table tr>td:nth-child(1) {
     background-color: var(--colorSecondary);
     color: var(--colorMain);
-    
+
   }
 }

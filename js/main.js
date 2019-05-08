@@ -29,7 +29,13 @@ AlleKommunerSingleton = (function() {
 	var _employmentRates = [];
 	var _education = [];
 	var _loaded = false
-	const _eduCodes = ["01", "02a", "11", "03a", "04a", "09a"];
+	const _eduCodes = {
+		"Grunnskolenivå": "01",
+		"Videregående skole-nivå": "02a",
+		"Fagskolenivå": "11",
+		"Universitets- og høgskolenivå kort": "03a",
+		"Universitets- og høgskolenivå lang": "04a",
+		"Uoppgitt eller ingen fullført utdanning": "09a"};
 
 	function init(){
 
@@ -98,8 +104,11 @@ AlleKommunerSingleton = (function() {
 
 		}
 
-		function getEduCodes() {
-			return _eduCodes;
+		function getEduCodes(name) {
+			if (name) {
+				return _eduCodes[name]
+			}
+			return Object.values(_eduCodes);
 		}
 
 		function getAlleKommuner() {
@@ -153,6 +162,21 @@ AlleKommunerSingleton = (function() {
 			return "Ingen tilgjengelige data.";
 		}
 
+		function getEduName(eduCode) {
+			const categories = {
+					"01": "Grunnskolenivå",
+			    	"02a": "Videregående skole-nivå",
+			    	"11": "Fagskolenivå",
+			    	"03a": "Universitets- og høgskolenivå kort",
+			    	"04a": "Universitets- og høgskolenivå lang",
+			     	"09a": "Uoppgitt eller ingen fullført utdanning"
+			    };
+			if (eduCode) {
+			    return categories[eduCode];
+	    	}
+	    	return categories;
+		}
+
 		function loaded(){
 			_loaded = true
 		}
@@ -174,6 +198,7 @@ AlleKommunerSingleton = (function() {
 			getInhabitants: getInhabitants,
 			getEmploymentRates: getEmploymentRates,
 			getEducation: getEducation,
+			getEduName: getEduName,
 			loaded: loaded,
 			isLoaded: isLoaded,
 
@@ -194,17 +219,20 @@ AlleKommunerSingleton = (function() {
 function httpRequest(url, callback) {
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", url);
-	xhr.timout = 1;
+	xhr.timeout = 10000;
 
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			callback(xhr.responseText);
 			// Uncomment to test for latency:
-			//setTimeout(() => {callback(xhr.responseText);}, 5000);
+			//setTimeout(() => {callback(xhr.responseText);}, 3000);
 		}
 	};
 
-	xhr.timeout = () => { alert("Timeout!!"); }
+	xhr.ontimeout = () => {
+		removeLoadingMessage();
+		displayTimeoutMessage()
+	}
 	xhr.send();
 }
 
@@ -376,23 +404,6 @@ People.prototype = {
 
 
 	// EDUCATION methods:
-
-	getEduCodes() {
-		const allCodes = ["01", "02a", "11", "03a", "04a", "09a"];
-		return allCodes;
-	},
-
-	getEduName(eduCode) {
-		const categories = {
-			"01": "Grunnskolenivå",
-	    	"02a": "Videregående skole-nivå",
-	    	"11": "Fagskolenivå",
-	    	"03a": "Universitets- og høgskolenivå kort",
-	    	"04a": "Universitets- og høgskolenivå lang",
-	     	"09a": "Uoppgitt eller ingen fullført utdanning"
-    	};
-    	return categories[eduCode];
-	},
 
 	getAllEducationRates() {
 		const educodes = [
