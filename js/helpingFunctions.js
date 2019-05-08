@@ -144,11 +144,18 @@ function isContentInCategory(cat) {
 }
 
 function displayTimeoutMessage() {
-    const targets = document.querySelectorAll(".msg-box")
-    const message = "Ingen data tilgjengelig, prøv igjen senere."
+    const targets = document.querySelectorAll(".msg-box");
+
+    const message = `Ingen data tilgjengelig, 
+                     vennligst <button id="reload-button" type="submit" onClick="reloadPage();"
+                     ">last inn på nytt</button> eller prøv senere...`
     for (let i = 0; i < targets.length; i++) {
         addChild(targets[i], message, "p")
     }
+}
+
+function reloadPage(){
+    window.location.reload();
 }
 
 function displayLoadingMessage(domElem) {

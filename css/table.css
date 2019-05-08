@@ -98,3 +98,47 @@ td, th {
 
   }
 }
+
+/* Telefon width */
+@media (max-width: 414px){
+
+  td {
+    white-space: normal;
+    word-wrap: anywhere;
+  }
+  
+  .lastT thead {
+    font-size: 14px;
+  }
+  
+  .historic-table tr {
+    max-width: 10vw;
+  }
+
+  .sammenligning tr{
+    max-width: 18vw;
+  }
+  
+  /* 
+  Overskrifter i tabellen
+  */
+  .sammenligning th:nth-child(1),
+  .sammenligning td:nth-child(1),
+  .historic-table td:nth-child(1) {
+    font-size: 12px;
+  }
+
+  .oversikt th {
+    font-size: 2.5vw;
+  }
+  
+  .lastT td,
+  .oversikt td,
+  .historic-table td,
+  .historic-table th,
+  .sammenligning td,
+  .sammenligning th {
+    font-size: 3vw;
+  }
+
+}

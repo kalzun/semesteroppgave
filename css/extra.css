@@ -11,3 +11,13 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+#reload-button {
+	background-color: var(--colorSecondary);
+	color: var(--colorMain);
+	padding: 10px 20px;
+}
+
+#reload-button:hover {
+	box-shadow: 5px 5px 30px lightgray;
+}

@@ -19,14 +19,14 @@ const [GRUNNSKOLE,
 
 AlleKommunerSingleton = (function() {
 	let instance;
-	let _IDs = [];
+	const _IDs = [];
 	const _IDs2 = [];
 	const _IDs3 = [];
-	let _names = [];
-	let _all = [];
-	let _inhabitants = [];
-	let _employmentRates = [];
-	let _education = [];
+	const _names = [];
+	const _all = [];
+	const _inhabitants = [];
+	const _employmentRates = [];
+	const _education = [];
 	let _loaded = false
 	const _eduCodes = {
 		"Grunnskolenivå": "01",
@@ -85,12 +85,18 @@ AlleKommunerSingleton = (function() {
 					}
 				}
 
-				// Sjekk forskjell, finner IDer som ikke er i hvert datasett.
+				// Ved å ha IDs på alle datasett fordelt, kan vi sjekke forskjeller mellom dem.
+				// Så vi bruker filter og include-metodene under, og finner IDer som ikke er i hvert datasett.
+				// Konkret finner vi:
+				// - kommunenummer 5061 ikke finnes i Utdanningsdatasett.
+				// - det er flere kommunenummer i Utdanningsdatasett som ikke finnes i de andre datasettene.
+
 				const diff1v2 = _IDs.filter(num => (!_IDs2.includes(num)));
 				const diff1v3 = _IDs.filter(num => (!_IDs3.includes(num)));
 				const diff2v3 = _IDs2.filter(num => (!_IDs3.includes(num)));
 				const diff3v1 = _IDs3.filter(num => (!_IDs.includes(num)));
 				const diff3v2 = _IDs3.filter(num => (!_IDs2.includes(num)));
+
 
 			}());
 
@@ -200,7 +206,6 @@ AlleKommunerSingleton = (function() {
 			getEduName: getEduName,
 			loaded: loaded,
 			isLoaded: isLoaded,
-
 		}
 	}
 
@@ -248,7 +253,7 @@ const DataSet = function(urls) {
 	}
 
 	this.load = function() {
-		if (this.data) return "Data is already loaded.";
+		if (this.data) return "Data is already loading...";
 		this.data = new Array();
 
 		// Gi tilbakmelding om at den laster inn.
@@ -306,8 +311,6 @@ People.prototype = {
 		this._kommuner = AlleKommunerSingleton.getInstance();
 		return this._kommuner;
 	},
-
-
 
 	// INHABITANTS methods:
 
