@@ -53,7 +53,7 @@ table {
   }
   .detaljer .historic-table th:nth-child(1),
   .detaljer .historic-table td:nth-child(1) {
-    height: 50px;
+    height: 30px;
     background-color: var(--colorSecondary);
     color: var(--colorMain);
     font-size: 1.2vw;
