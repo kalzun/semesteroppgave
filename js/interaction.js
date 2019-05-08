@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", function(event){
 	});
 
 	const eduNames = kommuneSingleton.getEduName();
-	console.log(eduNames)
 	const infoBox = document.querySelector(".infobox");
 	for (key in eduNames){
 		addChild(infoBox, `Utdanningskode: ${key} = ${eduNames[key]}`, "div", "class", "infobox-elements");

@@ -16,7 +16,6 @@ const [GRUNNSKOLE,
 	   UTENUTD] = ["01", "02a", "11", "03a", "04a", "09a"];
 
 // Benytter Singleton-pattern, for å ha ett samlet objekt å forholde seg til ved spørringer.
-// Denne funksjonen kjøres umiddelbart, og er ti
 
 AlleKommunerSingleton = (function() {
 	let instance;

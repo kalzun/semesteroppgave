@@ -163,7 +163,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		// Fjerner ev. eksisterende tabell
 		removeTable(div, 1);
 
-		div.querySelector(".municipalityName").innerHTML = `Kommune: ${kommune.navn}`
+		div.querySelector(".municipalityName").innerHTML = `Kommune: ${kommune1.navn}`
 
 		// Konstruerer tabellen
 		const target = div.querySelector(".compareT")

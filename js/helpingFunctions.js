@@ -5,6 +5,9 @@ function addChild(parent, input, type, attrType, attrVal){
     if (input === "undefined" || input === undefined || input === "NaN" || input === NaN){
         node.innerHTML = "-";
         node.classList.add("no-data");
+    } else if (attrVal == "data-cell" && (input === null || input.length <= 0)) {
+        node.innerHTML = "-";
+        node.classList.add("no-data");
     }
     else
         node.innerHTML = input;
