@@ -19,16 +19,16 @@ const [GRUNNSKOLE,
 // Denne funksjonen kjøres umiddelbart, og er ti
 
 AlleKommunerSingleton = (function() {
-	var instance;
-	var _IDs = [];
+	let instance;
+	let _IDs = [];
 	const _IDs2 = [];
 	const _IDs3 = [];
-	var _names = [];
-	var _all = [];
-	var _inhabitants = [];
-	var _employmentRates = [];
-	var _education = [];
-	var _loaded = false
+	let _names = [];
+	let _all = [];
+	let _inhabitants = [];
+	let _employmentRates = [];
+	let _education = [];
+	let _loaded = false
 	const _eduCodes = {
 		"Grunnskolenivå": "01",
 		"Videregående skole-nivå": "02a",
@@ -98,7 +98,7 @@ AlleKommunerSingleton = (function() {
 			// Oppretter alle kommuneobjektene, som vi samler i _all.
 			// _all blir gjort offentlig tilgjengelige via funksjonen getAlleKommuner()
 			for (id in _IDs){
-				var _ = new Kommuneobj(_names[id], _IDs[id]);
+				const _ = new Kommuneobj(_names[id], _IDs[id]);
 				_all.push(_);
 			}
 
@@ -217,7 +217,7 @@ AlleKommunerSingleton = (function() {
 }())
 
 function httpRequest(url, callback) {
-	var xhr = new XMLHttpRequest();
+	let xhr = new XMLHttpRequest();
 	xhr.open("GET", url);
 	xhr.timeout = 10000;
 
@@ -236,7 +236,7 @@ function httpRequest(url, callback) {
 	xhr.send();
 }
 
-var DataSet = function(urls) {
+const DataSet = function(urls) {
 	this.urls = urls;
 	this.onload = null;
 
@@ -255,7 +255,7 @@ var DataSet = function(urls) {
 		// Gi tilbakmelding om at den laster inn.
 		//lastInn();
 
-		var timer0 = performance.now();
+		const timer0 = performance.now();
 		httpRequest(this.urls[0], (response0) => { 			// Befolkning
 			httpRequest(this.urls[1], (response1) => { 		// Sysselsatte
 				httpRequest(this.urls[2], (response2) => {	// Utdanning
@@ -263,14 +263,14 @@ var DataSet = function(urls) {
 					this.data.push(JSON.parse(response1, rmvUnused));
 					this.data.push(JSON.parse(response2, rmvUnused));
 
-					var timer1 = performance.now();
+					const timer1 = performance.now();
 					console.log(`All datasets are loaded. It took approximately: ${timer1-timer0} milliseconds.`);
 
-					var t2 = performance.now();
+					const t2 = performance.now();
 					this.singleton = AlleKommunerSingleton.getInstance();
 					this.singleton.setup(this.data);
 					this.singleton.loaded();
-					var t3 = performance.now();
+					const t3 = performance.now();
 					console.log(`Datasets are setup in Singleton. It took approximately: ${t3-t2} milliseconds.`);
 
 					if (this.onload) {
@@ -294,7 +294,7 @@ var DataSet = function(urls) {
 	}
 }
 
-var People = function(id) {
+const People = function(id) {
 	this.setup()
 	this.inhabitants = this._kommuner.getInhabitants(id);
 	this.employment = this._kommuner.getEmploymentRates(id);
@@ -479,16 +479,16 @@ People.prototype = {
 };
 
 
-var Kommuneobj = function(navn, id) {
+let Kommuneobj = function(navn, id) {
 	this.navn = navn;
 	this.id = id;
 	this.people = new People(id);
 }
 
 // Konstruerer dataset og singleton objekt for alle kommuner
-var fullstendigDataSet = new DataSet(allUrls);
+const fullstendigDataSet = new DataSet(allUrls);
 fullstendigDataSet.load()
-var kommuneSingleton = AlleKommunerSingleton.getInstance()
+const kommuneSingleton = AlleKommunerSingleton.getInstance()
 
 
 

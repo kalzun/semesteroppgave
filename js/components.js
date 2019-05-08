@@ -1,8 +1,7 @@
-// event detaljer
-//tabell(this.target, "Detaljer", inputvalue)
-
 // Konstruerer tabell som barn av gitt dom-element (div) utifra kategori og kommunenr.
+// Add child funksjon definert i helpingFunctoins.js
 function tabell(div, category, kommunenr1, kommunenr2){
+	//Fjerner ev. feilmeldinger eller ventemeldinger dersom disse finnes
 	removeErrorMessages(div);
 	removeLoadingMessage();
 
@@ -29,6 +28,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 	    addChild(tHead, "Kommunenavn", "th");
 	    addChild(tHead, "Siste målte befolkningsantall", "th");
 
+	    // Lager en rad i tabbell definert over for hver kommune i alleKommuner.
 	    for (let index in alleKommuner) {
 	        const currentRow = addChild(tBody, null, "tr");
 	        addChild(currentRow, alleKommuner[index].id, "td")
@@ -49,6 +49,8 @@ function tabell(div, category, kommunenr1, kommunenr2){
 
 		removeTable(div, 2); // Fjerne tabell funnet som child av div, og fjern 2 tabeller
 
+		div.querySelector(".municipalityName").innerHTML = `Kommune: ${kommune.navn}`
+
 		const sisteBefolkning = kommune.people.getInhabitantsLastYearTotal();
 		const sisteSysselsatteProsent = kommune.people.getEmploymentRatesLastYear();
 		const sisteSysselsatteAntall = Math.floor(sisteBefolkning * sisteSysselsatteProsent / 100);
@@ -62,7 +64,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		const sisteUtdAntall = Math.floor(sisteBefolkning * sisteUtdProsentGjennomsnitt / 100);
 
 		/*
-		Vise tabell med
+		Konstruere tabell med
 		kommunens navn,
 		kommunenummer,
 		siste målte befolkning
@@ -70,25 +72,21 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		siste målte statistikk for høyere utdanning (antall og prosent)
 		*/
 
-		//Presentasjon
-		// Konstruerer tabellen
-
-		let target = div.querySelector(".lastT");
-
-		addChild(target, `Detaljert oversikt over siste målinger for befolkning, sysselsetting og utdanning på høyerenivå for ${kommune.navn}`, "div", "class", "table-header")
+		const target = div.querySelector(".lastT");
 
 		let table = addChild(target, null, "table")
 		const tHead = addChild(table, null, "tHead");
 		const tBody = addChild(table, null, "tbody");
-		const headerRow = addChild(tHead, null, "tr");
-		//const infoRow = addChild(tBody, null, "tr");
 
+		// Tabell-rader.
+		const headerRow = addChild(tHead, null, "tr");
 		const befRow = addChild(tBody, null, "tr");
 		const sysRow = addChild(tBody, null, "tr");
 		const utdKortRow = addChild(tBody, null, "tr");
 		const utdLangRow = addChild(tBody, null, "tr");
 
-		addChild(headerRow, null, "th");
+		// Beskrivelse til hver rad
+		addChild(headerRow, "Siste målte", "th");
 		addChild(befRow, "Befolkning", "td");
 		addChild(sysRow, "Sysselsatte", "td");
 		addChild(utdKortRow, "Utdanning (Universitets- og høgskolenivå kort)", "td");
@@ -97,6 +95,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		addChild(headerRow, "Antall", "th", "class", "row-header");
 		addChild(headerRow, "Prosent", "th", "class", "row-header");
 
+		// Data til hver rad
 		addChild(befRow, sisteBefolkning, "td", "class", "data-cell");
 		addChild(sysRow, sisteSysselsatteAntall, "td", "class", "data-cell");
 		addChild(sysRow, sisteSysselsatteProsent, "td", "class", "data-cell");
@@ -119,16 +118,17 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			const utdanningHistorisk = kommune.people.getEducationRates();
 			const dataSets = [befolkningHistorisk, sysselsatteHistorisk, utdanningHistorisk];
 
-			//Presentasjon
-			let target = div.querySelector(".historicT");
-			addChild(target, `Detaljert oversikt over historiske målinger for befolkning, sysselsetting og utdanning på høyerenivå for ${kommune.navn}`, "div", "class", "table-header")
 
+
+			// Konstruerer tabell
+			let target = div.querySelector(".historicT");
 			let table = addChild(target, null, "table", "class", "historic-table");
 			const tHead = addChild(table, null, "tHead");
 			const tBody = addChild(table, null, "tbody");
 			const headerRow = addChild(tHead, null, "tr");
 			addChild(headerRow, null, "th");
 
+			// Konstruerer en liste med alle år fra dataSets, og legger disse årene til tabell-headeren
 			const yearList = getYears(dataSets);
 			if (yearList) {
 				for (let i = 0, len = yearList.length; i < len; i++) {
@@ -136,12 +136,17 @@ function tabell(div, category, kommunenr1, kommunenr2){
 				};
 			}
 
+			// For hver kategori, befolkning, sysselsetting, data legger vi til datarader i tabell-bodyen
 			["befolkning", "sysselsetting", "utdanning"].forEach(function(name){addData(kommune, tBody, yearList, name);
 			});
 		})()
 	}
 
-	// Lager tabellen til sammenligning-fanen
+/*
+	Viser historiske data
+	Sammenligner 2 kommuner
+	Markerer det kommunen for hvert kjønn som har høyest økning i prosentpoeng.
+*/
 	function sammenligning(){
 		const singleton = AlleKommunerSingleton.getInstance();
 		const kommune1 = singleton.getInfo(kommunenr1);
@@ -155,32 +160,36 @@ function tabell(div, category, kommunenr1, kommunenr2){
 			return;
 		}
 
-		removeTable(div, 1); // Parametere: parent-element og antall tabeller
+		// Fjerner ev. eksisterende tabell
+		removeTable(div, 1);
 
-		//Presentasjon
+		div.querySelector(".municipalityName").innerHTML = `Kommune: ${kommune.navn}`
+
 		// Konstruerer tabellen
 		const target = div.querySelector(".compareT")
 		let table = addChild(target, null, "table");
 		const tHead = addChild(table, null, "tHead");
 		const tBody = addChild(table, null, "tBody");
 		const headerRow = addChild(tHead, null, "tr");
-
 		addChild(headerRow, "Kommune (Kjønn)/År", "th")
 
 		const dataSets = [
 			kommune1.people.getEmploymentRates(),
 			kommune2.people.getEmploymentRates()
-		]
+		];
+
+		// Konstruerer en liste med alle år fra dataSets, og legger disse årene til tabell-headeren
 		const yearList = getYears(dataSets);
 		for (let i = 0, len = yearList.length; i < len; i++) {
 			addChild(headerRow, `${yearList[i]}`, "th");
 		}
 
+		//Legger til sysselsettingsdata for begge kommunene i tabellen
 		for (i in kommuner) {
 			addData(kommuner[i], tBody, yearList, "sysselsetting", "sammenligning")
 		}
 
-		//Itererer gjennom hvert år i tabellen og sammenligner dataene i hver rad med dataene fra forrige år, markerer cellene (menn og kvinner) med høyest økning.
+		//Itererer gjennom hvert år i tabellen og sammenligner dataene i hver rad med dataene fra forrige år, markerer den kommunen for hvert kjønn med høyest økning i prosentpoeng.
 		//Ikke interresert i første år, da vi ikke har noen tidligere år å regne vekst ut i fra.
 
 		const tableData = tBody.childNodes;

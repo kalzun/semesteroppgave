@@ -1,9 +1,11 @@
+// Legger til search-funksjonen på søkeknapper.
 document.addEventListener("DOMContentLoaded", function(event){
 	const searchButtons = document.querySelectorAll(".searchbutton");
 	for (let index = 0; index < 2; index++){
 		searchButtons[index].addEventListener("click", search);
 	}
 
+	// Dersom vinduets størrelse endres til mindre enn 900px, konverteres utdanningsnavn til utdanningskoder, og dersom størrelsen endres til større enn eller lik 900px.
 	window.addEventListener("resize", () => {
 		const limit = 900;
 		const tableElems = document.querySelectorAll(".detaljer .eduCat");

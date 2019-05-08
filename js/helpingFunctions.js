@@ -168,13 +168,11 @@ function removeLoadingMessage() {
     }
 }
 
+
 function removeTable(div, numberOfTables){
     for (let i = 0; i < numberOfTables; i++) {
         const table = div.querySelector("table");
-        if (table != undefined) {
-            console.log("Removing old table...")
-            table.parentNode.removeChild(table);
-        }
+        if (table != undefined) table.parentNode.removeChild(table);
     }
 }
 
@@ -190,5 +188,6 @@ function convertToId(name) {
 
 function capFirstLetter(word) {
     // Gjør første bokstav i word Stor.
+    if (word === undefined || word === "") return word;
     return word[0].toUpperCase() + word.slice(1);
 }
