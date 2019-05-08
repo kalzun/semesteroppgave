@@ -4,7 +4,6 @@ table {
 }
 
 .detaljer table:nth-child(1) {
-  overflow-y: scroll;
   font-size: 1.6vw;
 }
 
@@ -25,9 +24,7 @@ td, th {
   overflow: hidden;
   padding-left: 1vh;;
   padding-right: 1vh;
-  border: 1px;
-  border-style: solid;
-  border-color: lightgrey;
+  border: 1px solid white;
 }
 
 @media (max-width: 900px) {
@@ -85,10 +82,10 @@ td, th {
     font-size: 1.6vw;
   }
 }
-@media (min-width: 801px) {
+@media (min-width: 901px) {
 
   td, th {
-    font-size: 1.2vh;
+    font-size: 1.05vw;
   }
 
   .historicT {
