@@ -91,11 +91,19 @@ AlleKommunerSingleton = (function() {
 				// - kommunenummer 5061 ikke finnes i Utdanningsdatasett.
 				// - det er flere kommunenummer i Utdanningsdatasett som ikke finnes i de andre datasettene.
 
-				const diff1v2 = _IDs.filter(num => (!_IDs2.includes(num)));
-				const diff1v3 = _IDs.filter(num => (!_IDs3.includes(num)));
-				const diff2v3 = _IDs2.filter(num => (!_IDs3.includes(num)));
-				const diff3v1 = _IDs3.filter(num => (!_IDs.includes(num)));
-				const diff3v2 = _IDs3.filter(num => (!_IDs2.includes(num)));
+				const diff1v2 = _IDs.filter(num => (!_IDs2.includes(num))); // Hvilke KOMNR i befolkning er ikke i sysselsetting?
+				const diff1v3 = _IDs.filter(num => (!_IDs3.includes(num))); // Hvilke KOMNR i befolkning er ikke i utdanning?
+				const diff2v3 = _IDs2.filter(num => (!_IDs3.includes(num))); // Hvilke KOMNR i sysselsetting er ikke i ?
+				const diff3v1 = _IDs3.filter(num => (!_IDs.includes(num))); // Hvilke KOMNR i utdanning er ikke i sysselsetting?
+				const diff3v2 = _IDs3.filter(num => (!_IDs2.includes(num))); // Hvilke KOMNR i utdanning er ikke i sysselsetting?
+
+				// All true === alle IDene er med.
+				// console.log("Integrity check :", diff1v2.every((num) => _IDs.includes(num)))
+				// console.log("Integrity check :", diff1v3.every((num) => _IDs.includes(num)))
+				// console.log("Integrity check :", diff2v3.every((num) => _IDs.includes(num)))
+				// console.log("Integrity check :", diff3v1.every((num) => _IDs.includes(num)))
+				// console.log("Integrity check :", diff3v2.every((num) => _IDs.includes(num)))
+				
 
 
 			}());
@@ -260,9 +268,6 @@ const DataSet = function(urls) {
 		if (this.data) return "Data is already loading...";
 		this.data = new Array();
 
-		// Gi tilbakmelding om at den laster inn.
-		//lastInn();
-
 		const timer0 = performance.now();
 		httpRequest(this.urls[0], (response0) => { 			// Befolkning
 			httpRequest(this.urls[1], (response1) => { 		// Sysselsatte
@@ -279,11 +284,11 @@ const DataSet = function(urls) {
 					this.singleton.setup(this.data);
 					this.singleton.loaded();
 					const t3 = performance.now();
+
 					console.log(`Datasets are setup in Singleton. It took approximately: ${t3-t2} milliseconds.`);
 
-					if (this.onload) {
-						this.onload();
-					}
+					if (this.onload) this.onload();
+
 					// Konstruerer oversiktstabell
 					tabell(document.querySelector('.oversikt'), 'oversikt')
 				});
