@@ -9,12 +9,10 @@
     --colorSecondaryHover: #e04d59;
     --colorNoData: #f0ee8f;
     --colorGreenHighlight: #c6ffab;
-
     --tableCell_1: #ffffff;
     --tableCell_2: #f1eeee;
     --tableBorder: #000000;
 }
-
 /* Forandring av fryktelige deafult-settings */
 * {
     font-family: 'Roboto', sans-serif;
