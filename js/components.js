@@ -1,6 +1,6 @@
 // Konstruerer tabell som barn av gitt dom-element (div) utifra kategori og kommunenr.
 // Add child funksjon definert i helpingFunctoins.js
-function tabell(div, category, kommunenr1, kommunenr2){
+function constructTable(div, category, kommunenr1, kommunenr2){
 	//Fjerner ev. feilmeldinger eller ventemeldinger dersom disse finnes
 	removeErrorMessages(div);
 	removeLoadingMessage();
