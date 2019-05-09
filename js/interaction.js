@@ -143,8 +143,10 @@ function outputRegexHits(hits, output){
 	const offsetTopContent = inputBottom - (parseFloat(computedStyles.getPropertyValue("padding-top"))) - contentElem.getBoundingClientRect().top;
 
 	if (output.classList.contains("search-output-right")) {
-		const offsetRightContent =  contentElem.getBoundingClientRect().right + parseFloat(computedStyles.getPropertyValue("padding-right")) - inputElement.getBoundingClientRect().left;
-		output.style.marginRight = offsetRightContent + "px";
+		const inputElement = output.parentNode.querySelectorAll("input")[1];
+		const offsetRightContent =  inputElement.getBoundingClientRect().left - contentElem.getBoundingClientRect().left - parseFloat(computedStyles.getPropertyValue("padding-left"));	 
+		//const offsetRightContent =  contentElem.getBoundingClientRect().right + parseFloat(computedStyles.getPropertyValue("padding-right")) - inputElement.getBoundingClientRect().left;
+		output.style.marginLeft = offsetRightContent + "px";
 	} else {
 		const offsetLeftContent = inputElement.getBoundingClientRect().left - contentElem.getBoundingClientRect().left - parseFloat(computedStyles.getPropertyValue("padding-left"));
 		output.style.marginLeft = offsetLeftContent + "px";
