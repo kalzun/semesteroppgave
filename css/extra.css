@@ -20,3 +20,24 @@
 #reload-button:hover {
 	box-shadow: 5px 5px 30px lightgray;
 }
+
+.edu-tooltip {
+	visibility: hidden;
+	background-color: var(--colorSecondary);
+	padding: 5px;
+	max-width: 60px;
+	height: 50px;
+	position: absolute;
+	z-index: 999;
+	margin-top: -75px;
+	margin-left: -50px;
+	word-wrap: break-word;
+	white-space: pre-wrap;
+	opacity: 0;
+	transition: opacity 0.2s;
+}
+
+.eduCat:hover .edu-tooltip {
+	visibility: visible;
+	opacity: 1
+}

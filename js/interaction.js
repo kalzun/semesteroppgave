@@ -213,15 +213,21 @@ function changeVisibleEducation() {
 	const eduCodes = kommuneSingleton.getEduCodes();
 	if (window.innerWidth < limit) {
 		for (let i = 2; i < tableElems.length; i++) {
-			const val = tableElems[i].innerHTML;
+			const val = tableElems[i].innerText;
 			if (!eduCodes.includes(val)) {
 				const newVal = kommuneSingleton.getEduCodes(val);
 				tableElems[i].innerHTML = newVal;
+					const tooltip = document.createElement("span");
+					if (tableElems[i].contains(tooltip))
+						return;
+					tooltip.setAttribute("class", "edu-tooltip");
+					tooltip.innerHTML = val;
+					tableElems[i].appendChild(tooltip);
 			}
 		}
 	}else{
 		for (let i = 2; i < tableElems.length; i++) {
-			const val = tableElems[i].innerHTML;
+			const val = tableElems[i].innerText;
 			if (eduCodes.includes(val)) {
 				const newVal = kommuneSingleton.getEduName(val);
 				tableElems[i].innerHTML = newVal;
