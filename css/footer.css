@@ -1,5 +1,5 @@
 footer {
-  height: 220px;
+  height: 280px;
   background-color: var(--colorSecondary);
   border-top: 10px solid var(--colorSecondaryHover);
 }
