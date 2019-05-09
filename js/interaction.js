@@ -11,8 +11,9 @@ document.addEventListener("DOMContentLoaded", function(event){
 	// Legger til informasjon i forklaringsfelt i detaljer- og sammenlignings-dane
 	const eduNames = kommuneSingleton.getEduName();
 	const infoBox = document.querySelector(".infobox");
+	const eduCodeBox = addChild(infoBox, null, "div", "class", "eduCodeBox")
 	for (key in eduNames){
-		addChild(infoBox, `Utdanningskode: ${key} = ${eduNames[key]}`, "div", "class", "infobox-elements");
+		addChild(eduCodeBox, `Utdanningskode: ${key} = ${eduNames[key]}`, "div", "class", "infobox-elements");
 	}
 
 	// Input-listener som sjekker for hver bokstav skrevet inn
@@ -52,7 +53,7 @@ function search(suggestion){
     	};
 		removeLoadingMessage();
         tabell(domElem, targetClass, kommunenr1, kommunenr2);
-        
+
         changeVisibleEducation();
 
         // VIS informasjonsboks på bunnen av siden
@@ -140,9 +141,9 @@ function outputRegexHits(hits, output){
 	const contentElem = output.closest(".content");
 	const computedStyles = window.getComputedStyle(contentElem);
 	const offsetTopContent = inputBottom - (parseFloat(computedStyles.getPropertyValue("padding-top"))) - contentElem.getBoundingClientRect().top;
-	
+
 	if (output.classList.contains("search-output-right")) {
-		const offsetRightContent =  contentElem.getBoundingClientRect().right + parseFloat(computedStyles.getPropertyValue("padding-right")) - inputElement.getBoundingClientRect().left;	
+		const offsetRightContent =  contentElem.getBoundingClientRect().right + parseFloat(computedStyles.getPropertyValue("padding-right")) - inputElement.getBoundingClientRect().left;
 		output.style.marginRight = offsetRightContent + "px";
 	} else {
 		const offsetLeftContent = inputElement.getBoundingClientRect().left - contentElem.getBoundingClientRect().left - parseFloat(computedStyles.getPropertyValue("padding-left"));
@@ -151,7 +152,7 @@ function outputRegexHits(hits, output){
 
 	output.style.minWidth = inputWidth + "px";
 	output.style.marginTop = offsetTopContent + "px";
-	
+
 	const maxHitsShown = 5;
 	hits.slice(0, maxHitsShown).forEach((hit) => {
 		const li = document.createElement("li");
@@ -171,8 +172,8 @@ function outputRegexHits(hits, output){
 						<span class="search-span">
 						${(kommunenavn) ? kommunenavn : kommunenr}
 						</span>
-						
-						${kommuneinfo.people.getInhabitantsLastYearTotal() ? 
+
+						${kommuneinfo.people.getInhabitantsLastYearTotal() ?
 						`<span class="search-span">Innbyggere: ${kommuneinfo.people.getInhabitantsLastYearTotal()} (sist målte)</span>` :
 						 ""
 						}`;

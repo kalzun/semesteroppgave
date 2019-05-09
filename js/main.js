@@ -231,7 +231,7 @@ AlleKommunerSingleton = (function() {
 function httpRequest(url, callback) {
 	let xhr = new XMLHttpRequest();
 	xhr.open("GET", url);
-	xhr.timeout = 5000;
+	xhr.timeout = 10000;
 
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
@@ -241,6 +241,10 @@ function httpRequest(url, callback) {
 		}
 	};
 
+	xhr.onerror = () => {
+		removeLoadingMessage();
+		displayTimeoutMessage()
+	}
 	xhr.ontimeout = () => {
 		removeLoadingMessage();
 		displayTimeoutMessage()

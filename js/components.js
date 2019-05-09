@@ -113,6 +113,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		utdanning (ALLE UTDANNINGER I PROSENT)
 */
 		(function historisk() {
+			div.querySelector("#historicTHeader").innerHTML = "Historisk utvikling"
 			const befolkningHistorisk = kommune.people.getInhabitants();
 			const sysselsatteHistorisk = kommune.people.getEmploymentRates();
 			const utdanningHistorisk = kommune.people.getEducationRates();

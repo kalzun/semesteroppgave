@@ -2,40 +2,31 @@ table {
   width: 100%;
   font-size: 1.6vw;
 }
-
 .detaljer table:nth-child(1) {
-  font-size: 1.6vw;
+  font-size: 1.8vw;
 }
-
 .green-highlight {
   background-color: var(--colorGreenHighlight);
 }
-
 .no-data {
   background-color: var(--colorNoData);
 }
-
 td {
   white-space: nowrap;
 }
-
 td, th {
   text-overflow: ellipsis;
   overflow: hidden;
 }
-
 @media (max-width: 900px) {
   table {
     margin-top: 5vw;
   }
-
   .sammenligning table, .historic-table {
     display: flex;
     flex-direction: row;
     font-size: 2vw;
   }
-
-
   .sammenligning thead,
   .sammenligning tbody,
   .historic-table thead,
@@ -43,7 +34,6 @@ td, th {
     display: flex;
     flex-direction: row;
   }
-
   .sammenligning thead,
   .historic-table thead {
     flex: 1;
@@ -51,51 +41,39 @@ td, th {
   .sammenligning tbody {
     flex: 4;
   }
-
   .historic-table tbody {
     flex: 8;
   }
-
   .sammenligning tr,
   .historic-table tr {
     display: flex;
     flex-direction: column;
     flex: 1;
   }
-
   .sammenligning th:nth-child(1),
   .sammenligning td:nth-child(1) {
     height: 30px;
     background-color: var(--colorSecondary);
     color: var(--colorMain);
   }
-
   .historic-table th:nth-child(1),
   .historic-table td:nth-child(1) {
     height: 2.5vh;
     color: var(--colorMain);
     background-color: var(--colorSecondary);
-
     font-size: 1.6vw;
   }
 }
 @media (min-width: 901px) {
-
   td, th {
     font-size: 1.05vw;
   }
-
   .historicT {
     overflow-x: auto;
   }
   .historic-table td {
     padding-left: 10px;
     padding-right: 10px;
-  }
-  .historic-table tr>td:nth-child(1) {
-    background-color: var(--colorSecondary);
-    color: var(--colorMain);
-
   }
 }
 
@@ -106,11 +84,11 @@ td, th {
     white-space: normal;
     word-wrap: anywhere;
   }
-  
+
   .lastT thead {
     font-size: 14px;
   }
-  
+
   .historic-table tr {
     max-width: 10vw;
   }
@@ -118,27 +96,27 @@ td, th {
   .sammenligning tr{
     max-width: 18vw;
   }
-  
-  /* 
+
+  /*
   Overskrifter i tabellen
   */
   .sammenligning th:nth-child(1),
   .sammenligning td:nth-child(1),
   .historic-table td:nth-child(1) {
-    font-size: 12px;
+    font-size: 1.8vh;
   }
 
   .oversikt th {
     font-size: 2.5vw;
   }
-  
+
   .lastT td,
   .oversikt td,
   .historic-table td,
   .historic-table th,
   .sammenligning td,
   .sammenligning th {
-    font-size: 3vw;
+    font-size: 1.8vw;
   }
 
 }
