@@ -223,7 +223,7 @@ AlleKommunerSingleton = (function() {
 function httpRequest(url, callback) {
 	let xhr = new XMLHttpRequest();
 	xhr.open("GET", url);
-	xhr.timeout = 10000;
+	xhr.timeout = 1000;
 
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
