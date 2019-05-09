@@ -40,17 +40,12 @@ function search(suggestion){
     const alleInputs = aParent.querySelectorAll("div .search");
 
     fullstendigDataSet.onload = function(){
-        switch (targetClass){
-	    	case "detaljer":
-	    		// Hvis bruker skriver inn kommunenavn:
-				// Convert name to id
-				(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = kommuneSingleton.getID(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
-	    		break;
-	    	case "sammenligning":
-	    		(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = kommuneSingleton.getID(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
-	    		(isNameInDataset(alleInputs[1].value)) ? kommunenr2 = kommuneSingleton.getID(alleInputs[1].value) : kommunenr2 = alleInputs[1].value;
-	    		break;
-    	};
+    	// Hvis bruker skriver inn kommunenavn:
+		// Convert name to id
+    	(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = kommuneSingleton.getID(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
+    	if (targetClass == "sammenligning")
+        	(isNameInDataset(alleInputs[1].value)) ? kommunenr2 = kommuneSingleton.getID(alleInputs[1].value) : kommunenr2 = alleInputs[1].value;
+        
 		removeLoadingMessage();
         tabell(domElem, targetClass, kommunenr1, kommunenr2);
 
