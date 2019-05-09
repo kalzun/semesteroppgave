@@ -1,8 +1,12 @@
 /* Hjelpefunksjoner */
 
+// Konstruerer et element, gir den innhold, type og ev. atributt iht. argumenter og legger elementet til parent.
 function addChild(parent, input, type, attrType, attrVal){
     const node = document.createElement(type);
     if (input === "undefined" || input === undefined || input === "NaN" || input === NaN){
+        node.innerHTML = "-";
+        node.classList.add("no-data");
+    } else if (attrVal == "data-cell" && (input === null || input.length <= 0)) {
         node.innerHTML = "-";
         node.classList.add("no-data");
     }
@@ -118,7 +122,6 @@ function outputNotFound(div, kommune1, kommune2, kommunenr1, kommunenr2){
     if ([kommune1, kommune2].every((kom) => kom === "None found")){
         let message = `Ingen treff på kommunenr ${kommunenr1} eller ${kommunenr2}`;
         addChild(target, message, "p", "class", "error-message");
-        console.log("En kommune er undefined.");
     }else if(kommune2 === "None found") {
         let message = `Ingen treff på kommunenr ${kommunenr2}`;
         addChild(target, message, "p", "class", "error-message");
@@ -141,11 +144,18 @@ function isContentInCategory(cat) {
 }
 
 function displayTimeoutMessage() {
-    const targets = document.querySelectorAll(".msg-box")
-    const message = "Ingen data tilgjengelig, prøv igjen senere."
+    const targets = document.querySelectorAll(".msg-box");
+
+    const message = `Ingen data tilgjengelig, 
+                     vennligst <button id="reload-button" type="submit" onClick="reloadPage();"
+                     ">last inn på nytt</button> eller prøv senere...`
     for (let i = 0; i < targets.length; i++) {
         addChild(targets[i], message, "p")
     }
+}
+
+function reloadPage(){
+    window.location.reload();
 }
 
 function displayLoadingMessage(domElem) {
@@ -168,13 +178,11 @@ function removeLoadingMessage() {
     }
 }
 
+
 function removeTable(div, numberOfTables){
     for (let i = 0; i < numberOfTables; i++) {
         const table = div.querySelector("table");
-        if (table != undefined) {
-            console.log("Removing old table...")
-            table.parentNode.removeChild(table);
-        }
+        if (table != undefined) table.parentNode.removeChild(table);
     }
 }
 
@@ -190,5 +198,6 @@ function convertToId(name) {
 
 function capFirstLetter(word) {
     // Gjør første bokstav i word Stor.
+    if (word === undefined || word === "") return word;
     return word[0].toUpperCase() + word.slice(1);
 }

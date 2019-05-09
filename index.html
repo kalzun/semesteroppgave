@@ -31,8 +31,7 @@
       <button>Detaljer</button>
       <button>Sammenligning</button>
     </header>
-    <main>
-      <div id="tabs">
+    <main id="tabs">
         <div class="intro active">
           <div class="content">
             <div class="info">
@@ -40,7 +39,7 @@
               <p>Denne applikasjonen viser statistikk om Norges kommuner. Informasjonen er hentet fra modifiserte kopier av Statistisk Sentralbyrå, og det tas forbehold om at informasjonen kan inneholde feil.</p>
             </div>
             <div class="kilder">
-              <h1>Kilder</h1>
+              <h2>Kilder</h2>
               <a href="http://data.ssb.no/api/v0/dataset/104857?lang=no
               ">Befolkning</a>
               <a href="http://data.ssb.no/api/v0/dataset/100145?lang=no
@@ -59,15 +58,16 @@
           </div>
           <div class="msg-box"></div>
         </div>
-        
+
         <div class="detaljer">
-          <p>Detaljert informasjon om befolkning, sysselsetting og utdanning i en kommune.</p>
+          <p class="table-desc">Detaljert informasjon om befolkning, sysselsetting og utdanning i en kommune.</p>
           <div class="content">
             <input autocomplete="off" id="input-det" type="text" placeholder="kommunenummer" class="search search3"/>
             <button type="search" id="detaljer" class="searchbutton">SØK</button>
             <div class="search-output"></div>
           </div>
           <div class="msg-box"></div>
+          <h2 class="municipalityName"></h2>
           <div class="lastT"></div>
           <div class="historicT"></div>
 
@@ -80,7 +80,7 @@
         </div>
 
         <div class="sammenligning">
-          <p>Sammenlign sysselsettingsprosent i to kommuner. Tabellen viser dataene for hver kommune i prosent (%), regnet utifra total befolkning i kommunen.</p>
+          <p class="table-desc">Sammenlign sysselsettingsprosent i to kommuner. Tabellen viser dataene for hver kommune i prosent (%), regnet utifra total befolkning i kommunen.</p>
           <div class="content">
             <h3 class="tabTitle">Sammenlign</h3>
             <input autocomplete="off" id="input-sam1" type="text" placeholder="kommunenr." class="search search2"/>
@@ -91,6 +91,7 @@
             <div class="search-output search-output-right"></div>
           </div>
           <div class="msg-box"></div>
+          <h2 class="municipalityName"></h2>
           <div class="compareT"></div>
 
           <div class="infobox">
@@ -106,8 +107,8 @@
             </div>
           </div>
         </div>
-      
-      </div>
+
+
     </main>
     <footer>
       <p>Nettsiden er en oppgavebesvarelse i emnet INFO134 ved Universitetet i Bergen våren 2019.</p>

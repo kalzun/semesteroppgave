@@ -16,6 +16,7 @@
     background-color: var(--colorSecondary);
     color: var(--colorMain);
     padding: 5vw;
+
 }
 .oversikt .content {
     flex-direction: column;
