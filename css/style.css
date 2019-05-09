@@ -1,0 +1,481 @@
+/*
+1. Generell styling
+2. Header
+3. Tabs
+4. Footer
+5. Table
+6. Popup
+7. Tooltip
+8. Loading
+9. Infobox
+
+*/
+
+/*-----  Generell styling. -----*/
+/* Variabler */
+:root {
+    --colorMain: white;
+    --colorSecondary: #be2b38;
+    --colorThird: #000000;
+    --colorSecondaryHover: #e04d59;
+    --colorNoData: #f0ee8f;
+    --colorGreenHighlight: #c6ffab;
+    --tableCell_1: #ffffff;
+    --tableCell_2: #f1eeee;
+    --tableBorder: #000000;
+}
+/* Forandring av fryktelige deafult-settings */
+* {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    background-color: inherit;
+    border: none;
+    color: inherit;
+    font-weight: 400;
+    font-size: inherit;
+}
+input {
+    outline: none;
+}
+
+/* For å fjerne irriterende blå outline til knapper og tekstbokser som er trykket på. */
+button:focus, input:focus {outline:0;}
+
+/* Header-styling */
+h1 {font-size: 4vw; font-weight: 600;}
+h2 {font-size: 3.5vh; text-align: center;}
+h3 {font-size: 24px; font-weight: 400; text-align: center; padding: 3vh;}
+h4 {font-size: 3vh; font-style: italic;}
+
+@media (max-width: 900px) {
+    h1 {
+        font-size: 6vw;
+        text-align: left;
+    }
+    p {
+        text-align: left;
+    }
+}
+
+/* Generell paragraf-tekst styling */
+p{font-size: 3vh;}
+
+/* hyperlink-styling */
+a {font-size: 3vh; font-style: italic;}
+
+table {
+    border-spacing: 0;
+    font-size: 1.5vw;
+
+}
+table > tbody > tr:nth-child(odd) {
+    background: var(--tableCell_1);
+}
+table > tbody > tr:nth-child(even) {
+background: var(--tableCell_2);
+}
+
+table > thead {
+background-color: var(--colorSecondary);
+color: var(--colorMain);
+}
+table td, table th {
+    text-align: center;
+    vertical-align: middle;
+
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
+
+/*----- Header -----*/
+header {
+    background-color: var(--colorSecondary);
+    display: flex;
+    flex-flow: row;
+}
+header button {
+    color: var(--colorMain);
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 40px;
+}
+@media screen and (max-width: 600px) {
+    header {
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+/*----- Tabs -----*/
+#tabs > .active {
+    display: flex;
+    flex-direction: column;
+    margin: 5vw;
+}
+#tabs > div:not(.active) {
+    display: none;
+}
+#buttons .active {
+    background-color: var(--colorMain);
+    color: var(--colorThird);
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--colorSecondary);
+    color: var(--colorMain);
+    padding: 5vw;
+
+}
+.oversikt .content {
+    flex-direction: column;
+    text-align: center;
+}
+.content a {
+    display: block;
+    color: var(--colorMain);
+    text-decoration-line: none;
+    text-align: center;
+}
+.info {
+    flex: 2;
+    padding-left: 2.5vw;
+    padding-right: 2.5vw;
+}
+.kilder {
+    flex: 1;
+    padding-left: 2.5vw;
+    padding-right: 2.5vw;
+}
+
+.content button {
+    width: 100%;
+    font-size: 24px;
+    background-color: var(--colorSecondaryHover);
+    font-weight: 400;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    margin-top: 5vh;
+}
+.search {
+    padding: 5px;
+    font-size: 24px;
+}
+.error-message {
+    text-align: center;
+    background-color: var(--colorSecondary);
+    color: var(--colorMain);
+    padding: 5vw;
+}
+
+@media screen and (min-width: 800px) {
+    .content {
+        flex-direction: row;
+        margin-bottom: 5vw;
+        padding: 2vw;
+    }
+    .content h1 {
+        text-align: center;
+    }
+    .search {
+        font-size: 2vw;
+        margin-top: 2vw;
+        margin-bottom: 2vw;
+    }
+    .detaljer .search {
+        padding: 2vh;
+        width: 80%;
+    }
+    .detaljer button {
+        width: 20%;
+    }
+    .content button {
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-top: 2vw;
+        margin-bottom: 2vw;
+    }
+    .info {
+        padding-right: 5vw;
+    }
+    .kilder {
+        border-left: 2px dotted var(--colorMain);
+    }
+    .sammenligning h3 {
+        font-size: 2vw;
+    }
+    .detaljer p:nth-child(1), .sammenligning p:nth-child(1) {
+        margin: 0% 20% 5% 20%;
+    }
+}
+
+/*----- Footer -----*/
+footer {
+  height: 280px;
+  background-color: var(--colorSecondary);
+  border-top: 10px solid var(--colorSecondaryHover);
+}
+footer p {
+  text-align: center;
+  color: var(--colorMain);
+  padding: 50px;
+}
+
+/*----- Table -----*/
+table {
+  width: 100%;
+  font-size: 1.6vw;
+}
+.detaljer table:nth-child(1) {
+  font-size: 1.8vw;
+}
+.green-highlight {
+  background-color: var(--colorGreenHighlight);
+}
+.no-data {
+  background-color: var(--colorNoData);
+}
+td {
+  white-space: nowrap;
+}
+td, th {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+@media (max-width: 900px) {
+  table {
+    margin-top: 5vw;
+  }
+  .sammenligning table, .historic-table {
+    display: flex;
+    flex-direction: row;
+    font-size: 2vw;
+  }
+  .sammenligning thead,
+  .sammenligning tbody,
+  .historic-table thead,
+  .historic-table tbody {
+    display: flex;
+    flex-direction: row;
+  }
+  .sammenligning thead,
+  .historic-table thead {
+    flex: 1;
+  }
+  .sammenligning tbody {
+    flex: 4;
+  }
+  .historic-table tbody {
+    flex: 8;
+  }
+  .sammenligning tr,
+  .historic-table tr {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .sammenligning th:nth-child(1),
+  .sammenligning td:nth-child(1) {
+    height: 30px;
+    background-color: var(--colorSecondary);
+    color: var(--colorMain);
+  }
+  .historic-table th:nth-child(1),
+  .historic-table td:nth-child(1) {
+    height: 2.5vh;
+    color: var(--colorMain);
+    background-color: var(--colorSecondary);
+    font-size: 1.6vw;
+  }
+}
+@media (min-width: 901px) {
+  td, th {
+    font-size: 1.05vw;
+  }
+  .historicT {
+    overflow-x: auto;
+  }
+  .historic-table td {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* Telefon width */
+@media (max-width: 414px){
+
+  td {
+    white-space: normal;
+    word-wrap: anywhere;
+  }
+
+  .lastT thead {
+    font-size: 14px;
+  }
+
+  .historic-table tr {
+    max-width: 10vw;
+  }
+
+  .sammenligning tr{
+    max-width: 18vw;
+  }
+
+  /*
+  Overskrifter i tabellen
+  */
+  .sammenligning th:nth-child(1),
+  .sammenligning td:nth-child(1),
+  .historic-table td:nth-child(1) {
+    font-size: 1.8vh;
+  }
+
+  .oversikt th {
+    font-size: 2.5vw;
+  }
+
+  .lastT td,
+  .oversikt td,
+  .historic-table td,
+  .historic-table th,
+  .sammenligning td,
+  .sammenligning th {
+    font-size: 1.8vw;
+  }
+
+}
+
+
+/*----- Popup -----*/
+.search-output {
+    z-index: 1;
+    position: absolute;
+    box-sizing: border-box;
+}
+
+@media (max-width: 800px){
+    .search-output {
+        display: none;
+    }
+}
+
+.search-output li {
+    list-style: none;
+}
+
+.search-output-right {
+    margin-left: 44vw;
+}
+
+.search-suggestion{
+    display: grid;
+    grid-gap: 10px;
+    padding: 40px;
+    background-color: var(--colorSecondary);
+}
+
+.search-suggestion:hover {
+    background-color: var(--colorSecondaryHover);
+}
+
+.search-span {
+    color: var(--colorMain);
+    font-size: 0.8rem;
+}
+
+/*----- Tooltip -----*/
+.edu-tooltip {
+    visibility: hidden;
+    background-color: var(--colorSecondary);
+    padding: 5px;
+    max-width: 60px;
+    height: 50px;
+    position: absolute;
+    z-index: 999;
+    margin-top: -75px;
+    margin-left: -50px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.eduCat:hover .edu-tooltip {
+    visibility: visible;
+    opacity: 1
+}
+
+/*----- Loading -----*/
+.loader {
+    border: 20px solid var(--colorSecondaryHover); /* Light grey */
+    border-top: 20px solid var(--colorSecondary); /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#reload-button {
+    background-color: var(--colorSecondary);
+    color: var(--colorMain);
+    padding: 10px 20px;
+}
+
+#reload-button:hover {
+    box-shadow: 5px 5px 30px lightgray;
+}
+
+/*----- Infobox -----*/
+/* Infobox styling */
+.infobox {
+    display: none;
+    margin-top: 20px;
+    flex-direction: column;
+
+}
+.info-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.infobox-elements {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.eduCodeBox {
+        display: none;
+}
+
+.box {
+    box-sizing: border-box;
+    padding: 10px 20px;
+}
+.yellow-box {
+    background-color: var(--colorNoData);
+}
+.green-box {
+    background-color: var(--colorGreenHighlight);
+    color: var(--colorGreenHighlight);
+}
+.box-text {
+    line-height: 35px;
+}
+
+@media (max-width: 900px) {
+    .eduCodeBox {
+        display: block;
+    }
+}
