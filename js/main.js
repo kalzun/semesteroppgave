@@ -103,7 +103,7 @@ AlleKommunerSingleton = (function() {
 				// console.log("Integrity check :", diff2v3.every((num) => _IDs.includes(num)))
 				// console.log("Integrity check :", diff3v1.every((num) => _IDs.includes(num)))
 				// console.log("Integrity check :", diff3v2.every((num) => _IDs.includes(num)))
-				
+
 
 
 			}());
@@ -290,7 +290,7 @@ const DataSet = function(urls) {
 					if (this.onload) this.onload();
 
 					// Konstruerer oversiktstabell
-					tabell(document.querySelector('.oversikt'), 'oversikt')
+					constructTable(document.querySelector('.oversikt'), 'oversikt')
 				});
 			});
 		});

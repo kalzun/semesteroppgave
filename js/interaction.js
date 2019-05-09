@@ -47,7 +47,7 @@ function search(suggestion){
         	(isNameInDataset(alleInputs[1].value)) ? kommunenr2 = kommuneSingleton.getID(alleInputs[1].value) : kommunenr2 = alleInputs[1].value;
         
 		removeLoadingMessage();
-        tabell(domElem, targetClass, kommunenr1, kommunenr2);
+        constructTable(domElem, targetClass, kommunenr1, kommunenr2);
 
         changeVisibleEducation();
 
@@ -139,7 +139,7 @@ function outputRegexHits(hits, output){
 
 	if (output.classList.contains("search-output-right")) {
 		const inputElement = output.parentNode.querySelectorAll("input")[1];
-		const offsetRightContent =  inputElement.getBoundingClientRect().left - contentElem.getBoundingClientRect().left - parseFloat(computedStyles.getPropertyValue("padding-left"));	 
+		const offsetRightContent =  inputElement.getBoundingClientRect().left - contentElem.getBoundingClientRect().left - parseFloat(computedStyles.getPropertyValue("padding-left"));
 		//const offsetRightContent =  contentElem.getBoundingClientRect().right + parseFloat(computedStyles.getPropertyValue("padding-right")) - inputElement.getBoundingClientRect().left;
 		output.style.marginLeft = offsetRightContent + "px";
 	} else {
