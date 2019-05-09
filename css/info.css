@@ -1,7 +1,9 @@
+/* Infobox styling */
 .infobox {
 	display: none;
 	margin-top: 20px;
-	flex-wrap: wrap;
+	flex-direction: column;
+
 }
 .info-container {
 	display: flex;

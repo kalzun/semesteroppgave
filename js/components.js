@@ -1,6 +1,6 @@
 // Konstruerer tabell som barn av gitt dom-element (div) utifra kategori og kommunenr.
 // Add child funksjon definert i helpingFunctoins.js
-function tabell(div, category, kommunenr1, kommunenr2){
+function constructTable(div, category, kommunenr1, kommunenr2){
 	//Fjerner ev. feilmeldinger eller ventemeldinger dersom disse finnes
 	removeErrorMessages(div);
 	removeLoadingMessage();
@@ -164,7 +164,7 @@ function tabell(div, category, kommunenr1, kommunenr2){
 		// Fjerner ev. eksisterende tabell
 		removeTable(div, 1);
 
-		div.querySelector(".municipalityName").innerHTML = `${kommune1.navn} sammenlignet med ${kommune2.navn}.`
+		div.querySelector(".municipalityName").innerHTML = `${kommune1.navn} sammenlignet med ${kommune2.navn}`
 
 		// Konstruerer tabellen
 		const target = div.querySelector(".compareT")
