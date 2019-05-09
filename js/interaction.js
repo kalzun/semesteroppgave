@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 		inputFields[i].addEventListener("input", regexChecker);
 		inputFields[i].addEventListener("blur", function() {
 			let clearThisOutput = clearOutput.bind(this);
-			clearThisOutput();
+				clearThisOutput();
 			});
 	}
 	displayLoadingMessage(document.querySelector(".oversikt"));
@@ -80,6 +80,10 @@ function populateSearchField(content, inputElements, isSecondary) {
 	clearOutput(output);
 }
 
+function inputField() {
+
+}
+
 function regexChecker(event){
 	const names = kommuneSingleton.getAllNames();
 	const IDs = kommuneSingleton.getAllIDs();
@@ -129,6 +133,25 @@ function clearOutput(output){
 }
 
 function outputRegexHits(hits, output){
+	// Få tak i inputfield:
+	const inputElement = output.parentNode.querySelector("input");
+	const inputWidth = inputElement.getBoundingClientRect().width;
+	const inputBottom = inputElement.getBoundingClientRect().bottom;
+	const contentElem = output.closest(".content");
+	const computedStyles = window.getComputedStyle(contentElem);
+	const offsetTopContent = inputBottom - (parseFloat(computedStyles.getPropertyValue("padding-top"))) - contentElem.getBoundingClientRect().top;
+	
+	if (output.classList.contains("search-output-right")) {
+		const offsetRightContent =  contentElem.getBoundingClientRect().right + parseFloat(computedStyles.getPropertyValue("padding-right")) - inputElement.getBoundingClientRect().left;	
+		output.style.marginRight = offsetRightContent + "px";
+	} else {
+		const offsetLeftContent = inputElement.getBoundingClientRect().left - contentElem.getBoundingClientRect().left - parseFloat(computedStyles.getPropertyValue("padding-left"));
+		output.style.marginLeft = offsetLeftContent + "px";
+	}
+
+	output.style.minWidth = inputWidth + "px";
+	output.style.marginTop = offsetTopContent + "px";
+	
 	const maxHitsShown = 5;
 	hits.slice(0, maxHitsShown).forEach((hit) => {
 		const li = document.createElement("li");

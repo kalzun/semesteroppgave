@@ -42,9 +42,13 @@ button:focus, input:focus {outline:0;}
 
 /* Header-styling */
 h1 {font-size: 6vh; font-weight: 600;}
-h2 {font-size: 3.5vh;}
+h2 {font-size: 3.5vh; text-align: center;}
 h3 {font-size: 24px; font-weight: 400; text-align: center; padding: 3vh;}
 h4 {font-size: 3vh; font-style: italic;}
+
+@media (max-width: 414px) {
+    h1 {font-size: 4vh;}
+}
 
 /* Generell paragraf-tekst styling */
 p{font-size: 3vh;}

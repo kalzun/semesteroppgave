@@ -1,22 +1,13 @@
 .search-output {
 	z-index: 1;
 	position: absolute;
-	margin-top: 10vh;
-	min-width: 500px;
+	box-sizing: border-box;
 }
 
 @media (max-width: 800px){
 	.search-output {
 		display: none;
 	}
-}
-
-.search-output:nth-child(2n+1) {
-	background-color: black; /*var(--colorSubSecondary);*/
-}
-
-.search-output:nth-child(2n+1) {
-	background-color: grey; /*var(--colorSubSecondary);*/
 }
 
 .search-output li {
