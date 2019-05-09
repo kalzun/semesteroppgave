@@ -1,5 +1,4 @@
-/*  Dette er den første css-filen som rendres. Top-level modifikasjon.
-    Ikke put spesifikk styling i denne filen. Bare generell styling. */
+/*  Generell styling. */
 
 /* Variabler */
 :root {
@@ -39,13 +38,19 @@ input {
 button:focus, input:focus {outline:0;}
 
 /* Header-styling */
-h1 {font-size: 6vh; font-weight: 600;}
+h1 {font-size: 4vw; font-weight: 600;}
 h2 {font-size: 3.5vh; text-align: center;}
 h3 {font-size: 24px; font-weight: 400; text-align: center; padding: 3vh;}
 h4 {font-size: 3vh; font-style: italic;}
 
-@media (max-width: 414px) {
-    h1 {font-size: 4vh;}
+@media (max-width: 900px) {
+    h1 {
+        font-size: 6vw;
+        text-align: left;
+    }
+    p {
+        text-align: left;
+    }
 }
 
 /* Generell paragraf-tekst styling */

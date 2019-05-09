@@ -38,9 +38,7 @@
     padding-left: 2.5vw;
     padding-right: 2.5vw;
 }
-.content h1 {
-    text-align: center;
-}
+
 .content button {
     width: 100%;
     font-size: 24px;
@@ -66,6 +64,9 @@
         flex-direction: row;
         margin-bottom: 5vw;
         padding: 2vw;
+    }
+    .content h1 {
+        text-align: center;
     }
     .search {
         font-size: 2vw;

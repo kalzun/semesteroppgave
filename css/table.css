@@ -75,10 +75,6 @@ td, th {
     padding-left: 10px;
     padding-right: 10px;
   }
-  .historic-table tr>td:nth-child(1) {
-    background-color: var(--colorSecondary);
-    color: var(--colorMain);
-  }
 }
 
 /* Telefon width */
