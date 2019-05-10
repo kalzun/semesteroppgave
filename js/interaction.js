@@ -46,24 +46,39 @@ document.addEventListener("DOMContentLoaded", function(event){
 
 
 // Kjøres når brukeren trykker på en søkeknapp
-function search(){
+function search(event, suggestion, inputElements, isSecondary){
 	let kommunenr1,
-		kommunenr2;
+		kommunenr2,
+		alleInputs,
+		domElem,
+		aParent;
 
-    const targetClass = event.target.id;
-    let domElem = document.getElementsByClassName(targetClass)[0];
-    const aParent = event.target.parentElement.parentElement;
-    const alleInputs = aParent.querySelectorAll("div .search");
+	const targetClass = (event) ? event.target.id : null;
+	alleInputs = [];	
+    
+    if (suggestion){
+    	alleInputs.push(suggestion);
+    	domElem = (isSecondary) ? document.getElementsByClassName("sammenligning")[0] : document.getElementsByClassName("detaljer")[0];
+    }
+    else {
+    	aParent = event.target.parentElement.parentElement;
+    	searchInputs = aParent.querySelectorAll("div .search");
+    	for (inp in searchInputs) alleInputs.push(searchInputs[inp].value);
+    	domElem = document.getElementsByClassName(targetClass)[0];
+    }
 
     fullstendigDataSet.onload = function(){
     	// Hvis bruker skriver inn kommunenavn:
 		// Convert name to id
-    	(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = kommuneSingleton.getID(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
+    	(isNameInDataset(alleInputs[0])) ? kommunenr1 = kommuneSingleton.getID(alleInputs[0]) : kommunenr1 = alleInputs[0];
     	if (targetClass == "sammenligning")
-        	(isNameInDataset(alleInputs[1].value)) ? kommunenr2 = kommuneSingleton.getID(alleInputs[1].value) : kommunenr2 = alleInputs[1].value;
+        	(isNameInDataset(alleInputs[1])) ? kommunenr2 = kommuneSingleton.getID(alleInputs[1]) : kommunenr2 = alleInputs[1];
         
 		removeLoadingMessage();
-        constructTable(domElem, targetClass, kommunenr1, kommunenr2);
+		if (suggestion && !isSecondary)
+        	constructTable(domElem, "detaljer", kommunenr1, kommunenr2);
+        else
+        	constructTable(domElem, targetClass, kommunenr1, kommunenr2);
 
         changeVisibleEducation();
 
@@ -100,7 +115,8 @@ function regexChecker(event){
 	try {
 		regexp = new RegExp(`^${userInput}`, 'gi');
 	} catch(e) {
-		// Catcher parenteser og andre feil i inntastingen, men gjør ikke noe med dem. Unngår feilmeldig i konsoll.
+		//console.log(e)
+		// Catcher parenteser og andre feil i inntastingen, men gjør ikke noe med dem. Unngår feilmelding i konsoll.
 	}
 
 
@@ -205,6 +221,9 @@ function outputRegexHits(hits, output){
 			let inputElements = event.target.parentElement.parentElement.parentElement.querySelectorAll("input");
 			let isSecondary = event.target.closest(".search-output-right");
 			populateSearchField(clickedName, inputElements, isSecondary);
+			
+			search(null, clickedName, inputElements, isSecondary);
+			//search(clickedName);
 		});
 		output.appendChild(li);
 	});
