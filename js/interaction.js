@@ -40,19 +40,14 @@ function search(suggestion){
     const alleInputs = aParent.querySelectorAll("div .search");
 
     fullstendigDataSet.onload = function(){
-        switch (targetClass){
-	    	case "detaljer":
-	    		// Hvis bruker skriver inn kommunenavn:
-				// Convert name to id
-				(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = kommuneSingleton.getID(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
-	    		break;
-	    	case "sammenligning":
-	    		(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = kommuneSingleton.getID(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
-	    		(isNameInDataset(alleInputs[1].value)) ? kommunenr2 = kommuneSingleton.getID(alleInputs[1].value) : kommunenr2 = alleInputs[1].value;
-	    		break;
-    	};
+    	// Hvis bruker skriver inn kommunenavn:
+		// Convert name to id
+    	(isNameInDataset(alleInputs[0].value)) ? kommunenr1 = kommuneSingleton.getID(alleInputs[0].value) : kommunenr1 = alleInputs[0].value;
+    	if (targetClass == "sammenligning")
+        	(isNameInDataset(alleInputs[1].value)) ? kommunenr2 = kommuneSingleton.getID(alleInputs[1].value) : kommunenr2 = alleInputs[1].value;
+        
 		removeLoadingMessage();
-        tabell(domElem, targetClass, kommunenr1, kommunenr2);
+        constructTable(domElem, targetClass, kommunenr1, kommunenr2);
 
         changeVisibleEducation();
 
@@ -144,7 +139,7 @@ function outputRegexHits(hits, output){
 
 	if (output.classList.contains("search-output-right")) {
 		const inputElement = output.parentNode.querySelectorAll("input")[1];
-		const offsetRightContent =  inputElement.getBoundingClientRect().left - contentElem.getBoundingClientRect().left - parseFloat(computedStyles.getPropertyValue("padding-left"));	 
+		const offsetRightContent =  inputElement.getBoundingClientRect().left - contentElem.getBoundingClientRect().left - parseFloat(computedStyles.getPropertyValue("padding-left"));
 		//const offsetRightContent =  contentElem.getBoundingClientRect().right + parseFloat(computedStyles.getPropertyValue("padding-right")) - inputElement.getBoundingClientRect().left;
 		output.style.marginLeft = offsetRightContent + "px";
 	} else {
@@ -213,15 +208,21 @@ function changeVisibleEducation() {
 	const eduCodes = kommuneSingleton.getEduCodes();
 	if (window.innerWidth < limit) {
 		for (let i = 2; i < tableElems.length; i++) {
-			const val = tableElems[i].innerHTML;
+			const val = tableElems[i].innerText;
 			if (!eduCodes.includes(val)) {
 				const newVal = kommuneSingleton.getEduCodes(val);
 				tableElems[i].innerHTML = newVal;
+					const tooltip = document.createElement("span");
+					if (tableElems[i].contains(tooltip))
+						return;
+					tooltip.setAttribute("class", "edu-tooltip");
+					tooltip.innerHTML = val;
+					tableElems[i].appendChild(tooltip);
 			}
 		}
 	}else{
 		for (let i = 2; i < tableElems.length; i++) {
-			const val = tableElems[i].innerHTML;
+			const val = tableElems[i].innerText;
 			if (eduCodes.includes(val)) {
 				const newVal = kommuneSingleton.getEduName(val);
 				tableElems[i].innerHTML = newVal;
