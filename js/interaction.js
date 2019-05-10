@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function(event){
+
 	const tabs = Array.from(document.getElementById("tabs").children);
     const buttons = Array.from(document.getElementById("buttons").children);
     const searchButtons = document.querySelectorAll(".searchbutton");
@@ -183,7 +184,7 @@ function outputRegexHits(hits, output){
 
 	output.style.minWidth = inputWidth + "px";
 	output.style.marginTop = offsetTopContent + "px";
-	// End
+	// End of output-styling
 	
 	// Gå gjennom hver treff
 	hits.slice(0, maxHitsShown).forEach((hit) => {
@@ -223,7 +224,6 @@ function outputRegexHits(hits, output){
 			populateSearchField(clickedName, inputElements, isSecondary);
 			
 			search(null, clickedName, inputElements, isSecondary);
-			//search(clickedName);
 		});
 		output.appendChild(li);
 	});

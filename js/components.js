@@ -19,7 +19,8 @@ function constructTable(div, category, kommunenr1, kommunenr2){
 
 	// Lager tabellen til oversikt-fanen
 	function oversikt() {
-	    const alleKommuner = kommuneSingleton.getAlleKommuner();
+		const singleton = AlleKommunerSingleton.getInstance();
+	    const alleKommuner = singleton.getAlleKommuner();
 
 	    let table = addChild(div, null, "table", "class", "oversikt");
 	    const tHead = addChild(table, null, "tHead");

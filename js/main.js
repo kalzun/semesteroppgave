@@ -498,10 +498,5 @@ let Kommuneobj = function(navn, id) {
 
 // Konstruerer dataset og singleton objekt for alle kommuner
 const fullstendigDataSet = new DataSet(allUrls);
-fullstendigDataSet.load()
-const kommuneSingleton = AlleKommunerSingleton.getInstance()
-
-
-
-
-
+fullstendigDataSet.load();
+const kommuneSingleton = AlleKommunerSingleton.getInstance();
