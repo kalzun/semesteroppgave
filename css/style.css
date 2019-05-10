@@ -235,6 +235,8 @@ footer {
   justify-content: center;
 }
 footer p {
+  padding: 20px;
+  font-size: 1.7vh;
   text-align: center;
   color: var(--colorMain);
 }
