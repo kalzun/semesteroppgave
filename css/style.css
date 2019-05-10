@@ -377,14 +377,17 @@ td, th {
 .search-suggestion{
     display: grid;
     grid-gap: 10px;
-    padding: 40px;
+    padding: 20px;
     background-color: var(--colorSecondary);
 }
-
-.search-suggestion:hover {
-    background-color: var(--colorSecondaryHover);
+.search-suggestion:nth-child(even) {
+  background-color: #b42222;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
 }
-
+.search-suggestion:hover {
+  background-color: var(--colorSecondaryHover);
+}
 .search-span {
     color: var(--colorMain);
     font-size: 0.8rem;
