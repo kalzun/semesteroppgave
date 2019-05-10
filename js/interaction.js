@@ -1,4 +1,3 @@
-// Legger til search-funksjonen på søkeknapper.
 document.addEventListener("DOMContentLoaded", function(event){
 	const tabs = Array.from(document.getElementById("tabs").children);
     const buttons = Array.from(document.getElementById("buttons").children);
@@ -47,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 
 
 // Kjøres når brukeren trykker på en søkeknapp
-function search(suggestion){
+function search(){
 	let kommunenr1,
 		kommunenr2;
 
@@ -91,10 +90,6 @@ function populateSearchField(content, inputElements, isSecondary) {
 		output = inputElements[0].parentElement.querySelector(".search-output");
 	}
 	clearOutput(output);
-}
-
-function inputField() {
-
 }
 
 function regexChecker(event){
@@ -146,7 +141,9 @@ function clearOutput(output){
 }
 
 function outputRegexHits(hits, output){
-	// Få tak i inputfield:
+	const maxHitsShown = 5; // Hvor mange forslag vil vi vise - maximum.
+	
+	// Start: Få output til å være like bred som inputen du skriver inn i:
 	const inputElement = output.parentNode.querySelector("input");
 	const inputWidth = inputElement.getBoundingClientRect().width;
 	const inputBottom = inputElement.getBoundingClientRect().bottom;
@@ -157,7 +154,6 @@ function outputRegexHits(hits, output){
 	if (output.classList.contains("search-output-right")) {
 		const inputElement = output.parentNode.querySelectorAll("input")[1];
 		const offsetRightContent =  inputElement.getBoundingClientRect().left - contentElem.getBoundingClientRect().left - parseFloat(computedStyles.getPropertyValue("padding-left"));
-		//const offsetRightContent =  contentElem.getBoundingClientRect().right + parseFloat(computedStyles.getPropertyValue("padding-right")) - inputElement.getBoundingClientRect().left;
 		output.style.marginLeft = offsetRightContent + "px";
 	} else {
 		const offsetLeftContent = inputElement.getBoundingClientRect().left - contentElem.getBoundingClientRect().left - parseFloat(computedStyles.getPropertyValue("padding-left"));
@@ -166,8 +162,9 @@ function outputRegexHits(hits, output){
 
 	output.style.minWidth = inputWidth + "px";
 	output.style.marginTop = offsetTopContent + "px";
-
-	const maxHitsShown = 5;
+	// End
+	
+	// Gå gjennom hver treff
 	hits.slice(0, maxHitsShown).forEach((hit) => {
 		const li = document.createElement("li");
 		let kommunenr, kommunenavn, kommuneinfo;
@@ -206,17 +203,6 @@ function outputRegexHits(hits, output){
 		});
 		output.appendChild(li);
 	});
-}
-
-function getCorrectOutput(id, elem) {
-	let output;
-	// Send in this.id som parameter!
-	// Sjekk hvilken input som skrives inn i, for å bestemme hvor forslagene skal skrives ut:
-	if (id === "input-sam2")
-		output = elem.parentElement.querySelector(".search-output-right");
-	else
-		output = elem.parentElement.querySelector(".search-output");
-	return output
 }
 
 function changeVisibleEducation() {
