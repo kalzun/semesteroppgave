@@ -93,11 +93,16 @@ function populateSearchField(content, inputElements, isSecondary) {
 }
 
 function regexChecker(event){
+	let output, regexp;
 	const names = kommuneSingleton.getAllNames();
 	const IDs = kommuneSingleton.getAllIDs();
 	let userInput = event.target.value;
-	let regexp = new RegExp(`^${userInput}`, 'gi');
-	let output;
+	try {
+		regexp = new RegExp(`^${userInput}`, 'gi');
+	} catch(e) {
+		// Catcher parenteser og andre feil i inntastingen, men gjør ikke noe med dem. Unngår feilmeldig i konsoll.
+	}
+
 
 	// Sjekk hvilken input som skrives inn i, for å bestemme hvor forslagene skal skrives ut:
 	if (this.id === "input-sam2")
