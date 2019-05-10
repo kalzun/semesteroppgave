@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function(event){
 	const infoBox = document.querySelector(".infobox");
 	const eduCodeBox = addChild(infoBox, null, "div", "class", "eduCodeBox");
 
+	// Eventlistener til alle menyknappene
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener("click", function(){
 
@@ -19,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function(event){
         });
     }
 
-    // Eventlistener til knapp.
+    // Eventlistener til Søkeknappene
 	for (let index = 0; index < 2; index++){
 		searchButtons[index].addEventListener("click", search);
 	}
