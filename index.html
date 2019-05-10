@@ -47,7 +47,7 @@
         </div>
 
         <div class="detaljer">
-          <p class="table-desc">Detaljert informasjon om befolkning, sysselsetting og utdanning i en kommune.</p>
+          <p class="table-desc">Detaljert informasjon om befolkningsantall, sysselsetting- og utdanningsprosent i en kommune.</p>
           <div class="content">
             <input autofocus="true" autocomplete="off" id="input-det" type="text" placeholder="kommunenummer" class="search search3"/>
             <button type="search" id="detaljer" class="searchbutton">SØK</button>
@@ -64,6 +64,12 @@
             <div class="infobox-elements">
               <span class="box yellow-box">-</span><span class="box-text"> = finnes ingen data i tallene fra SSB.</span>
             </div>
+            <div class="infobox-elements">
+              Utdanningsprosent er regnet utifra personer 16 år og over.
+            </div>
+            <div class="infobox-elements">
+                Sysselsettingsprosent er regnet utifra personer mellom 15 og 74 år.
+              </div>
           </div>
         </div>
 
@@ -81,16 +87,17 @@
           <div class="msg-box"></div>
           <h2 class="municipalityName"></h2>
           <div class="compareT"></div>
-
           <div class="infobox">
-            <label>Forklaring:
-            </label>
-            <div class="info-container">
+            <label>Forklaring:</label>
               <div class="infobox-elements">
                 <span class="box yellow-box">-</span><span class="box-text"> = finnes ingen data i tallene fra SSB.</span>
               </div>
               <div class="infobox-elements">
                 <span class="box green-box">-</span><span class="box-text"> = kommune som har høyest vekst i prosentpoeng (i forhold til foregående år og kjønn).</span>
+              </div>
+            <div class="info-container">
+              <div class="infobox-elements">
+                Sysselsettingsprosent er regnet utifra personer mellom 15 og 74 år.
               </div>
             </div>
           </div>
