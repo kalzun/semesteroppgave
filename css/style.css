@@ -427,7 +427,7 @@ td, th {
 
 .eduCat:hover .edu-tooltip {
     visibility: visible;
-    opacity: 1
+    opacity: 1;
 }
 
 /*----- Loading -----*/
@@ -448,6 +448,7 @@ td, th {
     background-color: var(--colorSecondary);
     color: var(--colorMain);
     padding: 10px 20px;
+    width:300px;
 }
 
 #reload-button:hover {
