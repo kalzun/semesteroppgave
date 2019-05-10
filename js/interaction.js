@@ -1,6 +1,25 @@
 // Legger til search-funksjonen på søkeknapper.
 document.addEventListener("DOMContentLoaded", function(event){
-	const searchButtons = document.querySelectorAll(".searchbutton");
+	const tabs = Array.from(document.getElementById("tabs").children);
+    const buttons = Array.from(document.getElementById("buttons").children);
+    const searchButtons = document.querySelectorAll(".searchbutton");
+    const eduNames = kommuneSingleton.getEduName();
+	const infoBox = document.querySelector(".infobox");
+	const eduCodeBox = addChild(infoBox, null, "div", "class", "eduCodeBox");
+
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", function(){
+
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+                buttons[i].classList.remove("active");
+            }
+            tabs[i].classList.add("active");
+            buttons[i].classList.add("active");
+        });
+    }
+
+    // Eventlistener til knapp.
 	for (let index = 0; index < 2; index++){
 		searchButtons[index].addEventListener("click", search);
 	}
@@ -9,9 +28,6 @@ document.addEventListener("DOMContentLoaded", function(event){
 	window.addEventListener("resize", changeVisibleEducation);
 
 	// Legger til informasjon i forklaringsfelt i detaljer- og sammenlignings-dane
-	const eduNames = kommuneSingleton.getEduName();
-	const infoBox = document.querySelector(".infobox");
-	const eduCodeBox = addChild(infoBox, null, "div", "class", "eduCodeBox")
 	for (key in eduNames){
 		addChild(eduCodeBox, `Utdanningskode: ${key} = ${eduNames[key]}`, "div", "class", "infobox-elements");
 	}
