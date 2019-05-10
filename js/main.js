@@ -323,10 +323,6 @@ People.prototype = {
 
 	// INHABITANTS methods:
 
-	getInhabitantsGenderByYear: function(gender, year) {
-		return this.inhabitants[gender][year];
-	},
-
 	getInhabitants: function() {
 		// Sjekk om det er noe tilgjengelige data,
 		// return null om ikke.
@@ -368,10 +364,6 @@ People.prototype = {
 		return this.sisteTallM + this.sisteTallK;
 	},
 
-	getInhabitantsByGender: function(gender) {
-		return this.inhabitants[gender];
-	},
-
 	// EMPLOYMENT methods:
 
 	getEmploymentRates: function() {
@@ -391,14 +383,6 @@ People.prototype = {
 		return this.empLastNumber;
 	},
 
-	getEmploymentRatesByYear: function(year) {
-		// Sjekk om det er noe tilgjengelige data,
-		// return null om ikke.
-		if (isContentInCategory(this.employment)) return [];
-
-		return this.employment[BEGGE][year];
-	},
-
 	getEmploymentRatesByGender: function(gender) {
 		// Sjekk om det er noe tilgjengelige data,
 		// return null om ikke.
@@ -406,36 +390,7 @@ People.prototype = {
 		return this.employment[gender];
 	},
 
-	getEmploymentRatesByGenderAndYear: function(gender, year) {
-		// Sjekk om det er noe tilgjengelige data,
-		// return null om ikke.
-		if (isContentInCategory(this.employment)) return [];
-		return this.employment[gender][year];
-	},
-
-
 	// EDUCATION methods:
-
-	getAllEducationRates() {
-		const educodes = [
-			GRUNNSKOLE,
-			VGS,
-			FAGSKOLE,
-			UNIKORT,
-			UNILANG,
-			UTENUTD
-		];
-		let eduRates = {};
-		for (num in educodes) {
-			eduRates[educodes[num]] = this.education[educodes[num]];
-		}
-		return eduRates;
-	},
-
-	getEducationRatesByYearSpecified: function (educode, year) {
-		this.edu = this.education[educode];
-		return this.edu[MENN][year] + this.edu[KVINNER][year];
-	},
 
 	getEducationRatesLastYearSpecified: function(educode) {
 
